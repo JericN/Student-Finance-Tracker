@@ -11,7 +11,7 @@
         "fmt:fix": "prettier --write .",
         "lint": "pnpm lint:html && pnpm lint:css && pnpm lint:js && pnpm lint:svelte",
         "lint:html": "linthtml src/**/*.html",
-        "lint:css": "stylelint src/**/*.css",
+        "lint:css": "stylelint src/**/*.{css,postcss}",
         "lint:js": "eslint **/*.{js,svelte,ts}",
         "lint:svelte": "svelte-check --tsconfig ./tsconfig.json",
         "check": "pnpm sync && pnpm fmt:fix && pnpm lint"
