@@ -1,8 +1,8 @@
 <script>
-	import '../app.postcss';
-	import { AppShell } from '@skeletonlabs/skeleton';
+    import '../app.postcss';
+    import { AppShell } from '@skeletonlabs/skeleton';
 </script>
 
 <AppShell>
-	<slot />
+    <slot />
 </AppShell>

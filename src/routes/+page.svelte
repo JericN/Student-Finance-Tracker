@@ -1,3 +1,1 @@
-<div class="grid place-content-center h-full">
-	Student Financial Tracker
-</div>
+<div class="grid h-full place-content-center">Student Financial Tracker</div>
