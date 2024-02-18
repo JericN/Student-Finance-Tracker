@@ -33,6 +33,7 @@
         "@types/node": "20.11.19",
         "@typescript-eslint/eslint-plugin": "^6.0.0",
         "@typescript-eslint/parser": "^6.0.0",
+        "@vercel/postgres": "^0.7.2",
         "autoprefixer": "10.4.17",
         "chart.js": "^4.4.1",
         "eslint": "^8.56.0",
@@ -52,6 +53,7 @@
         "tslib": "^2.4.1",
         "typescript": "^5.0.0",
         "valibot": "^0.28.1",
+        "vercel": "^33.5.1",
         "vite": "^5.0.3",
         "vite-plugin-tailwind-purgecss": "0.2.0",
         "vitest": "^1.2.0"
