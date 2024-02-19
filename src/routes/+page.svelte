@@ -20,5 +20,5 @@
         {/await}
     </div>
     <button type="button" class="variant-filled btn font-bold" on:click={() => (id += 1)}> Next </button>
-    <LightSwitch />
+    <LightSwitch class={'select-none'} />
 </div>
