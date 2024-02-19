@@ -6,11 +6,14 @@
     function getData(id: number) {
         return testFetch(id);
     }
+
+    // eslint-disable-next-line init-declarations
+    export let title: string;
 </script>
 
 <div class="flex h-full flex-col items-center justify-center gap-10">
-    <div class="text-xl font-bold">Student Financial Tracker</div>
-    <div class="text-secondary-800-100-token font-bold uppercase">
+    <div class="text-xl font-bold">{title}</div>
+    <div class="text-secondary-800-100-token font-bold uppercase underline">
         {#await getData(id)}
             <p>.......</p>
         {:then data}
@@ -19,6 +22,6 @@
             </div>
         {/await}
     </div>
-    <button type="button" class="variant-filled btn font-bold" on:click={() => (id += 1)}> Next </button>
+    <button class="variant-filled btn font-bold" on:click={() => (id += 1)}> Next </button>
     <LightSwitch class={'select-none'} />
 </div>
