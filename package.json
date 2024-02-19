@@ -1,22 +1,29 @@
 {
-    "name": "",
-    "version": "0.0.1",
+    "name": "student-finance-tracker",
+    "version": "0.0.2",
     "private": true,
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "preview": "vite preview",
+        "build:android": "vite build && pnpx rimraf android && npx cap add android && npx cap sync",
+        "build:ios": "vite build && pnpx rimraf ios && npx cap add ios && npx cap sync",
+        "build:sync": "npx cap sync",
+        "prev": "vite preview",
+        "prev:android": "npx cap open android",
+        "prev:ios": "npx cap open ios",
         "sync": "svelte-kit sync",
         "fmt": "prettier --check .",
         "fmt:fix": "prettier --write .",
         "lint": "pnpm lint:html && pnpm lint:css && pnpm lint:js && pnpm lint:svelte",
         "lint:html": "linthtml src/**/*.html",
         "lint:css": "stylelint src/**/*.{css,postcss}",
-        "lint:js": "eslint **/*.{js,svelte,ts}",
+        "lint:js": "eslint **/*.{js,ts,svelte}",
         "lint:svelte": "svelte-check --tsconfig ./tsconfig.json",
         "check": "pnpm sync && pnpm fmt:fix && pnpm lint"
     },
     "devDependencies": {
+        "@capacitor/android": "^5.7.0",
+        "@capacitor/ios": "^5.7.0",
         "@floating-ui/dom": "^1.6.3",
         "@linthtml/linthtml": "^0.9.5",
         "@linthtml/linthtml-config-recommended": "^0.1.0",
@@ -25,6 +32,7 @@
         "@steeze-ui/heroicons": "^2.3.0",
         "@steeze-ui/svelte-icon": "^1.5.0",
         "@sveltejs/adapter-auto": "^3.0.0",
+        "@sveltejs/adapter-static": "^3.0.1",
         "@sveltejs/kit": "^2.0.0",
         "@sveltejs/vite-plugin-svelte": "^3.0.0",
         "@tailwindcss/forms": "0.5.7",
@@ -58,5 +66,9 @@
         "vite-plugin-tailwind-purgecss": "0.2.0",
         "vitest": "^1.2.0"
     },
-    "type": "module"
+    "type": "module",
+    "dependencies": {
+        "@capacitor/cli": "^5.7.0",
+        "@capacitor/core": "^5.7.0"
+    }
 }
