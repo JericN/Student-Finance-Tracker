@@ -2,6 +2,9 @@
 .vscode
 node_modules
 /build
+/android
+/ios
+/.vercel
 /.svelte-kit
 /package
 .env
@@ -9,5 +12,3 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-.vercel
