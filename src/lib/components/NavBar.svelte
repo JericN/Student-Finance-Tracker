@@ -15,20 +15,20 @@
     justify="justify-center"
 >
     <TabAnchor href="/dashboard" selected={pathname === '/dashboard/'}>
-        <Icon src={Home} class="h-8" />
+        <Icon src={Home} class="w-8" />
     </TabAnchor>
     <TabAnchor href="/transactions" selected={pathname === '/transactions/'}>
-        <Icon src={CreditCard} class="h-8" />
+        <Icon src={CreditCard} class="w-8" />
     </TabAnchor>
     <Tab bind:group={isOpen} name="add" value={0} class="bg-surface-700-200-token pb-0">
-        <button class="text-surface-50-900-token btn h-8 p-0 active:scale-75">
+        <button class="text-surface-50-900-token btn w-8 p-0 active:scale-75">
             <Icon src={PlusCircle} />
         </button>
     </Tab>
     <TabAnchor href="/analytics" selected={pathname === '/analytics/'}>
-        <Icon src={PresentationChartLine} class="h-8" />
+        <Icon src={PresentationChartLine} class="w-8" />
     </TabAnchor>
     <TabAnchor href="/users" selected={pathname === '/users/'}>
-        <Icon src={User} class="h-8" />
+        <Icon src={User} class="w-8" />
     </TabAnchor>
 </TabGroup>
