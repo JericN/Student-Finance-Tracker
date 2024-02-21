@@ -3,7 +3,7 @@
     import { AccordionItem } from '@skeletonlabs/skeleton';
     import Entries from './Entries.svelte';
     import Header from './Header.svelte';
-    import { currency } from '$lib/funcs/funcs';
+    import { currency } from '$lib/funcs/helper';
 
     export let entries: Record;
     export let id: number;
@@ -16,7 +16,7 @@
     const bg = values[id % values.length];
 </script>
 
-<AccordionItem open regionControl={`${bg} border-2 border-surface-900`} regionPanel={'px-0 py-0 rounded-none -mx-2'}>
+<AccordionItem open regionControl={`${bg} border-default`} regionPanel={'px-0 py-0 rounded-none -mx-2'}>
     <svelte:fragment slot="summary">
         <Header {date} {income} {expenses} />
     </svelte:fragment>

@@ -6,8 +6,8 @@
     export let expenses: string;
 </script>
 
-<div class="grid w-full grid-cols-thead items-center text-white">
-    <div class="pr-2 text-right font-bold">{date}</div>
+<div class="grid grid-cols-thead items-center text-surface-50">
+    <div class="pr-2 text-right font-extrabold">{date}</div>
     <Day {date} />
     <div>{income}</div>
     <div>{expenses}</div>

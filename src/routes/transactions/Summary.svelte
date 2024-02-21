@@ -1,9 +1,6 @@
 <script lang="ts">
     import Card from '$lib/components/Card.svelte';
-    const currencyOptions = { style: 'currency', currency: 'PHP', maximumFractionDigits: 0 };
-    function currency(value: number) {
-        return value.toLocaleString('en-US', currencyOptions);
-    }
+    import { currency } from '$lib/funcs/helper';
 
     export let income: number;
     export let expenses: number;
@@ -11,8 +8,8 @@
 </script>
 
 <Card width={'min-w-max'}>
-    <div class="px-6 py-2 text-center">
-        <div class="grid grid-cols-3 gap-x-10 font-bold text-surface-900">
+    <div class="px-6 py-2 text-center text-surface-900">
+        <div class="grid grid-cols-3 gap-x-10 font-bold">
             <div class="text-xs">Income</div>
             <div class="text-xs">Expenses</div>
             <div class="text-xs">Balance</div>
