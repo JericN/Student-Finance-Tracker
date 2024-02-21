@@ -20,18 +20,19 @@ export default {
                 101: '1.01',
             },
             colors: {
-                income: '#244b8f',
+                income: '#1a335e',
                 expense: '#5e1b1b',
                 neutral: '#103d1a',
             },
             gridTemplateColumns: {
-                thead: '20px minmax(50px, 1fr) 50px 50px',
-                tbody: '20px 70px minmax(50px, 1fr) 50px 50px',
+                thead: '22px minmax(50px, 1fr) 50px 50px',
+                tbody: '22px 70px minmax(50px, 1fr) 50px 50px',
             },
             borderRadius: {
                 sm: '4px',
                 xs: '2px',
             },
+            translate: {},
         },
     },
     plugins: [
