@@ -1,11 +1,16 @@
 <script lang="ts">
     function test_function() {
         const username: string = (document.getElementById('username')! as HTMLInputElement).value;
-        const email: string = (document.getElementById('email')! as HTMLInputElement).value;
         const password: string = (document.getElementById('password')! as HTMLInputElement).value;
 
         console.log('Clicked Submit');
-        console.log({ username, email, password });
+        console.log({ username, password });
+
+        window.location.href = '/dashboard';
+    }
+
+    function goto_reg() {
+        window.location.href = '/register';
     }
 </script>
 
@@ -27,7 +32,9 @@
                 </div>
 
                 <div class="flex h-full justify-center gap-10" style="width: 100%;">
-                    <button type="submit" class="v47_1313 v47_1313_2 rounded-xl border border-black"> Sign Up </button>
+                    <button on:click={goto_reg} class="v47_1313 v47_1313_2 rounded-xl border border-black">
+                        Sign Up
+                    </button>
                     <button type="submit" class="v47_1313 rounded-xl border border-black"> Login </button>
                 </div>
             </div>
