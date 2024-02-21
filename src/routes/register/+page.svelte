@@ -6,6 +6,8 @@
 
         console.log('Clicked Submit');
         console.log({ username, email, password });
+
+        window.location.href = '/dashboard';
     }
 </script>
 
