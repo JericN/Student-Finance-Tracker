@@ -9,6 +9,7 @@
         Bank: 24200,
         Cash: 1200,
         GCash: 500,
+        Shared: 6850,
     };
     const expenses = {
         Mon: 200,

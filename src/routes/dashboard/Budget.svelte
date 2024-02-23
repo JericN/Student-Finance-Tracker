@@ -9,7 +9,7 @@
 
 <Card width="w-full max-w-sm" background="bg-primary-700" accent="slate">
     <div class="flex h-32 flex-col items-center justify-center text-surface-50">
-        <div class="mt-4 text-xs">Remaining Budget</div>
+        <div class="mt-4 text-xs">Budget Left</div>
         <div class="text-5xl font-bold">{currency(balance)}</div>
         <ProgressBar
             class="mt-5 scale-x-95"

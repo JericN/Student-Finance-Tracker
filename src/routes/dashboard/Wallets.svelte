@@ -1,40 +1,35 @@
 <script lang="ts">
-    import { ChevronDoubleLeft, ChevronDoubleRight } from '@steeze-ui/heroicons';
+    import { ChevronDoubleLeft as Left, ChevronDoubleRight as Right } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import Wallet from './Wallet.svelte';
 
     export let wallets: Record<string, number>;
 
-    // TODO: make the carousel infinite scroll
+    const length = Object.keys(wallets).length - 1;
     let card: HTMLDivElement;
+    let curr: number;
 
-    function carouselLeft(): void {
-        const x =
-            card.scrollLeft === 0
-                ? card.clientWidth * card.childElementCount // loop
-                : card.scrollLeft - card.clientWidth; // step left
-        card.scroll(x, 0);
+    function update(curr: number): number {
+        if (!card || curr < 0) return 0;
+        if (curr > length) return length;
+        card.scroll(card.clientWidth * curr, 0);
+        return curr;
     }
-
-    function carouselRight(): void {
-        const x =
-            card.scrollLeft === card.scrollWidth - card.clientWidth
-                ? 0 // loop
-                : card.scrollLeft + card.clientWidth; // step right
-        card.scroll(x, 0);
-    }
+    $: curr = update(curr);
 </script>
 
-<div class="gap grid w-full max-w-sm grid-cols-[auto_1fr_auto]">
-    <button type="button" on:click={carouselLeft}>
-        <Icon src={ChevronDoubleLeft} class="w-5 stroke-2" />
+<div class="grid max-w-sm grid-cols-[auto_1fr_auto]">
+    <div class="col-span-3 text-center font-bold">WALLETS</div>
+
+    <button class="w-5 stroke-2" on:click={() => curr--}>
+        <Icon src={Left} class={curr === 0 && 'stroke-transparent'} />
     </button>
-    <div bind:this={card} class="flex snap-x snap-mandatory overflow-hidden scroll-smooth">
+    <div bind:this={card} class="flex overflow-hidden scroll-smooth">
         {#each Object.entries(wallets) as [name, value]}
             <Wallet {name} {value} />
         {/each}
     </div>
-    <button type="button" class="text-3xl" on:click={carouselRight}>
-        <Icon src={ChevronDoubleRight} class="w-5 stroke-2" />
+    <button class="w-5 stroke-2" on:click={() => curr++}>
+        <Icon src={Right} class={curr === length && 'stroke-transparent'} />
     </button>
 </div>

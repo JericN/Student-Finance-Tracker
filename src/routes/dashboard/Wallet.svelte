@@ -6,14 +6,15 @@
 
     export let name: string;
     export let value: number;
+    // TODO: custom icons
 </script>
 
 <Card width="w-full flex-none">
-    <div class="grid grid-cols-[60px_1fr] p-4 text-surface-900">
-        <Icon src={CreditCard} class="w-8 place-self-center" />
-        <div class="row-span-2 my-auto text-right text-2xl font-bold">
+    <div class="grid grid-cols-[60px_1fr] place-items-center p-4 text-surface-900">
+        <Icon src={CreditCard} class="w-8" />
+        <div class="row-span-2 w-full text-right text-2xl font-bold">
             {currency(value)}
         </div>
-        <div class="place-self-center text-sm">{name}</div>
+        <div class="text-sm">{name}</div>
     </div>
 </Card>
