@@ -29,7 +29,7 @@
     } as ChartOptions<'line'>;
 </script>
 
-<Card width="">
+<Card accent="primary">
     <div class="p-2">
         <Chart type="line" {data} {options} />
     </div>

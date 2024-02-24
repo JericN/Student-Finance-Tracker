@@ -9,7 +9,7 @@
     // TODO: custom icons
 </script>
 
-<Card width="w-full flex-none">
+<Card width="w-full flex-none" accent="primary">
     <div class="grid grid-cols-[60px_1fr] place-items-center p-4 text-surface-900">
         <Icon src={CreditCard} class="w-8" />
         <div class="row-span-2 w-full text-right text-2xl font-bold">

@@ -7,7 +7,7 @@
     export let balance: number;
 </script>
 
-<Card width={'min-w-max'}>
+<Card width={'min-w-max'} accent="primary">
     <div class="px-6 py-2 text-center text-surface-900">
         <div class="grid grid-cols-3 gap-x-10 font-bold">
             <div class="text-xs">Income</div>

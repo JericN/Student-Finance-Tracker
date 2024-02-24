@@ -7,7 +7,7 @@
     export let maxBalance: number;
 </script>
 
-<Card width="w-full max-w-sm" background="bg-primary-700" accent="slate">
+<Card width="w-full max-w-sm" background="bg-primary-800" accent="slate">
     <div class="flex h-32 flex-col items-center justify-center text-surface-50">
         <div class="mt-4 text-xs">Budget Left</div>
         <div class="text-5xl font-bold">{currency(balance)}</div>
