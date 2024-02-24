@@ -5,12 +5,14 @@
 
         console.log('Clicked Submit');
         console.log({ username, password });
-
-        window.location.href = '/dashboard';
     }
 
     function goto_reg() {
         window.location.href = '/register';
+    }
+
+    function goto_dash() {
+        window.location.href = '/dashboard';
     }
 </script>
 
@@ -35,7 +37,7 @@
                     <button on:click={goto_reg} class="v47_1313 v47_1313_2 rounded-xl border border-black">
                         Sign Up
                     </button>
-                    <button type="submit" class="v47_1313 rounded-xl border border-black"> Login </button>
+                    <button on:click={goto_dash} class="v47_1313 rounded-xl border border-black"> Login </button>
                 </div>
             </div>
         </div>
