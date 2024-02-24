@@ -31,6 +31,9 @@ export const colors = {
     fuchsia: 'bg-fuchsia-900 active:bg-fuchsia-800',
     rose: 'bg-rose-900 active:bg-rose-800',
     surface: 'bg-surface-700 active:bg-surface-600',
+    primary: 'bg-primary-900 active:bg-primary-800',
+    secondary: 'bg-secondary-900 active:bg-secondary-800',
+    success: 'bg-success-900 active:bg-success-800',
 };
 
 export type Colors = keyof typeof colors;
