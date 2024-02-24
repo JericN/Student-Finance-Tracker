@@ -2,6 +2,7 @@
     import { CreditCard, Home, PlusCircle, PresentationChartLine, User } from '@steeze-ui/heroicons';
     import { Tab, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
     import { Icon } from '@steeze-ui/svelte-icon';
+    import { goto } from '$app/navigation';
     import { page } from '$app/stores';
 
     $: ({ pathname } = $page.url);
@@ -21,7 +22,7 @@
         <Icon src={CreditCard} class="w-8" />
     </TabAnchor>
     <Tab bind:group={isOpen} name="add" value={0} class="bg-surface-700-200-token pb-0">
-        <button class="text-surface-50-900-token btn w-8 p-0 active:scale-75">
+        <button class="text-surface-50-900-token btn w-8 p-0 active:scale-75" on:click={() => goto('/create')}>
             <Icon src={PlusCircle} />
         </button>
     </Tab>
