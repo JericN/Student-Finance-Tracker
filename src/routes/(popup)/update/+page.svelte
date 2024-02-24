@@ -1,8 +1,8 @@
 <script lang="ts">
+    import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import Category from './Category.svelte';
     import Wallet from './Wallet.svelte';
-    import Button from '$lib/components/Button.svelte';
 
     // TODO: move categories to a store
     // TODO: use proper icons
