@@ -24,20 +24,22 @@
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
-    <Card width="w-full max-w-sm min-w-72">
-        <div class="grid grid-cols-[60px_1fr] place-items-center gap-y-4 p-4">
-            <span class="input-label">Amount</span>
-            <input class="input" type="number" placeholder="Input" />
-            <span class="input-label">Date</span>
-            <input class="input" type="date" placeholder="Input" />
-            <span class="input-label">Category</span>
+    <Card width="w-full max-w-sm min-w-72" accent="primary">
+        <div class="grid grid-cols-[auto_1fr] place-items-center gap-2 p-6">
+            <div class="input-label">Amount</div>
+            <input class="input rounded-xl py-1" type="number" />
+            <div class="input-label">Date</div>
+            <input class="input rounded-xl py-1" type="date" />
+            <div class="input-label">Category</div>
             <Category {categories} bind:selected={category} />
-            <span class="input-label">Wallet</span>
+            <div class="input-label">Wallet</div>
             <Wallet {accounts} bind:selected={account} />
         </div>
-        <div class="p-4">
+        <div class="px-6 pb-4">
             <textarea class="textarea" rows="2" placeholder="Notes" />
         </div>
     </Card>
-    <Button text="SAVE" />
+    <Button accent="primary">
+        <span class="px-4 font-bold"> SAVE </span>
+    </Button>
 </div>

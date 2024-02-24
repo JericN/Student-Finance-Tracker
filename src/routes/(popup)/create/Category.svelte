@@ -11,11 +11,11 @@
 
     function update(deviceWidth: number): number {
         switch (true) {
-            case deviceWidth > 430:
+            case deviceWidth > 440:
                 return 7;
-            case deviceWidth > 400:
+            case deviceWidth > 410:
                 return 6;
-            case deviceWidth > 370:
+            case deviceWidth > 380:
                 return 5;
             default:
                 return 4;
@@ -36,5 +36,5 @@
             >{categories[item]}</ListBoxItem
         >
     {/each}
-    <button class="h-8 w-8 rounded-lg border-2 bg-surface-300 text-sm"> ➕ </button>
+    <button class="h-8 w-8 rounded-lg border-2 bg-surface-300"> ➕ </button>
 </ListBox>
