@@ -1,8 +1,8 @@
 <script lang="ts">
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 
-    export let accounts: string[];
-    export let selected: string;
+    export let wallets: string[];
+    export let wallet: string;
 
     let deviceWidth = window.innerWidth;
     window.addEventListener('resize', () => {
@@ -20,7 +20,7 @@
         }
     }
 
-    $: preview = accounts.slice(0, update(deviceWidth));
+    $: preview = wallets.slice(0, update(deviceWidth));
 </script>
 
 <div class="input-label">Wallet</div>
@@ -32,7 +32,7 @@
 >
     {#each preview as item}
         <ListBoxItem
-            bind:group={selected}
+            bind:group={wallet}
             name={item}
             value={item}
             rounded="rounded-lg"

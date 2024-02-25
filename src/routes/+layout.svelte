@@ -1,11 +1,14 @@
 <script>
     import '../app.postcss';
-    import { modeCurrent, setModeCurrent } from '@skeletonlabs/skeleton';
+    import { Toast, initializeStores, modeCurrent, setModeCurrent } from '@skeletonlabs/skeleton';
     import { onMount } from 'svelte';
+
+    initializeStores();
 
     onMount(() => {
         setModeCurrent($modeCurrent);
     });
 </script>
 
+<Toast />
 <slot />

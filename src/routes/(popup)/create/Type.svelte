@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { TransactionType } from '$lib/models/types';
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
+    import { TransactionType } from '$lib/models/types';
 
     export let type: TransactionType;
 </script>

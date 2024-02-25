@@ -2,7 +2,7 @@
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 
     export let categories: Record<string, string>;
-    export let selected: string;
+    export let category: string;
 
     let deviceWidth = window.innerWidth;
     window.addEventListener('resize', () => {
@@ -33,7 +33,7 @@
     regionDefault="text-center"
 >
     {#each preview as item}
-        <ListBoxItem bind:group={selected} name={item} value={item} rounded="rounded-lg" padding="p-1" class="h-8 w-8"
+        <ListBoxItem bind:group={category} name={item} value={item} rounded="rounded-lg" padding="p-1" class="h-8 w-8"
             >{categories[item]}</ListBoxItem
         >
     {/each}
