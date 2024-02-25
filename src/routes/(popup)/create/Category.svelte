@@ -25,6 +25,7 @@
     $: preview = Object.keys(categories).slice(0, update(deviceWidth));
 </script>
 
+<div class="input-label">Category</div>
 <ListBox
     class="flex items-center justify-self-start"
     active="bg-surface-700"

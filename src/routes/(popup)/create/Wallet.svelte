@@ -23,9 +23,10 @@
     $: preview = accounts.slice(0, update(deviceWidth));
 </script>
 
+<div class="input-label">Wallet</div>
 <ListBox
-    class="flex items-center gap-1 justify-self-start text-surface-900"
-    active="bg-surface-700 text-surface-100"
+    class="flex items-center gap-1 justify-self-start text-dark"
+    active="bg-surface-700 text-light"
     spacing="space-y-0"
     regionDefault="text-xs font-medium"
 >
@@ -36,8 +37,8 @@
             value={item}
             rounded="rounded-lg"
             padding="p-1 px-2"
-            class="border-default">{item}</ListBoxItem
+            class="border-2 border-dark">{item}</ListBoxItem
         >
     {/each}
-    <button class="h-8 w-8 rounded-lg border-2 bg-surface-300">➕</button>
+    <button class="size-8 rounded-lg border-2 bg-surface-300">➕</button>
 </ListBox>

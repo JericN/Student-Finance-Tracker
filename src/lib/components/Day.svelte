@@ -19,7 +19,7 @@
 </script>
 
 <span class={`grid h-3 w-4 place-items-center rounded-sm bg-white leading-none`}>
-    <span class={`${color} text-3xs font-bold `}>
+    <span class={`${color} text-3xs font-bold`}>
         {day}
     </span>
 </span>

@@ -1,7 +1,10 @@
 <script lang="ts">
+    import Amount from './Amount.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import Category from './Category.svelte';
+    import Date from './Date.svelte';
+    import Note from './Note.svelte';
     import Wallet from './Wallet.svelte';
 
     // TODO: move categories to a store
@@ -19,27 +22,24 @@
     // TODO: move accounts to a store
     const accounts = ['Bank', 'Cash', 'GCash', 'Shared'];
 
+    let amount: number;
+    let date: string;
     let category: string;
     let account: string;
+    let note: string;
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
-    <Card width="w-full max-w-sm min-w-72" accent="primary">
-        <div class="grid grid-cols-[auto_1fr] place-items-center gap-2 p-6">
-            <div class="input-label">Amount</div>
-            <input class="input rounded-xl py-1" type="number" />
-            <div class="input-label">Date</div>
-            <input class="input rounded-xl py-1" type="date" />
-            <div class="input-label">Category</div>
+    <Card width="w-full max-w-sm min-w-72">
+        <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
+            <Amount bind:amount />
+            <Date bind:date />
             <Category {categories} bind:selected={category} />
-            <div class="input-label">Wallet</div>
             <Wallet {accounts} bind:selected={account} />
         </div>
-        <div class="px-6 pb-4">
-            <textarea class="textarea" rows="2" placeholder="Notes" />
-        </div>
+        <Note bind:note />
     </Card>
-    <Button accent="primary">
+    <Button>
         <span class="px-4 font-bold"> SAVE </span>
     </Button>
 </div>

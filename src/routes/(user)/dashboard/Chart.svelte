@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Card from '$lib/components/Card.svelte';
     import LineChart from '$lib/charts/LineChart.svelte';
 
     // TODO: should fetch the most recent transactions
@@ -7,5 +8,7 @@
 
 <div class="w-full max-w-sm">
     <div class="text-center font-bold">EXPENSES</div>
-    <LineChart {dataset} />
+    <Card>
+        <LineChart {dataset} />
+    </Card>
 </div>

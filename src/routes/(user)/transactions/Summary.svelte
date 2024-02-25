@@ -7,8 +7,8 @@
     export let balance: number;
 </script>
 
-<Card width={'min-w-max'} accent="primary">
-    <div class="px-6 py-2 text-center text-surface-900">
+<Card width={'min-w-max'} padding="px-6">
+    <div class="text-center text-surface-900">
         <div class="grid grid-cols-3 gap-x-10 font-bold">
             <div class="text-xs">Income</div>
             <div class="text-xs">Expenses</div>

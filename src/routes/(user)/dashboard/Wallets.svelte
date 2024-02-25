@@ -20,16 +20,15 @@
 
 <div class="grid max-w-sm grid-cols-[auto_1fr_auto]">
     <div class="col-span-3 text-center font-bold">WALLETS</div>
-
-    <button class="w-5 stroke-2" on:click={() => curr--}>
-        <Icon src={Left} class={curr === 0 && 'stroke-transparent'} />
+    <button class="w-5" on:click={() => curr--}>
+        <Icon src={Left} aria-hidden={curr === 0} class="stroke-2 aria-hidden:hidden" />
     </button>
     <div bind:this={card} class="flex overflow-hidden scroll-smooth">
         {#each Object.entries(wallets) as [name, value]}
             <Wallet {name} {value} />
         {/each}
     </div>
-    <button class="w-5 stroke-2" on:click={() => curr++}>
-        <Icon src={Right} class={curr === length && 'stroke-transparent'} />
+    <button class="w-5" on:click={() => curr++}>
+        <Icon src={Right} aria-hidden={curr === length} class="stroke-2 aria-hidden:hidden" />
     </button>
 </div>
