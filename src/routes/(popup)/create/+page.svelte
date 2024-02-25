@@ -5,6 +5,7 @@
     import Category from './Category.svelte';
     import Date from './Date.svelte';
     import Note from './Note.svelte';
+    import Type from './Type.svelte';
     import Wallet from './Wallet.svelte';
 
     // TODO: move categories to a store
@@ -27,11 +28,13 @@
     let category: string;
     let account: string;
     let note: string;
+    let type = TransactionType.Expense;
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
+            <Type bind:type />
             <Amount bind:amount />
             <Date bind:date />
             <Category {categories} bind:selected={category} />
