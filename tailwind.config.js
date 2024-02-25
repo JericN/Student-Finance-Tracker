@@ -23,6 +23,8 @@ export default {
                 income: '#1a335e',
                 expense: '#5e1b1b',
                 neutral: '#103d1a',
+                light: 'rgba(var(--color-surface-100) / 1)',
+                dark: 'rgba(var(--color-surface-900) / 1)',
             },
             gridTemplateColumns: {
                 thead: '22px minmax(50px, 1fr) 50px 50px',
@@ -32,7 +34,6 @@ export default {
                 sm: '4px',
                 xs: '2px',
             },
-            translate: {},
         },
     },
     plugins: [
