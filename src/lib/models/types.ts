@@ -1,4 +1,17 @@
-import { type Output, array, date, enum_, maxLength, number, object, optional, safeInteger, string } from 'valibot';
+import {
+    type Output,
+    array,
+    date,
+    enum_,
+    maxLength,
+    maxValue,
+    minValue,
+    number,
+    object,
+    optional,
+    safeInteger,
+    string,
+} from 'valibot';
 
 export enum TransactionType {
     Income = 'income',
@@ -47,8 +60,8 @@ export type Days = (typeof days)[number];
 
 export const Transaction = object({
     type: enum_(TransactionType),
-    amount: number([safeInteger()]),
-    date: date(),
+    amount: number([safeInteger(), minValue(1)]),
+    date: date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]),
     category: string([maxLength(30)]),
     wallet: string([maxLength(30)]),
     description: optional(string([maxLength(50)])),

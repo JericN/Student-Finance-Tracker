@@ -10,9 +10,9 @@
 </script>
 
 <TabGroup
+    hover="hover:variant-soft-primary"
     active="variant-filled-primary"
     class="bg-surface-200-700-token w-full"
-    hover="hover:variant-soft-primary"
     justify="justify-center"
 >
     <TabAnchor href="/dashboard" selected={pathname === '/dashboard/'}>

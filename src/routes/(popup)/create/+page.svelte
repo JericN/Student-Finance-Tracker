@@ -89,6 +89,6 @@
         <Description bind:description />
     </Card>
     <Button on:click={() => create()}>
-        <span class="px-4 font-bold"> SAVE </span>
+        <span class="px-4 font-bold text-dark"> SAVE </span>
     </Button>
 </div>
