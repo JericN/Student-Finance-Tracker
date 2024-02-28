@@ -16,7 +16,7 @@
     const bg = values[id % values.length];
 </script>
 
-<AccordionItem open regionControl={`${bg} border-default`} regionPanel={'px-0 py-0 rounded-none -mx-2'}>
+<AccordionItem open regionControl={`${bg} border-default`} regionPanel={'-mx-2'}>
     <svelte:fragment slot="summary">
         <Header {date} {income} {expenses} />
     </svelte:fragment>

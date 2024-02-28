@@ -10,12 +10,25 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
+@font-face {
+    font-family: ShantellSans;
+    src: url('/fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf');
+}
+
 @layer components {
     .border-default {
-        @apply border-2 border-surface-900;
+        @apply rounded-xl border-2 border-dark;
+    }
+
+    .border-small {
+        @apply rounded-xl border-2 border-dark;
     }
 
     .border-bottom {
-        @apply rounded-b-xl border-2 border-t-0 border-surface-900;
+        @apply rounded-b-xl border-2 border-t-0 border-dark;
+    }
+
+    .input-label {
+        @apply w-full text-left text-xs font-bold text-dark;
     }
 }

@@ -9,12 +9,14 @@
     // TODO: custom icons
 </script>
 
-<Card width="w-full flex-none">
-    <div class="grid grid-cols-[60px_1fr] place-items-center p-4 text-surface-900">
-        <Icon src={CreditCard} class="w-8" />
-        <div class="row-span-2 w-full text-right text-2xl font-bold">
+<Card width="w-full flex-none" padding="px-6">
+    <div class="flex justify-between text-dark">
+        <div class="flex flex-col items-center">
+            <Icon src={CreditCard} class="w-8" />
+            <div class="text-xs font-bold">{name}</div>
+        </div>
+        <div class="my-auto text-2xl font-bold">
             {currency(value)}
         </div>
-        <div class="text-sm">{name}</div>
     </div>
 </Card>

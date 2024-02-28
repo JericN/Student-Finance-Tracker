@@ -1,9 +1,22 @@
-import { type Output, array, number, object, safeInteger, string } from 'valibot';
+import {
+    type Output,
+    array,
+    date,
+    enum_,
+    maxLength,
+    maxValue,
+    minValue,
+    number,
+    object,
+    optional,
+    safeInteger,
+    string,
+} from 'valibot';
 
 export enum TransactionType {
-    Income,
-    Expense,
-    Transfer,
+    Income = 'income',
+    Expense = 'expense',
+    Transfer = 'transfer',
 }
 
 export const Record = array(
@@ -19,18 +32,16 @@ export const Record = array(
 export type Record = Output<typeof Record>;
 
 export const colors = {
-    slate: 'bg-slate-700 active:bg-slate-600',
-    red: 'bg-red-900 active:bg-red-800',
-    amber: 'bg-amber-900 active:bg-amber-800',
-    green: 'bg-green-900 active:bg-green-800',
-    teal: 'bg-teal-900 active:bg-teal-800',
-    cyan: 'bg-cyan-900 active:bg-cyan-800',
-    blue: 'bg-blue-900 active:bg-blue-800',
-    indigo: 'bg-indigo-900 active:bg-indigo-800',
-    purple: 'bg-purple-900 active:bg-purple-800',
-    fuchsia: 'bg-fuchsia-900 active:bg-fuchsia-800',
-    rose: 'bg-rose-900 active:bg-rose-800',
-    surface: 'bg-surface-700 active:bg-surface-600',
+    red: 'bg-red-900',
+    amber: 'bg-amber-900',
+    green: 'bg-green-900',
+    teal: 'bg-teal-900',
+    cyan: 'bg-cyan-900',
+    blue: 'bg-blue-900',
+    indigo: 'bg-indigo-900',
+    purple: 'bg-purple-900',
+    fuchsia: 'bg-fuchsia-900',
+    rose: 'bg-rose-900',
 };
 
 export type Colors = keyof typeof colors;
@@ -46,3 +57,14 @@ export enum days {
 }
 
 export type Days = (typeof days)[number];
+
+export const Transaction = object({
+    type: enum_(TransactionType),
+    amount: number([safeInteger(), minValue(1)]),
+    date: date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]),
+    category: string([maxLength(30)]),
+    wallet: string([maxLength(30)]),
+    description: optional(string([maxLength(50)])),
+});
+
+export type Transaction = Output<typeof Transaction>;

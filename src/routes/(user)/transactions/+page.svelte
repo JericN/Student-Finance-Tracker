@@ -12,7 +12,7 @@
     const transactions = groupBy(records, ({ date }) => date);
 </script>
 
-<div class="flex flex-col items-center gap-10 p-10">
+<div class="flex flex-col items-center gap-4 p-10">
     <Summary {income} {expenses} {balance} />
     <Accordion class="max-w-screen-sm text-xs" spacing={'space-y-4'} regionCaret={'hidden'} hover="">
         {#each Object.values(transactions) as entries, id}

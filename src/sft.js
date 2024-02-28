@@ -1,16 +1,15 @@
 // You can also use the generator at https://skeleton.dev/docs/generator to create these values for you
-import type { CustomThemeConfig } from '@skeletonlabs/tw-plugin';
-export const sft: CustomThemeConfig = {
+export const sft = {
     name: 'sft',
     properties: {
         // =~= Theme Properties =~=
-        '--theme-font-family-base': 'system-ui',
-        '--theme-font-family-heading': 'system-ui',
+        '--theme-font-family-base': 'ShantellSans',
+        '--theme-font-family-heading': 'ShantellSans',
         '--theme-font-color-base': '0 0 0',
         '--theme-font-color-dark': '255 255 255',
-        '--theme-rounded-base': '9999px',
-        '--theme-rounded-container': '8px',
-        '--theme-border-base': '1px',
+        '--theme-rounded-base': '12px',
+        '--theme-rounded-container': '12px',
+        '--theme-border-base': '2px',
         // =~= Theme On-X Colors =~=
         '--on-primary': '0 0 0',
         '--on-secondary': '255 255 255',
@@ -21,16 +20,16 @@ export const sft: CustomThemeConfig = {
         '--on-surface': '255 255 255',
         // =~= Theme Colors  =~=
         // primary | #0FBA81
-        '--color-primary-50': '219 245 236', // #dbf5ec
-        '--color-primary-100': '207 241 230', // #cff1e6
-        '--color-primary-200': '195 238 224', // #c3eee0
-        '--color-primary-300': '159 227 205', // #9fe3cd
-        '--color-primary-400': '87 207 167', // #57cfa7
-        '--color-primary-500': '15 186 129', // #0FBA81
-        '--color-primary-600': '14 167 116', // #0ea774
-        '--color-primary-700': '11 140 97', // #0b8c61
-        '--color-primary-800': '9 112 77', // #09704d
-        '--color-primary-900': '7 91 63', // #075b3f
+        '--color-primary-50': '229 238 248', // #e5eef8
+        '--color-primary-100': '221 233 245', // #dde9f5
+        '--color-primary-200': '212 227 243', // #d4e3f3
+        '--color-primary-300': '187 210 236', // #bbd2ec
+        '--color-primary-400': '135 177 221', // #87b1dd
+        '--color-primary-500': '84 143 207', // #548fcf
+        '--color-primary-600': '76 129 186', // #4c81ba
+        '--color-primary-700': '63 107 155', // #3f6b9b
+        '--color-primary-800': '50 86 124', // #32567c
+        '--color-primary-900': '41 70 101', // #294665
         // secondary | #4F46E5
         '--color-secondary-50': '229 227 251', // #e5e3fb
         '--color-secondary-100': '220 218 250', // #dcdafa
