@@ -1,10 +1,15 @@
 <script>
     import '../app.postcss';
-    import { AppShell } from '@skeletonlabs/skeleton';
+    import { AppShell, modeCurrent, setModeCurrent } from '@skeletonlabs/skeleton';
     import NavBar from '$lib/components/NavBar.svelte';
+    import { onMount } from 'svelte';
+
+    onMount(() => {
+        setModeCurrent($modeCurrent);
+    });
 </script>
 
 <AppShell>
-    <NavBar slot="footer" />
     <slot />
+    <NavBar slot="footer" />
 </AppShell>
