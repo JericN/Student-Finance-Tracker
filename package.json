@@ -19,7 +19,8 @@
         "lint:css": "stylelint src/**/*.{css,postcss}",
         "lint:js": "eslint **/*.{js,ts,svelte}",
         "lint:svelte": "svelte-check --tsconfig ./tsconfig.json",
-        "check": "pnpm sync && pnpm fmt:fix && pnpm lint"
+        "check": "pnpm sync && pnpm fmt:fix && pnpm lint",
+        "test": "vitest run"
     },
     "devDependencies": {
         "@capacitor/android": "^5.7.0",
