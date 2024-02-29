@@ -1,6 +1,7 @@
 import {
     type Output,
     array,
+    boolean,
     date,
     enum_,
     maxLength,
@@ -30,6 +31,15 @@ export const Record = array(
 );
 
 export type Record = Output<typeof Record>;
+
+export const User = object({
+    id: number(),
+    name: string(),
+    email: string(),
+    auth: boolean(),
+});
+
+export type User = Output<typeof User>;
 
 export const colors = {
     red: 'bg-red-900',

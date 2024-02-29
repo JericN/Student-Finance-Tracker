@@ -1,20 +1,13 @@
-import { type Output, boolean, number, object, required, safeParse, string } from 'valibot';
+import { required, safeParse } from 'valibot';
+import { User } from '$lib/models/types';
 import { localStorageStore } from '@skeletonlabs/skeleton';
+
 const initial = {
     id: 0,
     name: 'Guest',
     email: 'guest@localhost',
     auth: false,
 };
-
-const User = object({
-    id: number(),
-    name: string(),
-    email: string(),
-    auth: boolean(),
-});
-
-type User = Output<typeof User>;
 
 export const session = localStorageStore('UserCredentials', initial, {
     serializer: {
