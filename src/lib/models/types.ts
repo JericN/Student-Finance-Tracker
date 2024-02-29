@@ -22,11 +22,13 @@ export enum TransactionType {
 
 export const Record = array(
     object({
-        date: number([safeInteger()]),
-        category: string(),
-        description: string(),
-        type: string(),
-        amount: number([safeInteger()]),
+        amount: number([safeInteger(), minValue(1)]),
+        category: string([maxLength(30)]),
+        date: date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]),
+        description: optional(string([maxLength(50)])),
+        id: number([safeInteger()]),
+        type: enum_(TransactionType),
+        wallet: string([maxLength(30)]),
     }),
 );
 
