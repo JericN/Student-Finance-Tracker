@@ -20,8 +20,8 @@ export default {
                 101: '1.01',
             },
             colors: {
-                income: '#1a335e',
-                expense: '#5e1b1b',
+                income: '#18366b',
+                expense: '#6e1717',
                 neutral: '#103d1a',
                 light: 'rgba(var(--color-surface-100) / 1)',
                 dark: 'rgba(var(--color-surface-900) / 1)',

@@ -13,8 +13,8 @@
             <Icon src={Cloud} class="size-3" />
             <div>{category}</div>
             <div class="truncate text-2xs">{description}</div>
-            <div>{type === 'income' ? currency(amount) : '-'}</div>
-            <div>{type === 'expense' ? currency(amount) : '-'}</div>
+            <div class="text-income">{type === 'income' ? currency(amount) : '-'}</div>
+            <div class="text-expense">{type === 'expense' ? currency(amount) : '-'}</div>
         </div>
     {/each}
 </div>
