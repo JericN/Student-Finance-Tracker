@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { get } from 'svelte/store';
     import { session } from '$lib/store/user';
     function test_function() {
         const username: string = (document.getElementById('username')! as HTMLInputElement).value;

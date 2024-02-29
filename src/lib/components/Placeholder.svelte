@@ -1,8 +1,8 @@
 <script lang="ts">
     import { LightSwitch } from '@skeletonlabs/skeleton';
-    import { testFetch } from '$lib/api/test';
-    import { session } from '$lib/store/user';
     import { goto } from '$app/navigation';
+    import { session } from '$lib/store/user';
+    import { testFetch } from '$lib/api/test';
 
     let id = 1;
     function getData(id: number) {
