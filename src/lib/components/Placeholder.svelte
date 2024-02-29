@@ -1,5 +1,7 @@
 <script lang="ts">
     import { LightSwitch } from '@skeletonlabs/skeleton';
+    import { goto } from '$app/navigation';
+    import { session } from '$lib/store/user';
     import { testFetch } from '$lib/api/test';
 
     let id = 1;
@@ -24,4 +26,13 @@
     </div>
     <button class="variant-filled btn font-bold" on:click={() => (id += 1)}> Next </button>
     <LightSwitch class={'select-none'} />
+    <button
+        class="variant-filled btn"
+        on:click={() => {
+            $session.auth = false;
+            goto('/auth/login');
+        }}
+    >
+        Logout
+    </button>
 </div>

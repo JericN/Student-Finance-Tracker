@@ -1,18 +1,13 @@
 <script lang="ts">
     function test_function() {
         const username: string = (document.getElementById('username')! as HTMLInputElement).value;
+        const email: string = (document.getElementById('email')! as HTMLInputElement).value;
         const password: string = (document.getElementById('password')! as HTMLInputElement).value;
 
         console.log('Clicked Submit');
-        console.log({ username, password });
-    }
+        console.log({ username, email, password });
 
-    function goto_reg() {
-        window.location.href = '/register';
-    }
-
-    function goto_dash() {
-        window.location.href = '/dashboard';
+        window.location.href = '/auth/login';
     }
 </script>
 
@@ -26,18 +21,15 @@
                     <span class="lbl">Username:</span>
                     <input type="text" id="username" />
 
-                    <span class="lbl"></span>
-                    <span class="lbl"></span>
+                    <span class="lbl">Email:</span>
+                    <input type="text" id="email" />
 
                     <span class="lbl">Password:</span>
                     <input type="password" id="password" />
                 </div>
 
-                <div class="flex h-full justify-center gap-10" style="width: 100%;">
-                    <button on:click={goto_reg} class="v47_1313 v47_1313_2 rounded-xl border border-black">
-                        Sign Up
-                    </button>
-                    <button on:click={goto_dash} class="v47_1313 rounded-xl border border-black"> Login </button>
+                <div class="flex h-full justify-center" style="width: 100%;">
+                    <button type="submit" class="v47_1313 rounded-xl border border-black"> Register </button>
                 </div>
             </div>
         </div>
@@ -70,10 +62,6 @@
         width: 100px;
     }
 
-    .v47_1313_2 {
-        color: rgba(233, 86, 120, 1);
-    }
-
     .lbl {
         font-family: Roboto Condensed;
         font-weight: Bold;
@@ -82,6 +70,7 @@
     }
 
     #username,
+    #email,
     #password {
         border: none; /* Remove border */
         background: none; /* Set background to transparent */
