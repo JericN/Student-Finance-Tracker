@@ -15,21 +15,24 @@
     class="bg-surface-200-700-token w-full"
     justify="justify-center"
 >
-    <TabAnchor href="/dashboard" selected={pathname === '/dashboard/'}>
+    <TabAnchor href="/user/dashboard" selected={pathname === '/user/dashboard/'}>
         <Icon src={Home} class="w-8" />
     </TabAnchor>
-    <TabAnchor href="/transactions" selected={pathname === '/transactions/'}>
+    <TabAnchor href="/user/transactions" selected={pathname === '/user/transactions/'}>
         <Icon src={CreditCard} class="w-8" />
     </TabAnchor>
     <Tab bind:group={isOpen} name="add" value={0} class="bg-surface-700-200-token pb-0">
-        <button class="text-surface-50-900-token btn w-8 p-0 active:scale-75" on:click={() => goto('/create')}>
+        <button
+            class="text-surface-50-900-token btn w-8 p-0 active:scale-75"
+            on:click={() => goto('/user/transactions/create')}
+        >
             <Icon src={PlusCircle} />
         </button>
     </Tab>
-    <TabAnchor href="/analytics" selected={pathname === '/analytics/'}>
+    <TabAnchor href="/user/analytics" selected={pathname === '/user/analytics/'}>
         <Icon src={PresentationChartLine} class="w-8" />
     </TabAnchor>
-    <TabAnchor href="/users" selected={pathname === '/users/'}>
+    <TabAnchor href="/user/users" selected={pathname === '/user/users/'}>
         <Icon src={User} class="w-8" />
     </TabAnchor>
 </TabGroup>

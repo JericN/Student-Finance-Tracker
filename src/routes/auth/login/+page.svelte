@@ -1,13 +1,22 @@
 <script lang="ts">
+    import { get } from 'svelte/store';
+    import { session } from '$lib/store/user';
     function test_function() {
         const username: string = (document.getElementById('username')! as HTMLInputElement).value;
-        const email: string = (document.getElementById('email')! as HTMLInputElement).value;
         const password: string = (document.getElementById('password')! as HTMLInputElement).value;
 
         console.log('Clicked Submit');
-        console.log({ username, email, password });
+        console.log({ username, password });
 
-        window.location.href = '/dashboard';
+        $session.auth = true;
+    }
+
+    function goto_reg() {
+        window.location.href = '/auth/register';
+    }
+
+    function goto_dash() {
+        window.location.href = '/user/dashboard';
     }
 </script>
 
@@ -21,15 +30,22 @@
                     <span class="lbl">Username:</span>
                     <input type="text" id="username" />
 
-                    <span class="lbl">Email:</span>
-                    <input type="text" id="email" />
+                    <span class="lbl"></span>
+                    <span class="lbl"></span>
 
                     <span class="lbl">Password:</span>
                     <input type="password" id="password" />
                 </div>
 
-                <div class="flex h-full justify-center" style="width: 100%;">
-                    <button type="submit" class="v47_1313 rounded-xl border border-black"> Register </button>
+                <div class="flex h-full justify-center gap-10" style="width: 100%;">
+                    <button
+                        type="button"
+                        on:click={goto_reg}
+                        class="v47_1313 v47_1313_2 rounded-xl border border-black"
+                    >
+                        Sign Up
+                    </button>
+                    <button on:click={goto_dash} class="v47_1313 rounded-xl border border-black"> Login </button>
                 </div>
             </div>
         </div>
@@ -62,6 +78,10 @@
         width: 100px;
     }
 
+    .v47_1313_2 {
+        color: rgba(233, 86, 120, 1);
+    }
+
     .lbl {
         font-family: Roboto Condensed;
         font-weight: Bold;
@@ -70,7 +90,6 @@
     }
 
     #username,
-    #email,
     #password {
         border: none; /* Remove border */
         background: none; /* Set background to transparent */
