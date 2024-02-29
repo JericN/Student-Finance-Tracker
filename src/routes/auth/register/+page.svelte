@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { session } from '$lib/store/user';
     function test_function() {
         const username: string = (document.getElementById('username')! as HTMLInputElement).value;
         const email: string = (document.getElementById('email')! as HTMLInputElement).value;
@@ -7,7 +8,8 @@
         console.log('Clicked Submit');
         console.log({ username, email, password });
 
-        window.location.href = '/auth/login';
+        window.location.href = '/user/dashboard';
+        $session.auth = true;
     }
 </script>
 
