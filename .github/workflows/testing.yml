@@ -1,0 +1,33 @@
+name: Automated Unit Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      POSTGRES_URL: postgres://127.0.0.1/postgres
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install `pnpm` via Corepack
+        run: corepack enable
+      - name: Get `pnpm` Store Directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v3
+        name: Setup `pnpm` Cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Running Tests
+        run: pnpm test
