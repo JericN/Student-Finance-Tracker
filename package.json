@@ -73,6 +73,7 @@
     "type": "module",
     "dependencies": {
         "@capacitor/cli": "^5.7.0",
-        "@capacitor/core": "^5.7.0"
+        "@capacitor/core": "^5.7.0",
+        "firebase": "^10.8.1"
     }
 }
