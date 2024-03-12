@@ -4,14 +4,7 @@
     import { LightSwitch } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { session } from '$lib/store/user';
-    import { testFetch } from '$lib/api/test';
 
-    import { Icon } from '@steeze-ui/svelte-icon';
-
-    let id = 1;
-    function getData(id: number) {
-        return testFetch(id);
-    }
 
     // eslint-disable-next-line init-declarations
 
@@ -19,11 +12,16 @@
 
 <!-- <Placeholder title="Users Page" /> -->
 
-<div class="flex h-full flex-col items-center justify-center justify-items-start gap-10">
+<div class="flex h-full flex-col items-center justify-center gap-10">
     <div class="text-xl font-bold">User Page</div>
     <div class="text-secondary-800-100-token font-bold uppercase underline">
-        <p>UserName</p>
+        <p>Username</p>
     </div>
+
+    <SettingsCard title="User Management">
+        <div>Edit Username</div>
+        <div>Edit Password</div>
+    </SettingsCard>
 
     <SettingsCard title="Budget">
         <div>Daily Budget:</div>
@@ -43,10 +41,7 @@
         <div>Add/remove Wishlist Item</div>
         <div>Edit Wishlist Item</div>
     </SettingsCard>
-    
-
-    
-                
+        
     <button
         class="variant-filled btn"
         on:click={() => {

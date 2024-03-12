@@ -26,7 +26,7 @@
                 <div class="flex flex-col items-start">
                     <div class="text-2x1 font-bold">{title}</div>
                 </div>
-                <div class="flex flex-col my-auto text-2xl items-end">
+                <div class="flex flex-col my-auto text-l items-end">
                     <slot></slot>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div class="flex flex-col items-start">
                 <div class="text-2x1 font-bold">{title}</div>
             </div>
-            <div class="flex flex-col my-auto text-2xl items-end">
+            <div class="flex flex-col my-auto text-l items-end">
                 <slot></slot>
             </div>
         </div>
