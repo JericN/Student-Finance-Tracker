@@ -7,6 +7,7 @@ import {
     maxLength,
     maxValue,
     minValue,
+    nullish,
     number,
     object,
     optional,
@@ -31,17 +32,22 @@ export const Record = array(
         wallet: string([maxLength(30)]),
     }),
 );
-
 export type Record = Output<typeof Record>;
 
 export const User = object({
-    id: number(),
-    name: string(),
-    email: string(),
-    auth: boolean(),
+    displayName: nullish(string()),
+    email: nullish(string()),
+    photoURL: nullish(string()),
+    uid: nullish(string()),
 });
 
 export type User = Output<typeof User>;
+
+export const Session = object({
+    user: nullish(User),
+    loggedIn: boolean(),
+});
+export type Session = Output<typeof Session>;
 
 export const colors = {
     red: 'bg-red-900',
