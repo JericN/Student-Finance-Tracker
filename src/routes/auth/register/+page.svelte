@@ -22,7 +22,7 @@
 </script>
 
 <div class="mx-10 -mt-10 flex h-full flex-col items-center justify-center gap-10">
-    <div class="text-primary-900-100-token text-5xl font-bold">Register Account</div>
+    <div class="text-primary-900-100-token text-5xl font-bold">Register<br /> Account</div>
     <Card width="max-w-sm" layout="space-y-4">
         <div class="grid gap-4">
             <input bind:value={email} class="input" type="email" placeholder="Username" />
