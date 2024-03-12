@@ -25,19 +25,26 @@
         <p>UserName</p>
     </div>
 
+    <SettingsCard title="Budget">
+        <div>Daily Budget:</div>
+        <div>{1000}</div>
+    </SettingsCard>
+
     <SettingsCard title="Dark Mode">
         <LightSwitch class={'select-none'} />
     </SettingsCard>
 
-    <SettingsCard title="Wallets">
+    <SettingsCard clickable = {true} link= "wallets" title="Wallets">
         <div>Add/remove Wallet</div>
         <div>Edit Wallet</div>
     </SettingsCard>
-
+   
     <SettingsCard title="Wishlist">
         <div>Add/remove Wishlist Item</div>
         <div>Edit Wishlist Item</div>
     </SettingsCard>
+    
+
     
                 
     <button
