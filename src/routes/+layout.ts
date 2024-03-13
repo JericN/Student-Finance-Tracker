@@ -1,15 +1,35 @@
+import { auth, initializeFirebase } from '$lib/firebase.client';
+import { User } from '$lib/models/types';
+import { browser } from '$app/environment';
+import { onAuthStateChanged } from 'firebase/auth';
+import { safeParse } from 'valibot';
+import { session } from '$lib/store/session';
+
 export const prerender = true;
 export const ssr = false;
 export const trailingSlash = 'always';
 
-import { get } from 'svelte/store';
-import { redirect } from '@sveltejs/kit';
-import { session } from '$lib/store/user';
+export async function load() {
+    if (browser)
+        try {
+            initializeFirebase();
+        } catch (error) {
+            throw new Error('Failed to initialize Firebase');
+        }
 
-export function load({ url }) {
-    const user = get(session);
-    const authPath = /^\/auth\/.*/.test(url.pathname);
-    if (!user.auth && !authPath) redirect(302, '/auth/login/');
-    if (user.auth && authPath) redirect(302, '/user/dashboard/');
-    if (url.pathname === '/') redirect(302, '/auth/login/');
+    function getAuthUser() {
+        return new Promise(resolve => {
+            onAuthStateChanged(auth, user => {
+                const data = safeParse(User, user);
+                if (data.success) {
+                    session.setUser(data.output);
+                    resolve(true);
+                } else {
+                    session.removeUser();
+                    resolve(false);
+                }
+            });
+        });
+    }
+    await getAuthUser();
 }

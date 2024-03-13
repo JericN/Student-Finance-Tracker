@@ -2,15 +2,15 @@
     import * as editStore from '$lib/store/editing';
     import { type ToastSettings, getToastStore } from '@skeletonlabs/skeleton';
     import { pick, safeParse } from 'valibot';
-    import Amount from '../Amount.svelte';
+    import Amount from '$lib/components/transaction/Amount.svelte';
     import Button from '$lib/components/Button.svelte';
-    import Calendar from '../Calendar.svelte';
+    import Calendar from '$lib/components/transaction/Calendar.svelte';
     import Card from '$lib/components/Card.svelte';
-    import Category from '../Category.svelte';
-    import Description from '../Description.svelte';
+    import Category from '$lib/components/transaction/Category.svelte';
+    import Description from '$lib/components/transaction/Description.svelte';
     import { Transaction } from '$lib/models/types';
-    import Type from '../Type.svelte';
-    import Wallet from '../Wallet.svelte';
+    import Type from '$lib/components/transaction/Type.svelte';
+    import Wallet from '$lib/components/transaction/Wallet.svelte';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 

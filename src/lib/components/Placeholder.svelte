@@ -1,7 +1,7 @@
 <script lang="ts">
     import { LightSwitch } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
-    import { session } from '$lib/store/user';
+    import { signOutUser } from '$lib/firebase/auth';
     import { testFetch } from '$lib/api/test';
 
     let id = 1;
@@ -9,8 +9,13 @@
         return testFetch(id);
     }
 
-    // eslint-disable-next-line init-declarations
     export let title: string;
+
+    function logout() {
+        signOutUser().then(() => {
+            goto('/');
+        });
+    }
 </script>
 
 <div class="flex h-full flex-col items-center justify-center gap-10">
@@ -26,13 +31,5 @@
     </div>
     <button class="variant-filled btn font-bold" on:click={() => (id += 1)}> Next </button>
     <LightSwitch class={'select-none'} />
-    <button
-        class="variant-filled btn"
-        on:click={() => {
-            $session.auth = false;
-            goto('/auth/login');
-        }}
-    >
-        Logout
-    </button>
+    <button class="variant-filled btn" on:click={logout}> Logout </button>
 </div>
