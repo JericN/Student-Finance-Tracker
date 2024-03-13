@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as createStore from '$lib/store/creating';
+    import { categories, wallets } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import Amount from '$lib/components/transaction/Amount.svelte';
