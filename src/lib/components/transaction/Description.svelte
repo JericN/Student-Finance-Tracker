@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let description = '' as string;
+    export let description: string | undefined;
 </script>
 
 <div class="mt-5">

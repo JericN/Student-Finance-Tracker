@@ -2,7 +2,7 @@
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
     import { TransactionType } from '$lib/models/types';
 
-    export let type: TransactionType;
+    export let type: TransactionType = TransactionType.Expense;
 </script>
 
 <div class="input-label">Type</div>

@@ -2,7 +2,7 @@
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 
     export let categories: Record<string, string>;
-    export let category: string;
+    export let category: string | undefined;
 
     let deviceWidth = window.innerWidth;
     window.addEventListener('resize', () => {

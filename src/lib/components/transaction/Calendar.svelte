@@ -1,7 +1,7 @@
 <script lang="ts">
-    export let date: Date;
+    export let date: Date | undefined;
 
-    let [_date] = date.toISOString().split('T');
+    let [_date] = date ? date.toISOString().split('T') : new Date().toISOString().split('T');
     $: date = new Date(_date);
 </script>
 

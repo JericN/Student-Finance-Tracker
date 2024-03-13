@@ -1,7 +1,6 @@
 <script lang="ts">
-    export let amount: number | null = 0;
+    export let amount: number | undefined;
     let flag = false;
-    if (amount === 0) amount = null;
 </script>
 
 <div class="input-label">Amount</div>
