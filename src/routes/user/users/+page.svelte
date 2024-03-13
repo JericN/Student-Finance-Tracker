@@ -1,5 +1,5 @@
 <script lang='ts'>
-    // import Placeholder from '$lib/components/Placeholder.svelte';
+    
     import SettingsCard from './SettingsCard.svelte'
     import { LightSwitch } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
@@ -9,8 +9,6 @@
     // eslint-disable-next-line init-declarations
 
 </script>
-
-<!-- <Placeholder title="Users Page" /> -->
 
 <div class="flex h-full flex-col items-center justify-center gap-10">
     <div class="text-xl font-bold">User Page</div>
