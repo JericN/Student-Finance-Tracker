@@ -29,13 +29,14 @@ export async function addTransaction(data: Record) {
 export async function getTransactions() {
     const docRef = collection(db, `UserData/${session.uid()}/transactions`);
     const transactions: Transaction[] = [];
+
     try {
         const docSnap = await getDocs(docRef);
         docSnap.forEach(doc => {
             const value = { ...doc.data(), id: doc.id };
             const json = safeParse(Transaction, value);
             if (json.success) transactions.push(json.output);
-            else throw new Error('Invalid document found');
+            else throw new Error('Failed parsing transaction');
         });
         return transactions;
     } catch (e) {

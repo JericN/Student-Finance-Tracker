@@ -8,6 +8,7 @@ import { writable } from 'svelte/store';
 
 const TRANSACTIONS = Symbol('transactions');
 
+// TODO: validate correctness
 function initStore() {
     const store = writable<Transaction[]>([]);
     const { set, subscribe, update } = store;
