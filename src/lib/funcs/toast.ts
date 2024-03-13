@@ -1,6 +1,6 @@
 import type { ToastSettings } from '@skeletonlabs/skeleton';
 
-export function errorToast(message: string): ToastSettings {
+export function error(message: string): ToastSettings {
     return {
         message: message,
         timeout: 2000,
@@ -8,7 +8,7 @@ export function errorToast(message: string): ToastSettings {
     };
 }
 
-export function successToast(message: string): ToastSettings {
+export function success(message: string): ToastSettings {
     return {
         message: message,
         timeout: 2000,

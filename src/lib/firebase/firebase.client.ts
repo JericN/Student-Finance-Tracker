@@ -1,11 +1,11 @@
 import { type Auth, getAuth } from 'firebase/auth';
 import { type FirebaseApp, initializeApp } from 'firebase/app';
-import type { Firestore } from 'firebase/firestore';
+import { type Firestore, getFirestore } from 'firebase/firestore';
 import { browser } from '$app/environment';
 
-export let db: Firestore;
 export let app: FirebaseApp;
 export let auth: Auth;
+export let db: Firestore;
 
 const firebaseConfig = {
     apiKey: 'AIzaSyA1UTETFeAQLLWCmnYZ7DxGp-owebWIiPE',
@@ -17,10 +17,11 @@ const firebaseConfig = {
 };
 
 export function initializeFirebase() {
-    if (!browser) throw new Error("Can't use the Firebase client on the server.");
+    if (!browser) return;
 
     if (!app) {
         app = initializeApp(firebaseConfig);
         auth = getAuth(app);
+        db = getFirestore(app);
     }
 }

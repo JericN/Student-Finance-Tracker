@@ -1,30 +1,33 @@
-import { Record, TransactionType } from '$lib/models/types';
 import { getContext, hasContext, setContext } from 'svelte';
-import { writable } from 'svelte/store';
+import { get as getStore, writable } from 'svelte/store';
+import { Transaction } from '$lib/models/types';
 
 const EDITING = Symbol('editing');
 
-const initial = {
-    id: 0,
-    date: new Date(),
-    category: '',
-    description: '',
-    type: TransactionType.Expense,
-    amount: 0,
-    wallet: '',
-} satisfies Record[0];
-
 function initStore() {
-    const editing = writable<Record[0]>(structuredClone(initial));
-    function reset() {
-        editing.set(structuredClone(initial));
+    const store = writable<Partial<Transaction>>({});
+    const { set, subscribe } = store;
+
+    function values() {
+        return getStore(store);
     }
+
+    function save(transaction: Transaction) {
+        set(transaction);
+    }
+
+    function reset() {
+        set({});
+    }
+
     return {
-        ...editing,
+        save,
+        set,
+        subscribe,
         reset,
+        values,
     };
 }
-
 type Store = ReturnType<typeof initStore>;
 
 export function init() {
@@ -32,6 +35,6 @@ export function init() {
 }
 
 export function get() {
-    if (!hasContext(EDITING)) throw new Error('Editing store not initialized');
+    if (!hasContext(EDITING)) throw new Error('Failed to initialize editing store');
     return getContext<Store>(EDITING);
 }

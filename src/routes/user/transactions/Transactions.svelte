@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { type Record, colors } from '$lib/models/types';
+    import { type Transaction, colors } from '$lib/models/types';
     import { AccordionItem } from '@skeletonlabs/skeleton';
     import Entries from './Entries.svelte';
     import Header from './Header.svelte';
     import { currency } from '$lib/funcs/helper';
 
-    export let entries: Record;
+    export let entries: Transaction[];
     export let id: number;
 
-    const income = currency(entries.reduce((acc, { amount, type }) => (type === 'income' ? acc + amount : acc), 0));
-    const expenses = currency(entries.reduce((acc, { amount, type }) => (type === 'expense' ? acc + amount : acc), 0));
+    const income = currency(entries.reduce((acc, { amount, type }) => (type === 'Income' ? acc + amount : acc), 0));
+    const expenses = currency(entries.reduce((acc, { amount, type }) => (type === 'Expense' ? acc + amount : acc), 0));
     const [{ date }] = entries;
 
     const values = Object.values(colors);

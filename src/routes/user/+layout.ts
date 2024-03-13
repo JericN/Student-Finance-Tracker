@@ -1,9 +1,10 @@
-import { Record } from '$lib/models/types';
-import { parse } from 'valibot';
-import { records } from '$lib/data/dummy';
-
+import { getTransactions } from '$lib/firebase/database';
 export async function load({ parent }) {
     await parent();
-    const transactions = parse(Record, records);
-    return { transactions };
+
+    const transactions = await getTransactions();
+
+    return {
+        transactions,
+    };
 }

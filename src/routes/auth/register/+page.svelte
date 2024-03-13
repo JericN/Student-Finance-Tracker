@@ -1,23 +1,24 @@
 <script lang="ts">
-    import { errorToast, successToast } from '$lib/funcs/toast';
+    import { error, success } from '$lib/funcs/toast';
     import Card from '$lib/components/Card.svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { registerWithMail } from '$lib/firebase/auth';
 
+    let username: string;
     let email: string;
     let password: string;
     const toast = getToastStore();
 
-    function register() {
-        registerWithMail(email, password)
-            .then(_ => {
-                toast.trigger(successToast('Register successful'));
-                goto('/user/dashboard');
-            })
-            .catch(_ => {
-                toast.trigger(errorToast('Register failed'));
-            });
+    async function register() {
+        // TODO: Add form validation
+        try {
+            await registerWithMail(username, email, password);
+            toast.trigger(success('Register Successful'));
+            goto('/user/dashboard');
+        } catch (_) {
+            toast.trigger(error('Register Failed'));
+        }
     }
 </script>
 
@@ -25,7 +26,8 @@
     <div class="text-primary-900-100-token text-5xl font-bold">Register<br /> Account</div>
     <Card width="max-w-sm" layout="space-y-4">
         <div class="grid gap-4">
-            <input bind:value={email} class="input" type="email" placeholder="Username" />
+            <input bind:value={username} class="input" type="text" placeholder="Username" />
+            <input bind:value={email} class="input" type="email" placeholder="Email" />
             <input bind:value={password} class="input" type="password" placeholder="Password" />
         </div>
 

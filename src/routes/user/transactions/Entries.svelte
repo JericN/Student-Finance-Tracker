@@ -2,17 +2,16 @@
     import * as editStore from '$lib/store/editing';
     import { Cloud } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import { type Record } from '$lib/models/types';
+    import { type Transaction } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
     import { goto } from '$app/navigation';
 
-    export let entries: Record;
+    export let entries: Transaction[];
 
     const editing = editStore.get();
 
-    function edit(entries: Record[0]) {
-        editing.set(entries);
-
+    function edit(entry: Transaction) {
+        editing.set(structuredClone(entry));
         goto('/user/transactions/edit/');
     }
 </script>
@@ -27,8 +26,8 @@
             <Icon src={Cloud} class="size-3" />
             <div>{category}</div>
             <div class="truncate text-2xs">{description}</div>
-            <div class="text-income">{type === 'income' ? currency(amount) : '-'}</div>
-            <div class="text-expense">{type === 'expense' ? currency(amount) : '-'}</div>
+            <div class="text-income">{type === 'Income' ? currency(amount) : '-'}</div>
+            <div class="text-expense">{type === 'Expense' ? currency(amount) : '-'}</div>
         </a>
     {/each}
 </div>

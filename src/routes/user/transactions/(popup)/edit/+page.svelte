@@ -1,95 +1,72 @@
 <script lang="ts">
-    import * as editStore from '$lib/store/editing';
-    import { type ToastSettings, getToastStore } from '@skeletonlabs/skeleton';
-    import { pick, safeParse } from 'valibot';
+    import * as EditStore from '$lib/store/editing';
+    import { Record, Transaction } from '$lib/models/types';
+    import { categories, wallets } from '$lib/data/preference';
+    import { error, success } from '$lib/funcs/toast';
+    import { parse, pick, safeParse } from 'valibot';
+    import { removeTransaction, updateTransaction } from '$lib/firebase/database';
     import Amount from '$lib/components/transaction/Amount.svelte';
     import Button from '$lib/components/Button.svelte';
     import Calendar from '$lib/components/transaction/Calendar.svelte';
     import Card from '$lib/components/Card.svelte';
     import Category from '$lib/components/transaction/Category.svelte';
     import Description from '$lib/components/transaction/Description.svelte';
-    import { Transaction } from '$lib/models/types';
     import Type from '$lib/components/transaction/Type.svelte';
     import Wallet from '$lib/components/transaction/Wallet.svelte';
+    import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
-    const editing = editStore.get();
+    const editStore = EditStore.get();
 
-    // TODO: move categories to a store
-    // TODO: use proper icons
-    const categories = {
-        Food: '🍔',
-        House: '🏠',
-        Transpo: '🚌',
-        Gift: '🎁',
-        Allowance: '💵',
-        Savings: '💰',
-        Other: '📦',
-    };
+    async function update() {
+        const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
+        for (const property of properties) {
+            const result = safeParse(pick(Record, [property]), { [property]: $editStore[property] });
+            if (!result.success) {
+                toastStore.trigger(error(`Invalid ${property}`));
+                return;
+            }
+        }
 
-    // TODO: move accounts to a store
-    const wallets = ['Bank', 'Cash', 'GCash', 'Shared'];
-
-    function t(message: string): ToastSettings {
-        return {
-            message: message,
-            timeout: 2000,
-            background: 'variant-filled-error',
-        };
+        try {
+            await updateTransaction(parse(Transaction, $editStore));
+            goto('/user/transactions');
+            editStore.reset();
+            toastStore.trigger(success('Transaction updated'));
+        } catch (_) {
+            toastStore.trigger(error('Failed to update transaction'));
+        }
     }
 
-    // TODO: send post request to server
-    function update() {
-        if (!safeParse(pick(Transaction, ['amount']), { amount: $editing.amount }).success) {
-            toastStore.trigger(t('Invalid amount'));
-            return;
+    async function remove() {
+        try {
+            const { id } = parse(pick(Transaction, ['id']), { id: $editStore.id });
+            await removeTransaction(id);
+            goto('/user/transactions');
+            editStore.reset();
+            toastStore.trigger(success('Transaction removed'));
+        } catch (_) {
+            toastStore.trigger(error('Failed to remove transaction'));
         }
-        if (!safeParse(pick(Transaction, ['date']), { date: $editing.date }).success) {
-            toastStore.trigger(t('Invalid date'));
-            return;
-        }
-        if (!safeParse(pick(Transaction, ['category']), { category: $editing.category }).success) {
-            toastStore.trigger(t('Invalid category'));
-            return;
-        }
-        if (!safeParse(pick(Transaction, ['wallet']), { wallet: $editing.wallet }).success) {
-            toastStore.trigger(t('Invalid wallet'));
-            return;
-        }
-        if (!safeParse(pick(Transaction, ['description']), { description: $editing.description }).success) {
-            toastStore.trigger(t('Invalid description'));
-            return;
-        }
-        if (!safeParse(pick(Transaction, ['type']), { type: $editing.type }).success) {
-            toastStore.trigger(t('Invalid type'));
-            return;
-        }
-        goto('/user/transactions');
-        toastStore.trigger(t('Transaction saved'));
-    }
-
-    function remove() {
-        goto('/user/transactions');
-        toastStore.trigger(t('Transaction removed'));
     }
 
     onDestroy(() => {
-        editing.reset();
+        editStore.reset();
     });
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
-            <Type bind:type={$editing.type} />
-            <Amount bind:amount={$editing.amount} />
-            <Calendar bind:date={$editing.date} />
-            <Category {categories} bind:category={$editing.category} />
-            <Wallet {wallets} bind:wallet={$editing.wallet} />
+            <Type bind:type={$editStore.type} />
+            <Amount bind:amount={$editStore.amount} />
+            <Calendar bind:date={$editStore.date} />
+            <Category {categories} bind:category={$editStore.category} />
+            <Wallet {wallets} bind:wallet={$editStore.wallet} />
         </div>
-        <Description bind:description={$editing.description} />
+        <Description bind:description={$editStore.description} />
     </Card>
     <div class="flex gap-4">
         <Button on:click={() => update()}>
