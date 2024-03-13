@@ -89,3 +89,14 @@ export const Wallet = object({
 });
 
 export type Wallet = Output<typeof Wallet>;
+
+export const Wallets = array(
+    object({
+        id: number([safeInteger()]),
+        name: string([minLength(1),maxLength(30)]),
+        amount: number([safeInteger(), minValue(1)]),
+        description: optional(string([maxLength(50)])),
+    })
+)
+
+export type Wallets = Output<typeof Wallets>;
