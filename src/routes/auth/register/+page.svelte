@@ -5,6 +5,7 @@
     import { goto } from '$app/navigation';
     import { registerWithMail } from '$lib/firebase/auth';
 
+    let username: string;
     let email: string;
     let password: string;
     const toast = getToastStore();
@@ -25,7 +26,8 @@
     <div class="text-primary-900-100-token text-5xl font-bold">Register<br /> Account</div>
     <Card width="max-w-sm" layout="space-y-4">
         <div class="grid gap-4">
-            <input bind:value={email} class="input" type="email" placeholder="Username" />
+            <input bind:value={username} class="input" type="text" placeholder="Username" />
+            <input bind:value={email} class="input" type="email" placeholder="Email" />
             <input bind:value={password} class="input" type="password" placeholder="Password" />
         </div>
 
