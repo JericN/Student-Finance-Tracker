@@ -4,6 +4,6 @@
 </script>
 
 <AppShell>
-    <Header slot="header" />
+    <Header slot="header" title="New Wallet"/>
     <slot />
 </AppShell>

@@ -2,6 +2,7 @@
     import * as editStore from '$lib/store/editingWallet';
     import Card from '$lib/components/Card.svelte';
     import {type Wallets} from '$lib/models/types'
+    //import dummy data
     import {wallets as dummyData}from '$lib/data/dummy'
     import SettingsCard from '../../SettingsCard.svelte'
     import { CreditCard } from '@steeze-ui/heroicons';
@@ -59,7 +60,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col items-center">
-                    <div class="text-xs">{description ?? "test"}</div>
+                    <div class="text-s">{description ?? ""}</div>
                 </div>
             </Card>
         </a>

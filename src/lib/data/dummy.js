@@ -194,6 +194,7 @@ export const wallets =  [
     {
         id: 1,
         name: "Bank",
+        description: "BPI Savings",
         amount: 24200
     },
     {
