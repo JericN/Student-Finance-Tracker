@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { errorToast, successToast } from '$lib/funcs/toast';
+    import { error, success } from '$lib/funcs/toast';
     import Card from '$lib/components/Card.svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
@@ -10,15 +10,15 @@
     let password: string;
     const toast = getToastStore();
 
-    function register() {
-        registerWithMail(email, password)
-            .then(_ => {
-                toast.trigger(successToast('Register successful'));
-                goto('/user/dashboard');
-            })
-            .catch(_ => {
-                toast.trigger(errorToast('Register failed'));
-            });
+    async function register() {
+        // TODO: Add form validation
+        try {
+            await registerWithMail(username, email, password);
+            toast.trigger(success('Register Successful'));
+            goto('/user/dashboard');
+        } catch (_) {
+            toast.trigger(error('Register Failed'));
+        }
     }
 </script>
 
