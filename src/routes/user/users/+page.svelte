@@ -32,7 +32,7 @@
         <LightSwitch class={'select-none'} />
     </SettingsCard>
 
-    <SettingsCard clickable = {true} link= "wallets" title="Wallets">
+    <SettingsCard link= "wallets" title="Wallets">
         <div>Add/remove Wallet</div>
         <div>Edit Wallet</div>
     </SettingsCard>

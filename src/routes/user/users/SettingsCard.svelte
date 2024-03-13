@@ -1,6 +1,8 @@
 <script lang='ts'>
-    import Card from '$lib/components/Card.svelte';
+    import Card from './Card.svelte';
     export let title: string;
+
+    export let link: string = "";
 
     let deviceWidth = window.innerWidth;
     window.addEventListener('resize', () => {
@@ -15,32 +17,18 @@
                 return "w-3/4";
         }
     }
-    export let clickable: boolean = false;
-    export let link: string = "#";
+
     $: cardWidth =  update(deviceWidth);
+
 </script>
-{#if clickable}
+{#if link}
     <a class = {cardWidth} href={link}>
-        <Card width={`w-full flex-none`} padding="px-6" on:click>
-            <div class="justify-between text-dark">
-                <div class="flex flex-col items-start">
-                    <div class="text-2x1 font-bold">{title}</div>
-                </div>
-                <div class="flex flex-col my-auto text-l items-end">
-                    <slot></slot>
-                </div>
-            </div>
+        <Card {title} width="w-full">
+            <slot></slot>
         </Card>
     </a>
 {:else}
-    <Card width={`${cardWidth} flex-none`} padding="px-6" on:click>
-        <div class="justify-between text-dark">
-            <div class="flex flex-col items-start">
-                <div class="text-2x1 font-bold">{title}</div>
-            </div>
-            <div class="flex flex-col my-auto text-l items-end">
-                <slot></slot>
-            </div>
-        </div>
+    <Card {title} width={cardWidth}>
+        <slot></slot>
     </Card>
 {/if}

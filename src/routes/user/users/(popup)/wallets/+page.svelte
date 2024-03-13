@@ -1,5 +1,6 @@
 <script lang="ts">
     import Card from '$lib/components/Card.svelte';
+    import SettingsCard from '../../SettingsCard.svelte'
     import { ChevronDoubleLeft as Left} from '@steeze-ui/heroicons';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
@@ -21,6 +22,11 @@
 
 <div class="flex h-full flex-col items-center justify-center gap-10">
     <div class="text-xl font-bold">Wallets</div>
+    
+    <SettingsCard title = "Add a wallet" link="create">
+        <div class="h-8 w-8 rounded-lg border-2 bg-surface-300">➕</div> 
+    </SettingsCard>
+
     {#each Object.entries(wallets) as [name, value]}
         <Card width="w-2/4 flex-none" padding="px-6">
             <div class="flex justify-between text-dark">
