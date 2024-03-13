@@ -18,6 +18,7 @@ import {
     safeInteger,
     string,
 } from 'valibot';
+import { Timestamp } from 'firebase/firestore';
 
 export enum TransactionType {
     Income = 'Income',
@@ -25,11 +26,11 @@ export enum TransactionType {
     Transfer = 'Transfer',
 }
 
-const DateSchema = coerce(
-    date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]),
-    // @ts-expect-error - We are coercing the input to a date.
-    input => new Date(input),
-);
+const DateSchema = coerce(date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]), input => {
+    if (input instanceof Date) return new Date(input);
+    if (input instanceof Timestamp) return input.toDate();
+    throw new Error('Failed parsing date');
+});
 
 export const Transaction = object({
     id: string([length(20)]),
