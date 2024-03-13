@@ -1,54 +1,65 @@
 import {
     type Output,
-    array,
     boolean,
+    coerce,
     date,
+    email,
     enum_,
+    length,
     maxLength,
     maxValue,
     minValue,
     nullish,
     number,
     object,
+    omit,
     optional,
+    partial,
     safeInteger,
     string,
 } from 'valibot';
 
 export enum TransactionType {
-    Income = 'income',
-    Expense = 'expense',
-    Transfer = 'transfer',
+    Income = 'Income',
+    Expense = 'Expense',
+    Transfer = 'Transfer',
 }
 
-export const Record = array(
-    object({
-        amount: number([safeInteger(), minValue(1)]),
-        category: string([maxLength(30)]),
-        date: date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]),
-        description: optional(string([maxLength(50)])),
-        id: number([safeInteger()]),
-        type: enum_(TransactionType),
-        wallet: string([maxLength(30)]),
-    }),
+const DateSchema = coerce(
+    date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]),
+    // @ts-expect-error - We are coercing the input to a date.
+    input => new Date(input),
 );
+
+export const Transaction = object({
+    id: string([length(20)]),
+    timestamp: DateSchema,
+    type: enum_(TransactionType),
+    amount: number([safeInteger(), minValue(1)]),
+    date: DateSchema,
+    category: string([maxLength(30)]),
+    wallet: string([maxLength(30)]),
+    description: optional(string([maxLength(50)]), ''),
+});
+export type Transaction = Output<typeof Transaction>;
+
+// This is used for validating a new transaction
+export const Record = omit(Transaction, ['id', 'timestamp']);
 export type Record = Output<typeof Record>;
 
-export const User = object({
-    displayName: nullish(string()),
-    email: nullish(string()),
-    photoURL: nullish(string()),
-    uid: nullish(string()),
-});
-
-export type User = Output<typeof User>;
+// This is used for creating a new transaction
+export const PartialRecord = partial(Record);
+export type PartialRecord = Output<typeof PartialRecord>;
 
 export const Session = object({
-    user: nullish(User),
     loggedIn: boolean(),
+    username: nullish(string()),
+    email: nullish(string([email()])),
+    uid: nullish(string()),
 });
 export type Session = Output<typeof Session>;
 
+// TODO: move this
 export const colors = {
     red: 'bg-red-900',
     amber: 'bg-amber-900',
@@ -61,9 +72,9 @@ export const colors = {
     fuchsia: 'bg-fuchsia-900',
     rose: 'bg-rose-900',
 };
-
 export type Colors = keyof typeof colors;
 
+// TODO: move this
 export enum days {
     Sun,
     Mon,
@@ -73,16 +84,4 @@ export enum days {
     Fri,
     Sat,
 }
-
 export type Days = (typeof days)[number];
-
-export const Transaction = object({
-    type: enum_(TransactionType),
-    amount: number([safeInteger(), minValue(1)]),
-    date: date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]),
-    category: string([maxLength(30)]),
-    wallet: string([maxLength(30)]),
-    description: optional(string([maxLength(50)])),
-});
-
-export type Transaction = Output<typeof Transaction>;
