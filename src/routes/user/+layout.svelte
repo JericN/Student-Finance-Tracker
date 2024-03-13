@@ -6,20 +6,23 @@
     import { page } from '$app/stores';
 
     $: current = $page.url.pathname;
-    $: showHeader = current === '/user/transactions/create/' || current === '/user/transactions/edit/';
+    $: transaction = current === '/user/transactions/create/' || current === '/user/transactions/edit/';
+    $: wallet = current === '/user/users/wallets/create/' || current === '/user/users/wallets/edit/';
 
     transactionStore.init();
 </script>
 
 <AppShell>
     <div slot="header">
-        {#if showHeader}
-            <Header />
+        {#if transaction}
+            <Header title="Transactions" />
+        {:else if wallet}
+            <Header title="Wallets" />
         {/if}
     </div>
     <slot />
     <div slot="footer">
-        {#if !showHeader}
+        {#if !transaction && !wallet}
             <NavBar />
         {/if}
     </div>
