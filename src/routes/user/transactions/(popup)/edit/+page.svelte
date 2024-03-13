@@ -1,6 +1,6 @@
 <script lang="ts">
     import * as editStore from '$lib/store/editing';
-    import { type ToastSettings, getToastStore } from '@skeletonlabs/skeleton';
+    import { type ToastSettings, getToastStore, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
     import { pick, safeParse } from 'valibot';
     import Amount from '../Amount.svelte';
     import Button from '$lib/components/Button.svelte';
@@ -15,7 +15,15 @@
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
+    const modalStore = getModalStore();
     const editing = editStore.get();
+
+    const modal: ModalSettings = {
+        type: 'confirm',
+        title: 'Please Confirm',
+        body: 'Are you sure you wish to remove this transaction?',
+        response: (r: boolean) => remove(r),
+    };
 
     // TODO: move categories to a store
     // TODO: use proper icons
@@ -70,9 +78,11 @@
         toastStore.trigger(t('Transaction saved'));
     }
 
-    function remove() {
-        goto('/user/transactions');
-        toastStore.trigger(t('Transaction removed'));
+    function remove(r: boolean) {
+        if (r){
+            goto('/user/transactions');
+            toastStore.trigger(t('Transaction removed'));
+        }
     }
 
     onDestroy(() => {
@@ -95,7 +105,7 @@
         <Button on:click={() => update()}>
             <span class="px-4 font-bold text-dark"> UPDATE </span>
         </Button>
-        <Button on:click={() => remove()}>
+        <Button on:click={() => modalStore.trigger(modal)}>
             <span class="px-4 font-bold text-dark"> REMOVE </span>
         </Button>
     </div>
