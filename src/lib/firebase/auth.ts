@@ -1,46 +1,34 @@
-import { type UserCredential, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '$lib/firebase.client';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from '$lib/firebase/firebase.client';
+import { createUserRecord } from '$lib/firebase/database';
 import { session } from '$lib/store/session';
 
-export function loginWithMail(email: string, password: string) {
-    return new Promise((resolve, reject) => {
-        signInWithEmailAndPassword(auth, email, password)
-            .then(result => {
-                const { user }: UserCredential = result;
-                session.setUser(user);
-                resolve(user);
-            })
-            .catch(_ => {
-                session.removeUser();
-                reject();
-            });
-    });
+export async function loginWithMail(email: string, password: string) {
+    try {
+        const { user } = await signInWithEmailAndPassword(auth, email, password);
+        session.create(user);
+    } catch (error) {
+        throw new Error('Failed logging in user');
+    }
 }
 
-export function registerWithMail(email: string, password: string) {
-    return new Promise((resolve, reject) => {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then(result => {
-                const { user }: UserCredential = result;
-                session.setUser(user);
-                resolve(user);
-            })
-            .catch(_ => {
-                session.removeUser();
-                reject();
-            });
-    });
+// Note: we are enabling session here
+export async function registerWithMail(username: string, email: string, password: string) {
+    try {
+        const { user } = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(user, { displayName: username });
+        createUserRecord(user);
+        session.create(user);
+    } catch (error) {
+        throw new Error('Failed registering user');
+    }
 }
 
-export function signOutUser() {
-    return new Promise((resolve, reject) => {
-        auth.signOut()
-            .then(() => {
-                session.removeUser();
-                resolve(true);
-            })
-            .catch(() => {
-                reject();
-            });
-    });
+export async function signOutUser() {
+    try {
+        await auth.signOut();
+        session.clear();
+    } catch (error) {
+        throw new Error('Failed signing out user');
+    }
 }
