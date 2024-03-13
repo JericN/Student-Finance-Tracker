@@ -1,5 +1,5 @@
-import { Wallets} from '$lib/models/types';
 import { getContext, hasContext, setContext } from 'svelte';
+import { Wallet } from '$lib/models/types';
 import { writable } from 'svelte/store';
 
 const CREATING = Symbol('creating');
@@ -9,10 +9,10 @@ const initial = {
     description: '',
     amount: 0,
     name: '',
-} satisfies Wallets[0];
+} satisfies Wallet;
 
 function initStore() {
-    const creating = writable<Wallets[0]>(structuredClone(initial));
+    const creating = writable<Wallet>(structuredClone(initial));
     function reset() {
         creating.set(structuredClone(initial));
     }

@@ -1,10 +1,10 @@
 <script lang="ts">
     import * as editStore from '$lib/store/editingWallet';
     import Card from '$lib/components/Card.svelte';
-    import {type Wallets} from '$lib/models/types'
+    import { type Wallet } from '$lib/models/types';
     //import dummy data
-    import {wallets as dummyData}from '$lib/data/dummy'
-    import SettingsCard from '../../SettingsCard.svelte'
+    import { wallets as dummyData } from '$lib/data/dummy';
+    import SettingsCard from '../../SettingsCard.svelte';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { currency } from '$lib/funcs/helper';
@@ -18,37 +18,33 @@
     function update(deviceWidth: number): string {
         switch (true) {
             case deviceWidth > 440:
-                return "w-2/4";
+                return 'w-2/4';
             default:
-                return "w-3/4";
+                return 'w-3/4';
         }
     }
 
-    $: cardWidth =  update(deviceWidth);
+    $: cardWidth = update(deviceWidth);
 
     const editing = editStore.get();
 
-    function edit(entries: Wallets[0]) {
+    function edit(entries: Wallet) {
         editing.set(entries);
         goto('/user/users/wallets/edit/');
     }
 
-    export let wallets: Wallets = dummyData;
+    export let wallets: Wallet[] = dummyData;
 </script>
 
 <div class="flex h-full flex-col items-center justify-center gap-10">
     <div class="text-xl font-bold">Wallets</div>
 
-    <SettingsCard title = "Add a wallet" link="create">
-        <div class="h-8 w-8 rounded-lg border-2 bg-surface-300">➕</div> 
+    <SettingsCard title="Add a wallet" link="create">
+        <div class="h-8 w-8 rounded-lg border-2 bg-surface-300">➕</div>
     </SettingsCard>
 
-    {#each wallets as {name, amount, description},id}
-        <a 
-        class={cardWidth}
-        href={null}
-        on:click = {()=>edit(wallets[id])} 
-        >
+    {#each wallets as { name, amount, description }, id}
+        <a class={cardWidth} href={null} on:click={() => edit(wallets[id])}>
             <Card width="w-full flex-none" padding="px-6">
                 <div class="flex justify-between text-dark">
                     <div class="flex flex-col items-center">
@@ -60,7 +56,7 @@
                     </div>
                 </div>
                 <div class="flex flex-col items-center">
-                    <div class="text-s">{description ?? ""}</div>
+                    <div class="text-s">{description ?? ''}</div>
                 </div>
             </Card>
         </a>
