@@ -38,11 +38,11 @@ function init() {
     }
 
     return {
-        subscribe,
         create,
         clear,
-        values,
+        subscribe,
         uid,
+        values,
     };
 }
 

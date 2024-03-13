@@ -1,31 +1,33 @@
-import { Transaction, TransactionType } from '$lib/models/types';
 import { getContext, hasContext, setContext } from 'svelte';
-import { writable } from 'svelte/store';
+import { get as getStore, writable } from 'svelte/store';
+import { Transaction } from '$lib/models/types';
 
 const EDITING = Symbol('editing');
 
-const initial = {
-    id: '',
-    timestamp: new Date(),
-    date: new Date(),
-    category: '',
-    description: '',
-    type: TransactionType.Expense,
-    amount: 0,
-    wallet: '',
-} satisfies Transaction;
-
 function initStore() {
-    const editing = writable<Transaction>(structuredClone(initial));
-    function reset() {
-        editing.set(structuredClone(initial));
+    const store = writable<Partial<Transaction>>({});
+    const { set, subscribe } = store;
+
+    function values() {
+        return getStore(store);
     }
+
+    function save(transaction: Transaction) {
+        set(transaction);
+    }
+
+    function reset() {
+        set({});
+    }
+
     return {
-        ...editing,
+        save,
+        set,
+        subscribe,
         reset,
+        values,
     };
 }
-
 type Store = ReturnType<typeof initStore>;
 
 export function init() {

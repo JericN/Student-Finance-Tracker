@@ -1,5 +1,5 @@
 import { type Record, Transaction } from '$lib/models/types';
-import { addDoc, collection, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { db } from '$lib/firebase/firebase.client';
 import { safeParse } from 'valibot';
@@ -26,7 +26,28 @@ export async function addTransaction(data: Record) {
     }
 }
 
-export async function getTransactions() {
+export async function removeTransaction(id: string) {
+    const path = `UserData/${session.uid()}/transactions/${id}`;
+
+    try {
+        await deleteDoc(doc(db, path));
+    } catch (e) {
+        throw new Error('Failed removing transaction');
+    }
+}
+
+export async function updateTransaction(transaction: Transaction) {
+    const path = `UserData/${session.uid()}/transactions/${transaction.id}`;
+    const payload = { ...transaction, updatedAt: serverTimestamp() };
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating transaction');
+    }
+}
+
+export async function getTransactions(): Promise<Transaction[]> {
     const docRef = collection(db, `UserData/${session.uid()}/transactions`);
     const transactions: Transaction[] = [];
 
