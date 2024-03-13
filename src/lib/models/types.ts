@@ -34,7 +34,8 @@ const DateSchema = coerce(date([minValue(new Date(2000, 0, 1)), maxValue(new Dat
 
 export const Transaction = object({
     id: string([length(20)]),
-    timestamp: DateSchema,
+    createdAt: DateSchema,
+    updatedAt: DateSchema,
     type: enum_(TransactionType),
     amount: number([safeInteger(), minValue(1)]),
     date: DateSchema,
@@ -45,7 +46,7 @@ export const Transaction = object({
 export type Transaction = Output<typeof Transaction>;
 
 // This is used for validating a new transaction
-export const Record = omit(Transaction, ['id', 'timestamp']);
+export const Record = omit(Transaction, ['id', 'createdAt', 'updatedAt']);
 export type Record = Output<typeof Record>;
 
 // This is used for creating a new transaction

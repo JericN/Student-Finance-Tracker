@@ -17,7 +17,7 @@ export async function createUserRecord(user: User) {
 
 export async function addTransaction(data: Record) {
     const path = `UserData/${session.uid()}/transactions`;
-    const payload = { ...data, timestamp: serverTimestamp() };
+    const payload = { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
 
     try {
         await addDoc(collection(db, path), payload);
