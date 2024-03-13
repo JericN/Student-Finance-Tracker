@@ -15,6 +15,7 @@ export async function createUserRecord(user: User) {
     });
 }
 
+// This function is used to create a new transaction
 export async function addTransaction(data: Record) {
     const path = `UserData/${session.uid()}/transactions`;
     const payload = { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
@@ -26,6 +27,7 @@ export async function addTransaction(data: Record) {
     }
 }
 
+// This function is used to remove a transaction
 export async function removeTransaction(id: string) {
     const path = `UserData/${session.uid()}/transactions/${id}`;
 
@@ -36,6 +38,7 @@ export async function removeTransaction(id: string) {
     }
 }
 
+// This function is used to update an existing transaction
 export async function updateTransaction(transaction: Transaction) {
     const path = `UserData/${session.uid()}/transactions/${transaction.id}`;
     const payload = { ...transaction, updatedAt: serverTimestamp() };
@@ -47,6 +50,7 @@ export async function updateTransaction(transaction: Transaction) {
     }
 }
 
+// This function is used to retrieve all transactions
 export async function getTransactions(): Promise<Transaction[]> {
     const docRef = collection(db, `UserData/${session.uid()}/transactions`);
     const transactions: Transaction[] = [];

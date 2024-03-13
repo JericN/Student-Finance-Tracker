@@ -10,9 +10,8 @@
 
     const editing = editStore.get();
 
-    function edit(entries: Transaction) {
-        editing.set(entries);
-
+    function edit(entry: Transaction) {
+        editing.set(structuredClone(entry));
         goto('/user/transactions/edit/');
     }
 </script>
