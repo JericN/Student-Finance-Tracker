@@ -4,6 +4,7 @@ import {
     boolean,
     date,
     enum_,
+    minLength,
     maxLength,
     maxValue,
     minValue,
@@ -80,3 +81,11 @@ export const Transaction = object({
 });
 
 export type Transaction = Output<typeof Transaction>;
+
+export const Wallet = object({
+    name: string([minLength(1),maxLength(30)]),
+    amount: number([safeInteger(), minValue(1)]),
+    description: optional(string([maxLength(50)])),
+});
+
+export type Wallet = Output<typeof Wallet>;

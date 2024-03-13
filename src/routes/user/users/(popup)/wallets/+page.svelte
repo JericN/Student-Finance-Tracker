@@ -14,15 +14,9 @@
     };
 </script>
 
-<a href="/user/users">
-    <button class="w-7 mt-3 ml-3">
-        <Icon src={Left} class="stroke-2" />
-    </button>
-</a>
-
 <div class="flex h-full flex-col items-center justify-center gap-10">
     <div class="text-xl font-bold">Wallets</div>
-    
+
     <SettingsCard title = "Add a wallet" link="create">
         <div class="h-8 w-8 rounded-lg border-2 bg-surface-300">➕</div> 
     </SettingsCard>
