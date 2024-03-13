@@ -18,21 +18,6 @@
     const toastStore = getToastStore();
     const cstore = createStore.get();
 
-    // TODO: move categories to a store
-    // TODO: use proper icons
-    const categories = {
-        Food: '🍔',
-        House: '🏠',
-        Transpo: '🚌',
-        Gift: '🎁',
-        Allowance: '💵',
-        Savings: '💰',
-        Other: '📦',
-    };
-
-    // TODO: move accounts to a store
-    const wallets = ['Bank', 'Cash', 'GCash', 'Shared'];
-
     async function submit() {
         const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
 

@@ -17,21 +17,6 @@
     const toastStore = getToastStore();
     const editing = editStore.get();
 
-    // TODO: move categories to a store
-    // TODO: use proper icons
-    const categories = {
-        Food: '🍔',
-        House: '🏠',
-        Transpo: '🚌',
-        Gift: '🎁',
-        Allowance: '💵',
-        Savings: '💰',
-        Other: '📦',
-    };
-
-    // TODO: move accounts to a store
-    const wallets = ['Bank', 'Cash', 'GCash', 'Shared'];
-
     function t(message: string): ToastSettings {
         return {
             message: message,
