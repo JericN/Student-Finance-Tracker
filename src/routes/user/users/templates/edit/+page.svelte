@@ -1,7 +1,6 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { Template } from '$lib/models/types';
     import { categories, wallets } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
@@ -12,6 +11,7 @@
     import Category from '$lib/components/forms/Category.svelte';
     import Description from '$lib/components/forms/Description.svelte';
     import Name from '$lib/components/forms/Name.svelte';
+    import { Template } from '$lib/models/types';
     import Type from '$lib/components/forms/Type.svelte';
     import Wallet from '$lib/components/forms/Wallet.svelte';
     import { goto } from '$app/navigation';

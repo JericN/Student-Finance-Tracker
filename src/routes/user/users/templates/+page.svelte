@@ -1,8 +1,8 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
     import * as templateStore from '$lib/store/template';
-    import { type TemplateForms, TransactionType } from '$lib/models/types';
     import Button from '$lib/components/Button.svelte';
+    import { TransactionType } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
     import { goto } from '$app/navigation';
 

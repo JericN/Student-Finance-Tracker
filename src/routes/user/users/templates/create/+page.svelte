@@ -2,7 +2,7 @@
     import * as FormStore from '$lib/store/forms';
     import { categories, wallets } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
-    import { omit, parse, pick, safeParse } from 'valibot';
+    import { parse, pick, safeParse } from 'valibot';
     import Amount from '$lib/components/forms/Amount.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
