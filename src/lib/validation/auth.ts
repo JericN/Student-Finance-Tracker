@@ -1,15 +1,12 @@
-
 export function validateUsername(input: string): boolean {
     const re = /[0-9A-Za-z]/;
-    const filtered = input.split("").filter(e => !re.test(e));
+    const filtered = input.split('').filter(e => !re.test(e));
 
-    const validChars =  filtered.length === 0;
+    const validChars = filtered.length === 0;
     const validLen = input.length <= 12;
 
     return validChars && validLen;
 }
-
-
 
 export function validatePassword(input: string): boolean {
     const re = /[0-9]/;
