@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as editStore from '$lib/store/editing';
+    import * as FormStore from '$lib/store/forms';
     import { Cloud } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { type Transaction } from '$lib/models/types';
@@ -8,10 +8,10 @@
 
     export let entries: Transaction[];
 
-    const editing = editStore.get();
+    const editStore = FormStore.transactionEdit();
 
     function edit(entry: Transaction) {
-        editing.set(structuredClone(entry));
+        editStore.set(structuredClone(entry));
         goto('/user/transactions/edit/');
     }
 </script>

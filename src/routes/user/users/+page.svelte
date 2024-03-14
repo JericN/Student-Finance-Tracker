@@ -8,8 +8,8 @@
     import { signOutUser } from '$lib/firebase/auth';
 </script>
 
-<div class="flex h-full flex-col items-center justify-center gap-10 p-10">
-    <div class="text-center font-bold">
+<div class="flex h-full flex-col items-center justify-center gap-2 p-10">
+    <div class="space-y-2 text-center font-bold">
         <div class="text-3xl">User Page</div>
         <div class="uppercase underline">
             {$session.username}
@@ -23,6 +23,9 @@
     <Entry link="wallets" title="Wallets">
         <div>Add/remove Wallet</div>
         <div>Edit Wallet</div>
+    </Entry>
+    <Entry link="templates" title="My Templates">
+        <div>Manage templates</div>
     </Entry>
 
     <Entry title="Wishlist">
@@ -40,6 +43,7 @@
     </Entry>
 
     <Button
+        font="font-bold text-dark"
         on:click={() => {
             signOutUser();
             goto('/auth/login');

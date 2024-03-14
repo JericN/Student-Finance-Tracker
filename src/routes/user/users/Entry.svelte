@@ -15,7 +15,7 @@
         <div class="flex flex-col items-start">
             <div class="text-2x1 font-bold">{title}</div>
         </div>
-        <div class="text-l my-auto flex flex-col items-end">
+        <div class="my-auto flex flex-col items-end text-sm">
             <slot />
         </div>
     </button>
