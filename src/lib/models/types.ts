@@ -5,6 +5,7 @@ import {
     date,
     email,
     enum_,
+    intersect,
     length,
     maxLength,
     maxValue,
@@ -15,7 +16,7 @@ import {
     object,
     omit,
     optional,
-    partial,
+    pick,
     safeInteger,
     string,
 } from 'valibot';
@@ -49,10 +50,23 @@ export type Transaction = Output<typeof Transaction>;
 // This is used for validating a new transaction
 export const Record = omit(Transaction, ['id', 'createdAt', 'updatedAt']);
 export type Record = Output<typeof Record>;
+export type PartialRecord = Partial<Output<typeof Record>>;
 
-// This is used for creating a new transaction
-export const PartialRecord = partial(Record);
-export type PartialRecord = Output<typeof PartialRecord>;
+// This is used for validating a transaction template
+export const Template = intersect([
+    pick(Transaction, ['id', 'type', 'amount', 'category', 'wallet', 'description']),
+    object({ name: string([maxLength(30)]) }),
+]);
+export type Template = Output<typeof Template>;
+export type PartialTemplate = Partial<Output<typeof Template>>;
+
+export const Wallet = object({
+    id: number([safeInteger()]),
+    name: string([minLength(3), maxLength(30)]),
+    amount: number([safeInteger(), minValue(0)]),
+    description: optional(string([maxLength(50)])),
+});
+export type Wallet = Output<typeof Wallet>;
 
 export const Session = object({
     loggedIn: boolean(),
@@ -87,13 +101,5 @@ export enum days {
     Fri,
     Sat,
 }
+
 export type Days = (typeof days)[number];
-
-export const Wallet = object({
-    id: number([safeInteger()]),
-    name: string([minLength(3), maxLength(30)]),
-    amount: number([safeInteger(), minValue(0)]),
-    description: optional(string([maxLength(50)])),
-});
-
-export type Wallet = Output<typeof Wallet>;
