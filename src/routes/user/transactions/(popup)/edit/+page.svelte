@@ -1,5 +1,6 @@
 <script lang="ts">
     import * as EditStore from '$lib/store/editing';
+    import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { Record, Transaction } from '$lib/models/types';
     import { categories, wallets } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
@@ -13,7 +14,6 @@
     import Description from '$lib/components/transaction/Description.svelte';
     import Type from '$lib/components/transaction/Type.svelte';
     import Wallet from '$lib/components/transaction/Wallet.svelte';
-    import { getToastStore, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
@@ -42,7 +42,7 @@
 
     async function remove(r: boolean) {
         try {
-            if (r){
+            if (r) {
                 const { id } = parse(pick(Transaction, ['id']), { id: $editStore.id });
                 await removeTransaction(id);
                 goto('/user/transactions');
@@ -52,6 +52,7 @@
         } catch (_) {
             toastStore.trigger(error('Failed to remove transaction'));
         }
+    }
 
     const modalStore = getModalStore();
 

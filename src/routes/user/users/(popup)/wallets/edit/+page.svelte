@@ -1,12 +1,12 @@
 <script lang="ts">
     import * as editStore from '$lib/store/editingWallet';
-    import { type ToastSettings, getToastStore, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
+    import { type ModalSettings, type ToastSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { pick, safeParse } from 'valibot';
     import Amount from '../Amount.svelte';
-    import Name from '../Name.svelte'
-    import Description from '../Description.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
+    import Description from '../Description.svelte';
+    import Name from '../Name.svelte';
     import { Wallet } from '$lib/models/types';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
@@ -15,13 +15,6 @@
     const modalStore = getModalStore();
     const editing = editStore.get();
 
-    const modal: ModalSettings = {
-        type: 'confirm',
-        title: 'Please Confirm',
-        body: 'Are you sure you wish to remove this wallet?',
-        response: (r: boolean) => remove(r),
-    };
-
     function t(message: string): ToastSettings {
         return {
             message: message,
@@ -29,6 +22,20 @@
             background: 'variant-filled-error',
         };
     }
+
+    function remove(r: boolean) {
+        if (r) {
+            goto('/user/users/wallets');
+            toastStore.trigger(t('Wallet removed'));
+        }
+    }
+
+    const modal: ModalSettings = {
+        type: 'confirm',
+        title: 'Please Confirm',
+        body: 'Are you sure you wish to remove this wallet?',
+        response: (r: boolean) => remove(r),
+    };
 
     // TODO: send post request to server
     function update() {
@@ -47,13 +54,6 @@
         goto('/user/users/wallets');
         editing.reset();
         toastStore.trigger(t('Wallet added'));
-    }
-
-    function remove(r: boolean) {
-        if (r){
-            goto('/user/users/wallets');
-            toastStore.trigger(t('Wallet removed'));
-        }
     }
 
     onDestroy(() => {

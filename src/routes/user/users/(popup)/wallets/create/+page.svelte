@@ -3,10 +3,10 @@
     import { type ToastSettings, getToastStore } from '@skeletonlabs/skeleton';
     import { pick, safeParse } from 'valibot';
     import Amount from '../Amount.svelte';
-    import Name from '../Name.svelte'
-    import Description from '../Description.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
+    import Description from '../Description.svelte';
+    import Name from '../Name.svelte';
     import { Wallet } from '$lib/models/types';
     import { goto } from '$app/navigation';
 

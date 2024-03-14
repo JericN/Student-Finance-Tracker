@@ -1,8 +1,8 @@
-<script lang='ts'>
+<script lang="ts">
     import Card from './Card.svelte';
     export let title: string;
 
-    export let link: string = "";
+    export let link: string = '';
 
     let deviceWidth = window.innerWidth;
     window.addEventListener('resize', () => {
@@ -12,23 +12,23 @@
     function update(deviceWidth: number): string {
         switch (true) {
             case deviceWidth > 440:
-                return "w-2/4";
+                return 'w-2/4';
             default:
-                return "w-3/4";
+                return 'w-3/4';
         }
     }
 
-    $: cardWidth =  update(deviceWidth);
-
+    $: cardWidth = update(deviceWidth);
 </script>
+
 {#if link}
-    <a class = {cardWidth} href={link}>
+    <a class={cardWidth} href={link}>
         <Card {title} width="w-full">
-            <slot></slot>
+            <slot />
         </Card>
     </a>
 {:else}
     <Card {title} width={cardWidth}>
-        <slot></slot>
+        <slot />
     </Card>
 {/if}

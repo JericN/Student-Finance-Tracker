@@ -2,8 +2,8 @@
     import '../app.postcss';
     import * as createStore from '$lib/store/creating';
     import * as editStore from '$lib/store/editing';
-    import * as walletEditStore from '$lib/store/editingWallet';
     import * as walletCreateStore from '$lib/store/creatingWallet';
+    import * as walletEditStore from '$lib/store/editingWallet';
     import { Modal, Toast, initializeStores, modeCurrent, setModeCurrent } from '@skeletonlabs/skeleton';
     import { onMount } from 'svelte';
 

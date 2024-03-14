@@ -3,15 +3,15 @@
 
     export let title: string;
     export let width: string;
-
 </script>
+
 <Card width={`${width} flex-none`} padding="px-6">
     <div class="justify-between text-dark">
         <div class="flex flex-col items-start">
             <div class="text-2x1 font-bold">{title}</div>
         </div>
-        <div class="flex flex-col my-auto text-l items-end">
-            <slot></slot>
+        <div class="text-l my-auto flex flex-col items-end">
+            <slot />
         </div>
     </div>
 </Card>

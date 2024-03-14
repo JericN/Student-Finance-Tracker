@@ -1,13 +1,12 @@
 <script lang="ts">
     import * as editStore from '$lib/store/editingWallet';
     import Card from '$lib/components/Card.svelte';
-    import { type Wallet } from '$lib/models/types';
-    //import dummy data
-    import { wallets as dummyData } from '$lib/data/dummy';
-    import SettingsCard from '../../SettingsCard.svelte';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
+    import SettingsCard from '../../SettingsCard.svelte';
+    import { type Wallet } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
+    import { wallets as dummyData } from '$lib/data/dummy';
     import { goto } from '$app/navigation';
 
     let deviceWidth = window.innerWidth;

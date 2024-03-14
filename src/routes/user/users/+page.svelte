@@ -1,13 +1,10 @@
-<script lang='ts'>
-    
-    import SettingsCard from './SettingsCard.svelte'
+<script lang="ts">
     import { LightSwitch } from '@skeletonlabs/skeleton';
+    import SettingsCard from './SettingsCard.svelte';
     import { goto } from '$app/navigation';
-    import { session } from '$lib/store/user';
-
+    // import { session } from '$lib/store/session';
 
     // eslint-disable-next-line init-declarations
-
 </script>
 
 <div class="flex h-full flex-col items-center justify-center gap-10">
@@ -30,24 +27,23 @@
         <LightSwitch class={'select-none'} />
     </SettingsCard>
 
-    <SettingsCard link= "wallets" title="Wallets">
+    <SettingsCard link="wallets" title="Wallets">
         <div>Add/remove Wallet</div>
         <div>Edit Wallet</div>
     </SettingsCard>
-   
+
     <SettingsCard title="Wishlist">
         <div>Add/remove Wishlist Item</div>
         <div>Edit Wishlist Item</div>
     </SettingsCard>
-        
+
     <button
         class="variant-filled btn"
         on:click={() => {
-            $session.auth = false;
+            // $session.auth = false;
             goto('/auth/login');
         }}
     >
         Logout
     </button>
 </div>
-

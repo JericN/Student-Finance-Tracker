@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let name: string = "";
+    export let name: string = '';
     let flag = false;
 </script>
 
@@ -10,7 +10,7 @@
         class="py-1 text-sm"
         type="text"
         on:change={() => {
-            flag = name.length == 0 || name.length > 30;
+            flag = name.length === 0 || name.length > 30;
         }}
     />
 </div>
