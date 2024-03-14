@@ -15,6 +15,7 @@ import {
     object,
     omit,
     optional,
+    partial,
     safeInteger,
     string,
 } from 'valibot';
@@ -48,7 +49,8 @@ export type Transaction = Output<typeof Transaction>;
 // This is used for validating a new transaction
 export const Record = omit(Transaction, ['id', 'createdAt', 'updatedAt']);
 export type Record = Output<typeof Record>;
-export type PartialRecord = Partial<Output<typeof Record>>;
+export const PartialRecord = partial(Record);
+export type PartialRecord = Output<typeof Record>;
 
 // This is used for validating a transaction template
 export const Template = object({

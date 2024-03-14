@@ -7,12 +7,26 @@
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import { Record } from '$lib/models/types';
+    import Template from './Template.svelte';
     import { addTransaction } from '$lib/firebase/database';
-    import { getToastStore } from '@skeletonlabs/skeleton';
+    import { getToastStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
+    import { ListBox, ListBoxItem, getModalStore } from '@skeletonlabs/skeleton';
 
+    const modalStore = getModalStore();
     const toastStore = getToastStore();
     const createStore = FormStore.transactionCreate();
+
+    const modalComponent: ModalComponent = { ref: Template };
+
+    const modal: ModalSettings = {
+        type: 'component',
+        component: modalComponent,
+        title: 'Templates',
+        response: r => {
+            console.log(r);
+        },
+    };
 
     async function submit() {
         const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
@@ -37,6 +51,9 @@
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
+    <div class="self-end">
+        <Button font="text-sm font-bold text-dark" on:click={() => modalStore.trigger(modal)}>Templates</Button>
+    </div>
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
             <Type bind:type={$createStore.type} />
