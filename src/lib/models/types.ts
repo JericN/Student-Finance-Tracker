@@ -8,6 +8,7 @@ import {
     length,
     maxLength,
     maxValue,
+    minLength,
     minValue,
     nullish,
     number,
@@ -87,3 +88,12 @@ export enum days {
     Sat,
 }
 export type Days = (typeof days)[number];
+
+export const Wallet = object({
+    id: number([safeInteger()]),
+    name: string([minLength(3), maxLength(30)]),
+    amount: number([safeInteger(), minValue(0)]),
+    description: optional(string([maxLength(50)])),
+});
+
+export type Wallet = Output<typeof Wallet>;
