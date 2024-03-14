@@ -1,5 +1,5 @@
 <script lang="ts">
-    import * as EditStore from '$lib/store/editing';
+    import * as FormStore from '$lib/store/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { Record, Transaction } from '$lib/models/types';
     import { categories, wallets } from '$lib/data/preference';
@@ -18,7 +18,7 @@
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
-    const editStore = EditStore.get();
+    const editStore = FormStore.transactionEdit();
 
     async function update() {
         const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];

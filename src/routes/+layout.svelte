@@ -1,17 +1,11 @@
 <script lang="ts">
     import '../app.postcss';
-    import * as createStore from '$lib/store/creating';
-    import * as editStore from '$lib/store/editing';
-    import * as walletCreateStore from '$lib/store/creatingWallet';
-    import * as walletEditStore from '$lib/store/editingWallet';
+    import * as FormStore from '$lib/store/forms';
     import { Modal, Toast, initializeStores, modeCurrent, setModeCurrent } from '@skeletonlabs/skeleton';
     import { onMount } from 'svelte';
 
     initializeStores();
-    editStore.init();
-    createStore.init();
-    walletEditStore.init();
-    walletCreateStore.init();
+    FormStore.init();
 
     onMount(() => {
         setModeCurrent($modeCurrent);
