@@ -1,13 +1,15 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
     import { type ModalSettings, type ToastSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { pick, safeParse } from 'valibot';
+    import { parse, pick, safeParse } from 'valibot';
+    import { error, success } from '$lib/funcs/toast';
+    import { removeWallet, updateWallet } from '$lib/firebase/database';
     import Amount from '$lib/components/forms/Amount.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import Description from '$lib/components/forms/Description.svelte';
     import Name from '$lib/components/forms/Name.svelte';
-    import { Wallet } from '$lib/models/types';
+    import { WalletRecord, Wallet } from '$lib/models/types';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
@@ -23,10 +25,17 @@
         };
     }
 
-    function remove(r: boolean) {
-        if (r) {
-            goto('/user/users/wallets');
-            toastStore.trigger(t('Wallet removed'));
+    async function remove(r: boolean) {
+        try {
+            if (r) {
+                const { id } = parse(pick(Wallet, ['id']), { id: $editStore.id });
+                await removeWallet(id);
+                goto('/user/users/wallets');
+                editStore.reset();
+                toastStore.trigger(success('Wallet removed'));
+            }
+        } catch (_) {
+            toastStore.trigger(error('Failed to remove wallet'));
         }
     }
 
@@ -38,22 +47,24 @@
     };
 
     // TODO: send post request to server
-    function update() {
-        if (!safeParse(pick(Wallet, ['name']), { name: $editStore.name }).success) {
-            toastStore.trigger(t('Invalid wallet name'));
-            return;
+    async function update() {
+        const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
+        for (const property of properties) {
+            const result = safeParse(pick(WalletRecord, [property]), { [property]: $editStore[property] });
+            if (!result.success) {
+                toastStore.trigger(error(`Invalid ${property}`));
+                return;
+            }
         }
-        if (!safeParse(pick(Wallet, ['amount']), { amount: $editStore.amount }).success) {
-            toastStore.trigger(t('Invalid amount'));
-            return;
+
+        try{
+            await updateWallet(parse(Wallet, $editStore))
+            goto('/user/users/wallets');
+            editStore.reset();
+            toastStore.trigger(t('Wallet updated'));
+        } catch (_) {
+            toastStore.trigger(error('Failed to update wallet'))
         }
-        if (!safeParse(pick(Wallet, ['description']), { description: $editStore.description }).success) {
-            toastStore.trigger(t('Invalid description'));
-            return;
-        }
-        goto('/user/users/wallets');
-        editStore.reset();
-        toastStore.trigger(t('Wallet added'));
     }
 
     onDestroy(() => {
