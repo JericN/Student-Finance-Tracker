@@ -1,8 +1,9 @@
 <script>
+    import * as FormStore from '$lib/store/forms';
     import * as templateStore from '$lib/store/template';
     import * as transactionStore from '$lib/store/transaction';
     import * as walletStore from '$lib/store/wallet'
-    import { AppShell } from '@skeletonlabs/skeleton';
+    import { AppShell, Modal } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
     import { page } from '$app/stores';
@@ -12,11 +13,14 @@
     $: wallet = current.startsWith('/user/users/wallets/');
     $: template = current.startsWith('/user/users/templates/');
 
+    FormStore.init();
+    templateStore.init();
     transactionStore.init();
     templateStore.init();
     walletStore.init();
 </script>
 
+<Modal />
 <AppShell>
     <div slot="header">
         {#if transaction}

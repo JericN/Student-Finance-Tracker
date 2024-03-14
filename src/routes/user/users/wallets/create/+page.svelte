@@ -1,13 +1,11 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
+    import { Amount, Description, Name } from '$lib/components/forms';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
-    import Amount from '$lib/components/forms/Amount.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import Description from '$lib/components/forms/Description.svelte';
-    import Name from '$lib/components/forms/Name.svelte';
     import { addWallet } from '$lib/firebase/database';
     import { WalletRecord } from '$lib/models/types';
     import { goto } from '$app/navigation';
