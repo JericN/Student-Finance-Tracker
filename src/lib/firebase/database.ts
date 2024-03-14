@@ -1,4 +1,4 @@
-import { type Record, type TemplateForms, Transaction } from '$lib/models/types';
+import { type Record, type Template, type TemplateForms, Transaction } from '$lib/models/types';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { db } from '$lib/firebase/firebase.client';
@@ -78,5 +78,28 @@ export async function addTemplate(data: TemplateForms) {
         await addDoc(collection(db, path), payload);
     } catch (e) {
         throw new Error('Failed adding template');
+    }
+}
+
+// This function is used to remove a template
+export async function removeTemplate(id: string) {
+    const path = `UserData/${session.uid()}/transaction-templates/${id}`;
+
+    try {
+        await deleteDoc(doc(db, path));
+    } catch (e) {
+        throw new Error('Failed removing template');
+    }
+}
+
+// This function is used to update an existing template
+export async function updateTemplate(template: Template) {
+    const path = `UserData/${session.uid()}/transaction-templates/${template.id}`;
+    const payload = { ...template, updatedAt: serverTimestamp() };
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating template');
     }
 }
