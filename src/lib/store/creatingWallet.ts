@@ -1,23 +1,26 @@
 import { getContext, hasContext, setContext } from 'svelte';
+import { get as getStore, writable } from 'svelte/store';
 import { Wallet } from '$lib/models/types';
-import { writable } from 'svelte/store';
 
 const CREATING = Symbol('creating');
 
-const initial = {
-    id: 0,
-    description: '',
-    amount: 0,
-    name: '',
-} satisfies Wallet;
-
+// TODO: create a store template
 function initStore() {
-    const creating = writable<Wallet>(structuredClone(initial));
-    function reset() {
-        creating.set(structuredClone(initial));
+    const store = writable<Partial<Wallet>>({});
+    const { set, subscribe } = store;
+
+    function values() {
+        return getStore(store);
     }
+
+    function reset() {
+        set({});
+    }
+
     return {
-        ...creating,
+        set,
+        subscribe,
+        values,
         reset,
     };
 }
