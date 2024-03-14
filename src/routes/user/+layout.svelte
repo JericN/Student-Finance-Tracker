@@ -7,7 +7,7 @@
 
     $: current = $page.url.pathname;
     $: transaction = current === '/user/transactions/create/' || current === '/user/transactions/edit/';
-    $: wallet = current === '/user/users/wallets/create/' || current === '/user/users/wallets/edit/';
+    $: wallet = current.startsWith('/user/users/wallets/');
 
     transactionStore.init();
 </script>

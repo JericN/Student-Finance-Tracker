@@ -1,6 +1,6 @@
 <script lang="ts">
     export let accent = 'bg-primary-900';
-    export let padding = '3px';
+    export let padding = 'px-4 py-2';
 </script>
 
 <div class={`${accent} border-default rounded-2xl`}>
