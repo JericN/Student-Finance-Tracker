@@ -1,7 +1,6 @@
 <script lang="ts">
     import * as editStore from '$lib/store/editingWallet';
-    import { type ToastSettings, getToastStore } from '@skeletonlabs/skeleton';
-    import { type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
+    import { type ToastSettings, getToastStore, type ModalSettings, getModalStore } from '@skeletonlabs/skeleton';
     import { pick, safeParse } from 'valibot';
     import Amount from '../Amount.svelte';
     import Name from '../Name.svelte'

@@ -2,7 +2,7 @@
     import * as EditStore from '$lib/store/editing';
     import { Record, Transaction } from '$lib/models/types';
     import { categories, wallets } from '$lib/data/preference';
-    import { error, success, type ModalSettings, getModalStore } from '$lib/funcs/toast';
+    import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTransaction, updateTransaction } from '$lib/firebase/database';
     import Amount from '$lib/components/transaction/Amount.svelte';
@@ -13,7 +13,7 @@
     import Description from '$lib/components/transaction/Description.svelte';
     import Type from '$lib/components/transaction/Type.svelte';
     import Wallet from '$lib/components/transaction/Wallet.svelte';
-    import { getToastStore } from '@skeletonlabs/skeleton';
+    import { getToastStore, getModalStore, type ModalSettings } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
@@ -40,13 +40,15 @@
         }
     }
 
-    async function remove() {
+    async function remove(r: boolean) {
         try {
-            const { id } = parse(pick(Transaction, ['id']), { id: $editStore.id });
-            await removeTransaction(id);
-            goto('/user/transactions');
-            editStore.reset();
-            toastStore.trigger(success('Transaction removed'));
+            if (r){
+                const { id } = parse(pick(Transaction, ['id']), { id: $editStore.id });
+                await removeTransaction(id);
+                goto('/user/transactions');
+                editStore.reset();
+                toastStore.trigger(success('Transaction removed'));
+            }
         } catch (_) {
             toastStore.trigger(error('Failed to remove transaction'));
         }
