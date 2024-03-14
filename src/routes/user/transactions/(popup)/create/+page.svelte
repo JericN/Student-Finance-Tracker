@@ -1,6 +1,7 @@
 <script lang="ts">
+    import * as walletStore from '$lib/store/wallet';
     import * as FormStore from '$lib/store/forms';
-    import { categories, wallets } from '$lib/data/preference';
+    import { categories } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import Amount from '$lib/components/forms/Amount.svelte';
@@ -18,6 +19,9 @@
 
     const toastStore = getToastStore();
     const createStore = FormStore.transactionCreate();
+    const walletList = walletStore.get()
+
+    $: wallets = $walletList.map((wallet)=>wallet.name);
 
     async function submit() {
         const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
