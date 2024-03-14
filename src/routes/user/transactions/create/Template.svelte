@@ -1,10 +1,9 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
     import * as TemplateStore from '$lib/store/template';
-    import type { SvelteComponent } from 'svelte';
-    import { PartialRecord, Template } from '$lib/models/types';
-
     import { ListBox, ListBoxItem, getModalStore } from '@skeletonlabs/skeleton';
+    import { PartialRecord, Template } from '$lib/models/types';
+    import type { SvelteComponent } from 'svelte';
     import { parse } from 'valibot';
 
     export let parent: SvelteComponent;
@@ -14,7 +13,6 @@
     const createStore = FormStore.transactionCreate();
 
     let selected: Template;
-    $: console.log(selected);
 
     function onFormSubmit(): void {
         const data = parse(PartialRecord, { ...selected, date: new Date() });

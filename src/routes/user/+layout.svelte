@@ -2,11 +2,10 @@
     import * as FormStore from '$lib/store/forms';
     import * as templateStore from '$lib/store/template';
     import * as transactionStore from '$lib/store/transaction';
-    import { AppShell } from '@skeletonlabs/skeleton';
+    import { AppShell, Modal } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
     import { page } from '$app/stores';
-    import { Modal } from '@skeletonlabs/skeleton';
 
     $: current = $page.url.pathname;
     $: transaction = current === '/user/transactions/create/' || current === '/user/transactions/edit/';

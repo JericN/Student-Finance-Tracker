@@ -1,6 +1,7 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
+    import { type ModalComponent, type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { categories, wallets } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
@@ -9,9 +10,7 @@
     import { Record } from '$lib/models/types';
     import Template from './Template.svelte';
     import { addTransaction } from '$lib/firebase/database';
-    import { getToastStore, type ModalComponent, type ModalSettings } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
-    import { ListBox, ListBoxItem, getModalStore } from '@skeletonlabs/skeleton';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
@@ -23,9 +22,6 @@
         type: 'component',
         component: modalComponent,
         title: 'Templates',
-        response: r => {
-            console.log(r);
-        },
     };
 
     async function submit() {
