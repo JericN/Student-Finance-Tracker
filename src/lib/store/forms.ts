@@ -1,4 +1,4 @@
-import { Record, Template, Transaction, Wallet } from '$lib/models/types';
+import { Record, Template, Transaction, Wallet, WalletRecord } from '$lib/models/types';
 import { type Store, initStore } from './model/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
 import { assert } from '$lib/assert';
@@ -13,7 +13,7 @@ const EDITTEMPLATE = Symbol('edittemplate');
 export function init() {
     setContext(CREATETRANSACTION, initStore<Record>());
     setContext(EDITTRANSACTION, initStore<Transaction>());
-    setContext(CREATEWALLET, initStore<Wallet>());
+    setContext(CREATEWALLET, initStore<WalletRecord>());
     setContext(EDITWALLET, initStore<Wallet>());
     setContext(CREATETEMPLATE, initStore<Template>());
     setContext(EDITTEMPLATE, initStore<Template>());
@@ -31,7 +31,7 @@ export function transactionEdit() {
 
 export function walletCreate() {
     assert(hasContext(CREATEWALLET), 'Create wallet store not initialized');
-    return getContext<Store<Wallet>>(CREATEWALLET);
+    return getContext<Store<WalletRecord>>(CREATEWALLET);
 }
 export function walletEdit() {
     assert(hasContext(EDITWALLET), 'Edit wallet store not initialized');

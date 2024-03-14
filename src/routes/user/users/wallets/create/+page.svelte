@@ -1,43 +1,40 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import { type ToastSettings, getToastStore } from '@skeletonlabs/skeleton';
-    import { pick, safeParse } from 'valibot';
+    import { getToastStore } from '@skeletonlabs/skeleton';
+    import { error, success } from '$lib/funcs/toast';
+    import { parse, pick, safeParse } from 'valibot';
     import Amount from '$lib/components/forms/Amount.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import Description from '$lib/components/forms/Description.svelte';
     import Name from '$lib/components/forms/Name.svelte';
-    import { Wallet } from '$lib/models/types';
+    import { addWallet } from '$lib/firebase/database';
+    import { WalletRecord } from '$lib/models/types';
     import { goto } from '$app/navigation';
 
     const toastStore = getToastStore();
     const createStore = FormStore.walletCreate();
 
-    function t(message: string): ToastSettings {
-        return {
-            message: message,
-            timeout: 2000,
-            background: 'variant-filled-error',
-        };
-    }
-
     // TODO: send post request to server
-    function create() {
-        if (!safeParse(pick(Wallet, ['name']), { name: $createStore.name }).success) {
-            toastStore.trigger(t('Invalid wallet name'));
-            return;
+    async function create() {
+        const properties: (keyof WalletRecord)[] = [ 'name', 'amount', 'description'];
+        
+        for (const property of properties) {
+            const result = safeParse(pick(WalletRecord, [property]), { [property]: $createStore[property] });
+            if (!result.success) {
+                toastStore.trigger(error(`Invalid ${property}`));
+                return;
+            }
         }
-        if (!safeParse(pick(Wallet, ['amount']), { amount: $createStore.amount }).success) {
-            toastStore.trigger(t('Invalid amount'));
-            return;
+
+        try {
+            await addWallet(parse(WalletRecord, $createStore));
+            goto('/user/users/wallets');
+            createStore.reset();
+            toastStore.trigger(success('Wallet added'));
+        } catch (_) {
+            toastStore.trigger(error('Failed to add wallet'));
         }
-        if (!safeParse(pick(Wallet, ['description']), { description: $createStore.description }).success) {
-            toastStore.trigger(t('Invalid description'));
-            return;
-        }
-        goto('/user/users/wallets');
-        createStore.reset();
-        toastStore.trigger(t('Wallet added'));
     }
 </script>
 

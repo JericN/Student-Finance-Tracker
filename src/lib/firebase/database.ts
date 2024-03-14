@@ -1,4 +1,4 @@
-import { type Record, Transaction } from '$lib/models/types';
+import { type Record, Transaction, Wallet, WalletRecord } from '$lib/models/types';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { db } from '$lib/firebase/firebase.client';
@@ -66,5 +66,58 @@ export async function getTransactions(): Promise<Transaction[]> {
         return transactions;
     } catch (e) {
         throw new Error('Failed retrieving transactions');
+    }
+}
+
+// This function is used to create a new wallet
+export async function addWallet(data: WalletRecord) {
+    const path = `UserData/${session.uid()}/wallets`;
+    const payload = data;
+    try {
+        await addDoc(collection(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed adding wallet');
+    }
+}
+
+// This function is used to remove a wallet
+export async function removeWallet(id: string) {
+    const path = `UserData/${session.uid()}/wallets/${id}`;
+
+    try {
+        await deleteDoc(doc(db, path));
+    } catch (e) {
+        throw new Error('Failed removing wallet');
+    }
+}
+
+// This function is used to update an existing wallet
+export async function updateWallet(wallet: Wallet) {
+    const path = `UserData/${session.uid()}/wallets/${wallet.id}`;
+    const payload = wallet;
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating wallet');
+    }
+}
+
+// This function is used to retrieve all wallets
+export async function getWallets(): Promise<Wallet[]> {
+    const docRef = collection(db, `UserData/${session.uid()}/wallets`);
+    const wallets: Wallet[] = [];
+
+    try {
+        const docSnap = await getDocs(docRef);
+        docSnap.forEach(doc => {
+            const value = { ...doc.data(), id: doc.id };
+            const json = safeParse(Wallet, value);
+            if (json.success) wallets.push(json.output);
+            else throw new Error('Failed parsing wallet');
+        });
+        return wallets;
+    } catch (e) {
+        throw new Error('Failed retrieving wallets');
     }
 }
