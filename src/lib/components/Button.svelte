@@ -5,6 +5,7 @@
     export let padding = 'px-4 py-2';
     export let width = 'w-fit';
     export let background = 'bg-surface-100';
+    export let layout = '';
 </script>
 
 <!-- <div class={`${accent} ${width} border-default rounded-2xl`}>
@@ -19,9 +20,10 @@
     <div class={twMerge('border-default translate-x-1', accent)}>
         <button
             class={twMerge(
-                'border-default w-full -translate-x-1.5 -translate-y-1 scale-101 p-4 active:translate-x-0 active:translate-y-0',
+                'border-default flex w-full -translate-x-1.5 -translate-y-1 scale-101 items-center justify-center p-4 active:translate-x-0 active:translate-y-0',
                 background,
                 padding,
+                layout,
             )}
             on:click
         >
