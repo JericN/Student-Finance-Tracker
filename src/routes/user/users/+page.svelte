@@ -24,6 +24,9 @@
         <div>Add/remove Wallet</div>
         <div>Edit Wallet</div>
     </Entry>
+    <Entry link="templates" title="My Templates">
+        <div>Manage templates</div>
+    </Entry>
 
     <Entry title="Wishlist">
         <div>Add/remove Wishlist Item</div>
