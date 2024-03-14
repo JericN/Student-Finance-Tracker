@@ -61,7 +61,7 @@ export type Template = Output<typeof Template>;
 export type PartialTemplate = Partial<Output<typeof Template>>;
 
 export const Wallet = object({
-    id: number([safeInteger()]),
+    id: string([length(20)]),
     name: string([minLength(3), maxLength(30)]),
     amount: number([safeInteger(), minValue(0)]),
     description: optional(string([maxLength(50)])),

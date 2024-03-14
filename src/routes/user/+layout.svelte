@@ -1,6 +1,7 @@
 <script>
     import * as templateStore from '$lib/store/template';
     import * as transactionStore from '$lib/store/transaction';
+    import * as walletStore from '$lib/store/wallet'
     import { AppShell } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
@@ -13,6 +14,7 @@
 
     transactionStore.init();
     templateStore.init();
+    walletStore.init();
 </script>
 
 <AppShell>
