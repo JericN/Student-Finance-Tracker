@@ -2,11 +2,11 @@
     import * as createStore from '$lib/store/creatingWallet';
     import { type ToastSettings, getToastStore } from '@skeletonlabs/skeleton';
     import { pick, safeParse } from 'valibot';
-    import Amount from '../Amount.svelte';
+    import Amount from '$lib/components/transaction/Amount.svelte';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import Description from '../Description.svelte';
-    import Name from '../Name.svelte';
+    import Description from '$lib/components/transaction/Description.svelte';
+    import Name from '$lib/components/transaction/Name.svelte';
     import { Wallet } from '$lib/models/types';
     import { goto } from '$app/navigation';
 

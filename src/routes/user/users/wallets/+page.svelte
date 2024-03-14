@@ -16,15 +16,22 @@
         goto('/user/users/wallets/edit/');
     }
 
+    function add() {
+        goto('/user/users/wallets/create/');
+    }
+
     export let wallets: Wallet[] = dummyData;
 </script>
 
-<div class="flex h-full flex-col items-center justify-center gap-10 p-10">
-    <Entry title="Add a wallet" link="create">
-        <div class="h-8 w-8 rounded-lg border-2 bg-surface-300">➕</div>
-    </Entry>
+<div class="flex h-full flex-col items-center gap-2 p-10">
+    <Card width="max-w-sm" accent="bg-expense">
+        <button class="flex w-full items-center justify-between" on:click={add}>
+            <div class="text-4x1 font-bold text-dark">Add Wallet</div>
+            <div class="border-small border-surface-300 p-[1px]">➕</div>
+        </button>
+    </Card>
 
-    {#each wallets as { name, amount, description }, id}
+    {#each wallets as { name, amount }, id}
         <Card width="max-w-screen-sm" padding="px-6">
             <a href={null} on:click={() => edit(wallets[id])}>
                 <div class="flex justify-between text-dark">
@@ -35,9 +42,6 @@
                     <div class="my-auto text-2xl font-bold">
                         {currency(amount)}
                     </div>
-                </div>
-                <div class="flex flex-col items-center">
-                    <div class="text-s">{description ?? ''}</div>
                 </div>
             </a>
         </Card>
