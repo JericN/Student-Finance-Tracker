@@ -5,8 +5,7 @@
     import { currency } from '$lib/funcs/helper';
     import { goto } from '$app/navigation';
     import { session } from '$lib/store/session';
-
-    // eslint-disable-next-line init-declarations
+    import { signOutUser } from '$lib/firebase/auth';
 </script>
 
 <div class="flex h-full flex-col items-center justify-center gap-10 p-10">
@@ -42,7 +41,7 @@
 
     <Button
         on:click={() => {
-            // $session.auth = false;
+            signOutUser();
             goto('/auth/login');
         }}
     >
