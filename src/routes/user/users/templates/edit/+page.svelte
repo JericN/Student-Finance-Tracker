@@ -1,8 +1,9 @@
 <script lang="ts">
+    import * as walletStore from '$lib/store/wallet';
     import * as FormStore from '$lib/store/forms';
     import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { categories, wallets } from '$lib/data/preference';
+    import { categories } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTemplate, updateTemplate } from '$lib/firebase/database';
@@ -14,6 +15,9 @@
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
+    const walletList = walletStore.get()
+
+    $: wallets = $walletList.map((wallet)=>wallet.name);
     const forms = FormStore.templateEdit();
 
     async function update() {
