@@ -1,15 +1,12 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import Card from '$lib/components/Card.svelte';
+    import { goto } from '$app/navigation';
 
     export let title: string;
     export let link = false as string | boolean;
 
     function redir() {
-        if (link) {
-            console.log(link);
-            goto(`/user/users/${link}`);
-        }
+        if (link) goto(`/user/users/${link}`);
     }
 </script>
 

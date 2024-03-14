@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { LightSwitch } from '@skeletonlabs/skeleton';
+    import Button from '$lib/components/Button.svelte';
     import Entry from './Entry.svelte';
+    import { LightSwitch } from '@skeletonlabs/skeleton';
+    import { currency } from '$lib/funcs/helper';
     import { goto } from '$app/navigation';
     import { session } from '$lib/store/session';
-    import { currency } from '$lib/funcs/helper';
-    import Button from '$lib/components/Button.svelte';
 
     // eslint-disable-next-line init-declarations
 </script>

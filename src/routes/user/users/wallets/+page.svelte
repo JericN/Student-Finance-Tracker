@@ -3,7 +3,6 @@
     import Card from '$lib/components/Card.svelte';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import Entry from '../Entry.svelte';
     import { type Wallet } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
     import { wallets as dummyData } from '$lib/data/dummy';
