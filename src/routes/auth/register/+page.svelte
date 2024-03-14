@@ -1,5 +1,6 @@
 <script lang="ts">
     import { error, success } from '$lib/funcs/toast';
+    import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
@@ -15,7 +16,7 @@
         try {
             await registerWithMail(username, email, password);
             toast.trigger(success('Register Successful'));
-            goto('/user/dashboard');
+            goto('/user/dashboard/');
         } catch (_) {
             toast.trigger(error('Register Failed'));
         }
@@ -32,9 +33,7 @@
         </div>
 
         <div class="flex font-bold text-primary-900">
-            <Card width="full" accent="bg-expense" padding="p-2">
-                <button on:click={register} class="w-full">Register</button>
-            </Card>
+            <Button width="full" accent="bg-expense" padding="p-2" on:click={register}>Register</Button>
         </div>
     </Card>
     <a href="/auth/login" class="underline">Return to Login</a>
