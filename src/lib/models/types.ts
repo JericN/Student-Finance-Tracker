@@ -5,7 +5,6 @@ import {
     date,
     email,
     enum_,
-    intersect,
     length,
     maxLength,
     maxValue,
@@ -16,7 +15,6 @@ import {
     object,
     omit,
     optional,
-    pick,
     safeInteger,
     string,
 } from 'valibot';
@@ -53,12 +51,22 @@ export type Record = Output<typeof Record>;
 export type PartialRecord = Partial<Output<typeof Record>>;
 
 // This is used for validating a transaction template
-export const Template = intersect([
-    pick(Transaction, ['id', 'type', 'amount', 'category', 'wallet', 'description']),
-    object({ name: string([maxLength(30)]) }),
-]);
+export const Template = object({
+    id: string([length(20)]),
+    createdAt: DateSchema,
+    updatedAt: DateSchema,
+    name: string([minLength(3), maxLength(30)]),
+    type: enum_(TransactionType),
+    amount: number([safeInteger(), minValue(1)]),
+    category: string([maxLength(30)]),
+    wallet: string([maxLength(30)]),
+    description: optional(string([maxLength(50)]), ''),
+});
 export type Template = Output<typeof Template>;
-export type PartialTemplate = Partial<Output<typeof Template>>;
+
+export const TemplateForms = omit(Template, ['id', 'createdAt', 'updatedAt']);
+export type TemplateForms = Output<typeof TemplateForms>;
+export type PartialTemplateForms = Partial<Output<typeof TemplateForms>>;
 
 export const Wallet = object({
     id: number([safeInteger()]),

@@ -1,13 +1,13 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import { type PartialTemplate, TransactionType } from '$lib/models/types';
+    import { type TemplateForms, TransactionType } from '$lib/models/types';
     import Button from '$lib/components/Button.svelte';
     import { currency } from '$lib/funcs/helper';
     import { goto } from '$app/navigation';
 
     const editStore = FormStore.templateEdit();
 
-    function edit(entries: PartialTemplate) {
+    function edit(entries: TemplateForms) {
         editStore.set(entries);
         goto('/user/users/templates/edit/');
     }
@@ -41,7 +41,7 @@
             wallet: 'Bank',
             description: 'Yeyyy',
         },
-    ] satisfies PartialTemplate[];
+    ] satisfies TemplateForms[];
 </script>
 
 <div class="flex h-full flex-col items-center gap-2 p-10">

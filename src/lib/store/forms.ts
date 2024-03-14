@@ -1,4 +1,4 @@
-import { Record, Template, Transaction, Wallet } from '$lib/models/types';
+import { Record, Template, TemplateForms, Transaction, Wallet } from '$lib/models/types';
 import { type Store, initStore } from './model/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
 import { assert } from '$lib/assert';
@@ -40,7 +40,7 @@ export function walletEdit() {
 
 export function templateCreate() {
     assert(hasContext(CREATETEMPLATE), 'Create template store not initialized');
-    return getContext<Store<Template>>(CREATETEMPLATE);
+    return getContext<Store<TemplateForms>>(CREATETEMPLATE);
 }
 
 export function templateEdit() {
