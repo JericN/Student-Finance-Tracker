@@ -3,7 +3,7 @@
     import Card from '$lib/components/Card.svelte';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import SettingsCard from '../../SettingsCard.svelte';
+    import Entry from '../Entry.svelte';
     import { type Wallet } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
     import { wallets as dummyData } from '$lib/data/dummy';
@@ -38,9 +38,9 @@
 <div class="flex h-full flex-col items-center justify-center gap-10">
     <div class="text-xl font-bold">Wallets</div>
 
-    <SettingsCard title="Add a wallet" link="create">
+    <Entry title="Add a wallet" link="create">
         <div class="h-8 w-8 rounded-lg border-2 bg-surface-300">➕</div>
-    </SettingsCard>
+    </Entry>
 
     {#each wallets as { name, amount, description }, id}
         <a class={cardWidth} href={null} on:click={() => edit(wallets[id])}>
