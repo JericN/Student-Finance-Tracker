@@ -2,7 +2,7 @@
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 
     export let wallets: string[];
-    export let wallet: string;
+    export let wallet: string | undefined;
 
     let deviceWidth = window.innerWidth;
     window.addEventListener('resize', () => {

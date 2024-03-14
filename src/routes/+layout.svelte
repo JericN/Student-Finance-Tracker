@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import '../app.postcss';
     import * as createStore from '$lib/store/creating';
     import * as editStore from '$lib/store/editing';
@@ -18,6 +18,6 @@
     });
 </script>
 
-<Toast />
+<Toast position="t" />
 <Modal />
 <slot />

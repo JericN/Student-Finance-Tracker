@@ -7,7 +7,8 @@
     export let balance: number;
 </script>
 
-<Card width={'min-w-max'} padding="px-6">
+<!-- TO FIX -->
+<Card width="max-w-sm" padding="px-6">
     <div class="text-center text-surface-900">
         <div class="grid grid-cols-3 gap-x-10 font-bold">
             <div class="text-xs">Income</div>
