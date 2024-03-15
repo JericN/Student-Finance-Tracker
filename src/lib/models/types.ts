@@ -57,7 +57,7 @@ export const Template = object({
     id: string([length(20)]),
     createdAt: DateSchema,
     updatedAt: DateSchema,
-    name: string([minLength(3), maxLength(30)]),
+    name: string([minLength(3), maxLength(12)]),
     type: enum_(TransactionType),
     amount: number([safeInteger(), minValue(1)]),
     category: string([maxLength(30)]),
@@ -71,12 +71,17 @@ export type TemplateForms = Output<typeof TemplateForms>;
 export type PartialTemplateForms = Partial<Output<typeof TemplateForms>>;
 
 export const Wallet = object({
-    id: number([safeInteger()]),
-    name: string([minLength(3), maxLength(30)]),
+    id: string([length(20)]),
+    createdAt: DateSchema,
+    updatedAt: DateSchema,
+    name: string([minLength(3), maxLength(10)]),
     amount: number([safeInteger(), minValue(0)]),
     description: optional(string([maxLength(50)])),
 });
 export type Wallet = Output<typeof Wallet>;
+
+export const WalletRecord = omit(Wallet, ['id', 'createdAt', 'updatedAt']);
+export type WalletRecord = Output<typeof WalletRecord>;
 
 export const Session = object({
     loggedIn: boolean(),

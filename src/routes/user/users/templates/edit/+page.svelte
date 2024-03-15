@@ -1,8 +1,8 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
+    import * as walletStore from '$lib/store/wallet';
     import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { categories, wallets } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTemplate, updateTemplate } from '$lib/firebase/database';
@@ -10,10 +10,13 @@
     import Card from '$lib/components/Card.svelte';
     import Name from '$lib/components/forms/Name.svelte';
     import { Template } from '$lib/models/types';
-    import { goto } from '$app/navigation';
+    import { categories } from '$lib/data/preference';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
+    const walletList = walletStore.get();
+
+    $: wallets = $walletList.map(wallet => wallet.name);
     const forms = FormStore.templateEdit();
 
     async function update() {
@@ -28,7 +31,9 @@
         }
         try {
             await updateTemplate(parse(Template, $forms));
-            goto('/user/users/templates/');
+            // goto('/user/users/templates/');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             forms.reset();
             toastStore.trigger(success('Template updated'));
         } catch (_) {
@@ -36,12 +41,14 @@
         }
     }
 
-    async function remove(r: boolean) {
-        if (!r) return;
+    async function remove(flag: boolean) {
+        if (!flag) return;
         try {
             const { id } = parse(pick(Template, ['id']), { id: $forms.id });
             await removeTemplate(id);
-            goto('/user/users/templates/');
+            // goto('/user/users/templates/');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             forms.reset();
             toastStore.trigger(success('Template removed'));
         } catch (_) {

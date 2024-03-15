@@ -1,7 +1,7 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
+    import * as walletStore from '$lib/store/wallet';
     import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
-    import { categories, wallets } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import Button from '$lib/components/Button.svelte';
@@ -9,10 +9,13 @@
     import Name from '$lib/components/forms/Name.svelte';
     import { TemplateForms } from '$lib/models/types';
     import { addTemplate } from '$lib/firebase/database';
+    import { categories } from '$lib/data/preference';
     import { getToastStore } from '@skeletonlabs/skeleton';
-    import { goto } from '$app/navigation';
 
     const toastStore = getToastStore();
+    const walletList = walletStore.get();
+
+    $: wallets = $walletList.map(wallet => wallet.name);
     const forms = FormStore.templateCreate();
 
     async function submit() {
@@ -27,7 +30,9 @@
         }
         try {
             await addTemplate(parse(TemplateForms, $forms));
-            goto('/user/users/templates/');
+            // goto('/user/users/templates/');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             forms.reset();
             toastStore.trigger(success('Template added'));
         } catch (_) {

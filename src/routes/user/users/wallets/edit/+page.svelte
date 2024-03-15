@@ -2,11 +2,12 @@
     import * as FormStore from '$lib/store/forms';
     import { Amount, Description, Name } from '$lib/components/forms';
     import { type ModalSettings, type ToastSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { pick, safeParse } from 'valibot';
+    import { Wallet, WalletRecord } from '$lib/models/types';
+    import { error, success } from '$lib/funcs/toast';
+    import { parse, pick, safeParse } from 'valibot';
+    import { removeWallet, updateWallet } from '$lib/firebase/database';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import { Wallet } from '$lib/models/types';
-    import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
@@ -21,10 +22,18 @@
         };
     }
 
-    function remove(r: boolean) {
-        if (r) {
-            goto('/user/users/wallets');
-            toastStore.trigger(t('Wallet removed'));
+    async function remove(flag: boolean) {
+        if (!flag) return;
+        try {
+            const { id } = parse(pick(Wallet, ['id']), { id: $editStore.id });
+            await removeWallet(id);
+            // goto('/user/users/wallets');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
+            editStore.reset();
+            toastStore.trigger(success('Wallet removed'));
+        } catch (_) {
+            toastStore.trigger(error('Failed to remove wallet'));
         }
     }
 
@@ -35,23 +44,26 @@
         response: (r: boolean) => remove(r),
     };
 
-    // TODO: send post request to server
-    function update() {
-        if (!safeParse(pick(Wallet, ['name']), { name: $editStore.name }).success) {
-            toastStore.trigger(t('Invalid wallet name'));
-            return;
+    async function update() {
+        const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
+        for (const property of properties) {
+            const result = safeParse(pick(WalletRecord, [property]), { [property]: $editStore[property] });
+            if (!result.success) {
+                toastStore.trigger(error(`Invalid ${property}`));
+                return;
+            }
         }
-        if (!safeParse(pick(Wallet, ['amount']), { amount: $editStore.amount }).success) {
-            toastStore.trigger(t('Invalid amount'));
-            return;
+
+        try {
+            await updateWallet(parse(Wallet, $editStore));
+            // goto('/user/users/wallets');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
+            editStore.reset();
+            toastStore.trigger(t('Wallet updated'));
+        } catch (_) {
+            toastStore.trigger(error('Failed to update wallet'));
         }
-        if (!safeParse(pick(Wallet, ['description']), { description: $editStore.description }).success) {
-            toastStore.trigger(t('Invalid description'));
-            return;
-        }
-        goto('/user/users/wallets');
-        editStore.reset();
-        toastStore.trigger(t('Wallet added'));
     }
 
     onDestroy(() => {

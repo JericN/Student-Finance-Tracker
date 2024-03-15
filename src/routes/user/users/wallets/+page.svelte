@@ -1,25 +1,24 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
+    import * as walletStore from '$lib/store/wallet';
     import Card from '$lib/components/Card.svelte';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { type Wallet } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
-    import { wallets as dummyData } from '$lib/data/dummy';
     import { goto } from '$app/navigation';
 
+    const walletList = walletStore.get();
     const editStore = FormStore.walletEdit();
 
-    function edit(entries: Wallet) {
-        editStore.set(entries);
+    function edit(entry: Wallet) {
+        editStore.set(structuredClone(entry));
         goto('/user/users/wallets/edit/');
     }
 
     function add() {
         goto('/user/users/wallets/create/');
     }
-
-    export let wallets: Wallet[] = dummyData;
 </script>
 
 <div class="flex h-full flex-col items-center gap-2 p-10">
@@ -30,9 +29,9 @@
         </button>
     </Card>
 
-    {#each wallets as { name, amount }, id}
+    {#each $walletList as { name, amount }, id}
         <Card width="max-w-screen-sm" padding="px-6">
-            <a href={null} on:click={() => edit(wallets[id])}>
+            <a href={null} on:click={() => edit($walletList[id])}>
                 <div class="flex justify-between text-dark">
                     <div class="flex flex-col items-center">
                         <Icon src={CreditCard} class="w-8" />
