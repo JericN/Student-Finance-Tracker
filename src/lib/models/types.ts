@@ -83,6 +83,19 @@ export type Wallet = Output<typeof Wallet>;
 export const WalletRecord = omit(Wallet, ['id', 'createdAt', 'updatedAt']);
 export type WalletRecord = Output<typeof WalletRecord>;
 
+export const Category = object({
+    id: string([length(20)]),
+    createdAt: DateSchema,
+    updatedAt: DateSchema,
+    name: string([minLength(3), maxLength(10)]),
+    icon: string([minLength(1), maxLength(10)]),
+    description: optional(string([maxLength(50)])),
+});
+export type Category = Output<typeof Category>;
+
+export const CategoryForm = omit(Category, ['id', 'createdAt', 'updatedAt']);
+export type CategoryForm = Output<typeof CategoryForm>;
+
 export const Session = object({
     loggedIn: boolean(),
     username: nullish(string()),
