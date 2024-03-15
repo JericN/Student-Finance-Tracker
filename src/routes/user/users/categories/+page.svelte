@@ -2,8 +2,8 @@
     import * as FormStore from '$lib/store/forms';
     import * as categoryStore from '$lib/store/category';
     import Button from '$lib/components/Button.svelte';
-    import { goto } from '$app/navigation';
     import { TransactionType } from '$lib/models/types';
+    import { goto } from '$app/navigation';
 
     const forms = FormStore.categoryEdit();
     const categories = categoryStore.get();
