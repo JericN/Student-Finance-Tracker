@@ -44,7 +44,6 @@
         response: (r: boolean) => remove(r),
     };
 
-    // TODO: send post request to server
     async function update() {
         const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
         for (const property of properties) {

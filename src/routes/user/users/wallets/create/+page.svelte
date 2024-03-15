@@ -13,7 +13,6 @@
     const toastStore = getToastStore();
     const createStore = FormStore.walletCreate();
 
-    // TODO: send post request to server
     async function create() {
         const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
 
