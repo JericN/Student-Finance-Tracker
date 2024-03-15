@@ -1,5 +1,6 @@
 <script>
     import * as FormStore from '$lib/store/forms';
+    import * as categoryStore from '$lib/store/category';
     import * as templateStore from '$lib/store/template';
     import * as transactionStore from '$lib/store/transaction';
     import * as walletStore from '$lib/store/wallet';
@@ -12,8 +13,10 @@
     $: transaction = current === '/user/transactions/create/' || current === '/user/transactions/edit/';
     $: wallet = current.startsWith('/user/users/wallets/');
     $: template = current.startsWith('/user/users/templates/');
+    $: category = current.startsWith('/user/users/categories/');
 
     FormStore.init();
+    categoryStore.init();
     templateStore.init();
     transactionStore.init();
     templateStore.init();
@@ -29,6 +32,8 @@
             <Header title="Wallets" />
         {:else if template}
             <Header title="Templates" />
+        {:else if category}
+            <Header title="Categories" />
         {/if}
     </div>
     <slot />
