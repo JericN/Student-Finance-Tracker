@@ -8,7 +8,6 @@
     import { WalletRecord } from '$lib/models/types';
     import { addWallet } from '$lib/firebase/database';
     import { getToastStore } from '@skeletonlabs/skeleton';
-    import { goto } from '$app/navigation';
 
     const toastStore = getToastStore();
     const createStore = FormStore.walletCreate();

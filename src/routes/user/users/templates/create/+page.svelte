@@ -11,7 +11,6 @@
     import { addTemplate } from '$lib/firebase/database';
     import { categories } from '$lib/data/preference';
     import { getToastStore } from '@skeletonlabs/skeleton';
-    import { goto } from '$app/navigation';
 
     const toastStore = getToastStore();
     const walletList = walletStore.get();

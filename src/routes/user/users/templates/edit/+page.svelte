@@ -11,7 +11,6 @@
     import Name from '$lib/components/forms/Name.svelte';
     import { Template } from '$lib/models/types';
     import { categories } from '$lib/data/preference';
-    import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();

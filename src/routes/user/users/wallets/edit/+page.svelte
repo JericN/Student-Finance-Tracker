@@ -8,7 +8,6 @@
     import { removeWallet, updateWallet } from '$lib/firebase/database';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
