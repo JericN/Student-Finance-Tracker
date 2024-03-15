@@ -23,15 +23,16 @@
         };
     }
 
-    async function remove(r: boolean) {
+    async function remove(flag: boolean) {
+        if (!flag) return;
         try {
-            if (r) {
-                const { id } = parse(pick(Wallet, ['id']), { id: $editStore.id });
-                await removeWallet(id);
-                goto('/user/users/wallets');
-                editStore.reset();
-                toastStore.trigger(success('Wallet removed'));
-            }
+            const { id } = parse(pick(Wallet, ['id']), { id: $editStore.id });
+            await removeWallet(id);
+            // goto('/user/users/wallets');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
+            editStore.reset();
+            toastStore.trigger(success('Wallet removed'));
         } catch (_) {
             toastStore.trigger(error('Failed to remove wallet'));
         }
@@ -56,7 +57,9 @@
 
         try {
             await updateWallet(parse(Wallet, $editStore));
-            goto('/user/users/wallets');
+            // goto('/user/users/wallets');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             editStore.reset();
             toastStore.trigger(t('Wallet updated'));
         } catch (_) {

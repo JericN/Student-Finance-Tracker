@@ -31,7 +31,9 @@
         }
         try {
             await addTemplate(parse(TemplateForms, $forms));
-            goto('/user/users/templates/');
+            // goto('/user/users/templates/');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             forms.reset();
             toastStore.trigger(success('Template added'));
         } catch (_) {

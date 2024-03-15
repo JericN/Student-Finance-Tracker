@@ -32,7 +32,9 @@
         }
         try {
             await updateTemplate(parse(Template, $forms));
-            goto('/user/users/templates/');
+            // goto('/user/users/templates/');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             forms.reset();
             toastStore.trigger(success('Template updated'));
         } catch (_) {
@@ -40,12 +42,14 @@
         }
     }
 
-    async function remove(r: boolean) {
-        if (!r) return;
+    async function remove(flag: boolean) {
+        if (!flag) return;
         try {
             const { id } = parse(pick(Template, ['id']), { id: $forms.id });
             await removeTemplate(id);
-            goto('/user/users/templates/');
+            // goto('/user/users/templates/');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             forms.reset();
             toastStore.trigger(success('Template removed'));
         } catch (_) {

@@ -26,7 +26,9 @@
 
         try {
             await addWallet(parse(WalletRecord, $createStore));
-            goto('/user/users/wallets');
+            // goto('/user/users/wallets');
+            // FIXME: This is a temporary fix until we have a proper way to navigate
+            window.history.back();
             createStore.reset();
             toastStore.trigger(success('Wallet added'));
         } catch (_) {
