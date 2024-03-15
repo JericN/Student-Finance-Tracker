@@ -11,16 +11,14 @@
     const walletList = walletStore.get();
     const editStore = FormStore.walletEdit();
 
-    function edit(entries: Wallet) {
-        editStore.set(entries);
+    function edit(entry: Wallet) {
+        editStore.set(structuredClone(entry));
         goto('/user/users/wallets/edit/');
     }
 
     function add() {
         goto('/user/users/wallets/create/');
     }
-
-    $: wallets = $walletList;
 </script>
 
 <div class="flex h-full flex-col items-center gap-2 p-10">
@@ -31,9 +29,9 @@
         </button>
     </Card>
 
-    {#each wallets as { name, amount }, id}
+    {#each $walletList as { name, amount }, id}
         <Card width="max-w-screen-sm" padding="px-6">
-            <a href={null} on:click={() => edit(wallets[id])}>
+            <a href={null} on:click={() => edit($walletList[id])}>
                 <div class="flex justify-between text-dark">
                     <div class="flex flex-col items-center">
                         <Icon src={CreditCard} class="w-8" />
