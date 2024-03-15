@@ -1,4 +1,13 @@
-import { Record, Template, TemplateForms, Transaction, Wallet, WalletRecord } from '$lib/models/types';
+import {
+    Category,
+    CategoryForm,
+    Record,
+    Template,
+    TemplateForms,
+    Transaction,
+    Wallet,
+    WalletRecord,
+} from '$lib/models/types';
 import { type Store, initStore } from './model/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
 import { assert } from '$lib/assert';
@@ -9,6 +18,8 @@ const CREATEWALLET = Symbol('createwallet');
 const EDITWALLET = Symbol('editwallet');
 const CREATETEMPLATE = Symbol('createtemplate');
 const EDITTEMPLATE = Symbol('edittemplate');
+const CREATECATEGORY = Symbol('createcategory');
+const EDITCATEGORY = Symbol('editcategory');
 
 export function init() {
     setContext(CREATETRANSACTION, initStore<Record>());
@@ -17,6 +28,8 @@ export function init() {
     setContext(EDITWALLET, initStore<Wallet>());
     setContext(CREATETEMPLATE, initStore<Template>());
     setContext(EDITTEMPLATE, initStore<Template>());
+    setContext(CREATECATEGORY, initStore<Record>());
+    setContext(EDITCATEGORY, initStore<Record>());
 }
 
 export function transactionCreate() {
@@ -46,4 +59,14 @@ export function templateCreate() {
 export function templateEdit() {
     assert(hasContext(EDITTEMPLATE), 'Edit template store not initialized');
     return getContext<Store<Template>>(EDITTEMPLATE);
+}
+
+export function categoryCreate() {
+    assert(hasContext(CREATECATEGORY), 'Create category store not initialized');
+    return getContext<Store<CategoryForm>>(CREATECATEGORY);
+}
+
+export function categoryEdit() {
+    assert(hasContext(EDITCATEGORY), 'Edit category store not initialized');
+    return getContext<Store<Category>>(EDITCATEGORY);
 }

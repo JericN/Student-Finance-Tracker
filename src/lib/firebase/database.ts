@@ -1,4 +1,13 @@
-import { type Record, type Template, type TemplateForms, Transaction, Wallet, WalletRecord } from '$lib/models/types';
+import {
+    Category,
+    CategoryForm,
+    type Record,
+    type Template,
+    type TemplateForms,
+    Transaction,
+    Wallet,
+    WalletRecord,
+} from '$lib/models/types';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { db } from '$lib/firebase/firebase.client';
@@ -154,5 +163,40 @@ export async function getWallets(): Promise<Wallet[]> {
         return wallets;
     } catch (e) {
         throw new Error('Failed retrieving wallets');
+    }
+}
+
+// This function is used to create a new category
+export async function addCategory(category: CategoryForm) {
+    const path = `UserData/${session.uid()}/categories`;
+    const payload = { ...category, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
+
+    try {
+        await addDoc(collection(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed adding category');
+    }
+}
+
+// This function is used to remove a category
+export async function removeCategory(id: string) {
+    const path = `UserData/${session.uid()}/categories/${id}`;
+
+    try {
+        await deleteDoc(doc(db, path));
+    } catch (e) {
+        throw new Error('Failed removing category');
+    }
+}
+
+// This function is used to update an existing category
+export async function updateCategory(category: Category) {
+    const path = `UserData/${session.uid()}/categories/${category.id}`;
+    const payload = { ...category, updatedAt: serverTimestamp() };
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating category');
     }
 }
