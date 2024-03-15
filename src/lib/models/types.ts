@@ -87,6 +87,7 @@ export const Category = object({
     id: string([length(20)]),
     createdAt: DateSchema,
     updatedAt: DateSchema,
+    type: enum_(TransactionType),
     name: string([minLength(3), maxLength(10)]),
     icon: string([minLength(1), maxLength(10)]),
     description: optional(string([maxLength(50)])),

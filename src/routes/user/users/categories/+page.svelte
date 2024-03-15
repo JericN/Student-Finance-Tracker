@@ -3,6 +3,7 @@
     import * as categoryStore from '$lib/store/category';
     import Button from '$lib/components/Button.svelte';
     import { goto } from '$app/navigation';
+    import { TransactionType } from '$lib/models/types';
 
     const forms = FormStore.categoryEdit();
     const categories = categoryStore.get();
@@ -23,9 +24,15 @@
         <div>➕</div>
     </Button>
 
-    {#each $categories as { name, icon }, id}
-        <Button width="max-w-screen-sm" padding="p-4" layout="justify-between" on:click={() => editTemplate(id)}>
-            <div class="border-small bg-surface-400 p-0.5">{icon}</div>
+    {#each $categories as { name, icon, type }, id}
+        <Button
+            width="max-w-screen-sm"
+            padding="p-4"
+            layout="justify-between"
+            accent={type === TransactionType.Expense ? 'bg-expense' : 'bg-income'}
+            on:click={() => editTemplate(id)}
+        >
+            <div class="border-small size-8 bg-surface-400 p-0.5">{icon}</div>
             <div class="text-2xl font-bold text-dark">{name}</div>
         </Button>
     {/each}

@@ -1,6 +1,6 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import { Description, Icon, Name } from '$lib/components/forms';
+    import { Description, Icon, Name, Type } from '$lib/components/forms';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import Button from '$lib/components/Button.svelte';
@@ -38,6 +38,7 @@
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
+            <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Icon bind:icon={$forms.icon} />
         </div>
