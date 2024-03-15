@@ -70,9 +70,9 @@ export async function getTransactions(): Promise<Transaction[]> {
 }
 
 // This function is used to create a new template
-export async function addTemplate(data: TemplateForms) {
+export async function addTemplate(template: TemplateForms) {
     const path = `UserData/${session.uid()}/transaction-templates`;
-    const payload = { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
+    const payload = { ...template, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
 
     try {
         await addDoc(collection(db, path), payload);
@@ -105,9 +105,9 @@ export async function updateTemplate(template: Template) {
 }
 
 // This function is used to create a new wallet
-export async function addWallet(data: WalletRecord) {
+export async function addWallet(wallet: WalletRecord) {
     const path = `UserData/${session.uid()}/wallets`;
-    const payload = data;
+    const payload = { ...wallet, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
     try {
         await addDoc(collection(db, path), payload);
     } catch (e) {
@@ -129,7 +129,7 @@ export async function removeWallet(id: string) {
 // This function is used to update an existing wallet
 export async function updateWallet(wallet: Wallet) {
     const path = `UserData/${session.uid()}/wallets/${wallet.id}`;
-    const payload = wallet;
+    const payload = { ...wallet, updatedAt: serverTimestamp() };
 
     try {
         await setDoc(doc(db, path), payload);
