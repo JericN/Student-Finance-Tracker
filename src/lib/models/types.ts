@@ -79,7 +79,7 @@ export const Wallet = object({
 export type Wallet = Output<typeof Wallet>;
 
 export const WalletRecord = omit(Wallet, ['id']);
-export type WalletRecord = Output<typeof WalletRecord>
+export type WalletRecord = Output<typeof WalletRecord>;
 
 export const Session = object({
     loggedIn: boolean(),

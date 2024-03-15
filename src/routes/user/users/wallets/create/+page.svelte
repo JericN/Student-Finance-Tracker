@@ -1,13 +1,13 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
     import { Amount, Description, Name } from '$lib/components/forms';
-    import { getToastStore } from '@skeletonlabs/skeleton';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import { addWallet } from '$lib/firebase/database';
     import { WalletRecord } from '$lib/models/types';
+    import { addWallet } from '$lib/firebase/database';
+    import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
 
     const toastStore = getToastStore();
@@ -15,8 +15,8 @@
 
     // TODO: send post request to server
     async function create() {
-        const properties: (keyof WalletRecord)[] = [ 'name', 'amount', 'description'];
-        
+        const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
+
         for (const property of properties) {
             const result = safeParse(pick(WalletRecord, [property]), { [property]: $createStore[property] });
             if (!result.success) {

@@ -1,6 +1,6 @@
 <script lang="ts">
-    import * as walletStore from '$lib/store/wallet';
     import * as FormStore from '$lib/store/forms';
+    import * as walletStore from '$lib/store/wallet';
     import Card from '$lib/components/Card.svelte';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
@@ -8,7 +8,7 @@
     import { currency } from '$lib/funcs/helper';
     import { goto } from '$app/navigation';
 
-    const walletList = walletStore.get()
+    const walletList = walletStore.get();
     const editStore = FormStore.walletEdit();
 
     function edit(entries: Wallet) {

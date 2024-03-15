@@ -1,23 +1,23 @@
 <script lang="ts">
-    import * as walletStore from '$lib/store/wallet';
     import * as FormStore from '$lib/store/forms';
+    import * as walletStore from '$lib/store/wallet';
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { Record, Transaction } from '$lib/models/types';
-    import { categories} from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTransaction, updateTransaction } from '$lib/firebase/database';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
+    import { categories } from '$lib/data/preference';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
     const editStore = FormStore.transactionEdit();
-    const walletList = walletStore.get()
+    const walletList = walletStore.get();
 
-    $: wallets = $walletList.map((wallet)=>wallet.name);
+    $: wallets = $walletList.map(wallet => wallet.name);
 
     async function update() {
         const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];

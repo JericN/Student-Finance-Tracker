@@ -2,12 +2,12 @@
     import * as FormStore from '$lib/store/forms';
     import { Amount, Description, Name } from '$lib/components/forms';
     import { type ModalSettings, type ToastSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { parse, pick, safeParse } from 'valibot';
+    import { Wallet, WalletRecord } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
+    import { parse, pick, safeParse } from 'valibot';
     import { removeWallet, updateWallet } from '$lib/firebase/database';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import { WalletRecord, Wallet } from '$lib/models/types';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
@@ -55,13 +55,13 @@
             }
         }
 
-        try{
-            await updateWallet(parse(Wallet, $editStore))
+        try {
+            await updateWallet(parse(Wallet, $editStore));
             goto('/user/users/wallets');
             editStore.reset();
             toastStore.trigger(t('Wallet updated'));
         } catch (_) {
-            toastStore.trigger(error('Failed to update wallet'))
+            toastStore.trigger(error('Failed to update wallet'));
         }
     }
 

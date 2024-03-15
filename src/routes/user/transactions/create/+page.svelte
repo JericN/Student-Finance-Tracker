@@ -1,9 +1,8 @@
 <script lang="ts">
-    import * as walletStore from '$lib/store/wallet';
     import * as FormStore from '$lib/store/forms';
+    import * as walletStore from '$lib/store/wallet';
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalComponent, type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { categories } from '$lib/data/preference';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import Button from '$lib/components/Button.svelte';
@@ -11,14 +10,15 @@
     import { Record } from '$lib/models/types';
     import Template from './Template.svelte';
     import { addTransaction } from '$lib/firebase/database';
+    import { categories } from '$lib/data/preference';
     import { goto } from '$app/navigation';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
     const createStore = FormStore.transactionCreate();
-    const walletList = walletStore.get()
+    const walletList = walletStore.get();
 
-    $: wallets = $walletList.map((wallet)=>wallet.name);
+    $: wallets = $walletList.map(wallet => wallet.name);
 
     const modalComponent: ModalComponent = { ref: Template };
 
