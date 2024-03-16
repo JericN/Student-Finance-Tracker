@@ -15,6 +15,7 @@
     async function create() {
         const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
 
+        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(WalletRecord, [property]), { [property]: $createStore[property] });
             if (!result.success) {

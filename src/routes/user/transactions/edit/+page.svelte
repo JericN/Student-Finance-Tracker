@@ -21,6 +21,8 @@
 
     async function update() {
         const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
+
+        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(Record, [property]), { [property]: $editStore[property] });
             if (!result.success) {

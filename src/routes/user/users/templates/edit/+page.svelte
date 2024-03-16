@@ -22,6 +22,7 @@
     async function update() {
         const properties: (keyof Template)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
 
+        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(Template, [property]), { [property]: $forms[property] });
             if (!result.success) {

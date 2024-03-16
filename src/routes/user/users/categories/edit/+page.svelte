@@ -16,6 +16,7 @@
     async function update() {
         const properties: (keyof CategoryForm)[] = ['name', 'icon', 'description'];
 
+        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(CategoryForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
