@@ -1,10 +1,9 @@
 <script lang="ts">
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
-    import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+    import { Button, Card } from '$lib/components';
     import { error, success } from '$lib/funcs/toast';
+    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
     import Template from './Template.svelte';
     import { TransactionForm } from '$lib/models/types';
     import { addTransaction } from '$lib/firebase/database';
@@ -20,12 +19,6 @@
     // data stores
     const walletStore = getWalletStore();
     const forms = getTransactionCreateStore();
-
-    const modal: ModalSettings = {
-        type: 'component',
-        component: { ref: Template },
-        title: 'Templates',
-    };
 
     async function submit() {
         const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
@@ -49,12 +42,20 @@
         }
     }
 
+    function showTemplates() {
+        modalStore.trigger({
+            type: 'component',
+            component: { ref: Template },
+            title: 'Templates',
+        });
+    }
+
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
     <div class="self-end">
-        <Button font="text-sm font-bold text-dark" on:click={() => modalStore.trigger(modal)}>Templates</Button>
+        <Button on:click={showTemplates}>Templates</Button>
     </div>
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
@@ -66,7 +67,5 @@
         </div>
         <Description bind:description={$forms.description} />
     </Card>
-    <Button on:click={() => submit()}>
-        <span class="px-4 font-bold text-dark"> SAVE </span>
-    </Button>
+    <Button on:click={submit}>SAVE</Button>
 </div>

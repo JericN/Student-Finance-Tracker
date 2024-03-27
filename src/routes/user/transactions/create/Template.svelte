@@ -16,7 +16,7 @@
 
     let selected: Template;
 
-    function onFormSubmit(): void {
+    function submit(): void {
         const date = new Date(new Date().setHours(0, 0, 0, 0));
         const data = parse(PartialTransactionForm, { ...selected, date });
         forms.set(data);
@@ -25,6 +25,7 @@
     }
 </script>
 
+<!-- TODO: improve modal UI -->
 {#if $modalStore[0]}
     <div class="modal-example-form card w-modal space-y-4 p-4 shadow-xl">
         <header class="text-center text-2xl font-bold">{$modalStore[0].title}</header>
@@ -33,10 +34,9 @@
                 <ListBoxItem bind:group={selected} name={template.id} value={template}>{template.name}</ListBoxItem>
             {/each}
         </ListBox>
-        <!-- prettier-ignore -->
         <footer class="modal-footer {parent.regionFooter}">
-        <button class="btn {parent.buttonNeutral}" on:click={parent.onClose}>{parent.buttonTextCancel}</button>
-        <button class="btn {parent.buttonPositive}" on:click={onFormSubmit}>Apply</button>
-    </footer>
+            <button class="btn {parent.buttonNeutral}" on:click={parent.onClose}>{parent.buttonTextCancel}</button>
+            <button class="btn {parent.buttonPositive}" on:click={submit}>Apply</button>
+        </footer>
     </div>
 {/if}

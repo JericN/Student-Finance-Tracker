@@ -1,17 +1,15 @@
 <script lang="ts">
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
-    import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+    import { Button, Card } from '$lib/components';
     import { Transaction, TransactionForm } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
+    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTransaction, updateTransaction } from '$lib/firebase/database';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
     import { categories } from '$lib/data/preference';
     import { getTransactionEditStore } from '$lib/store/forms';
     import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
-    import { onDestroy } from 'svelte';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
@@ -21,7 +19,6 @@
     async function update() {
         const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
 
-        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(TransactionForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
@@ -40,30 +37,28 @@
         }
     }
 
-    async function remove(r: boolean) {
+    async function remove() {
         try {
-            if (r) {
-                const { id } = parse(pick(Transaction, ['id']), { id: $forms.id });
-                await removeTransaction(id);
-                goto('/user/transactions');
-                forms.reset();
-                toastStore.trigger(success('Transaction removed'));
-            }
+            const { id } = parse(pick(Transaction, ['id']), { id: $forms.id });
+            await removeTransaction(id);
+            goto('/user/transactions');
+            forms.reset();
+            toastStore.trigger(success('Transaction removed'));
         } catch (_) {
             toastStore.trigger(error('Failed to remove transaction'));
         }
     }
 
-    const modal: ModalSettings = {
-        type: 'confirm',
-        title: 'Please Confirm',
-        body: 'Are you sure you wish to remove this transaction?',
-        response: (r: boolean) => remove(r),
-    };
-
-    onDestroy(() => {
-        forms.reset();
-    });
+    function removeHandler() {
+        modalStore.trigger({
+            type: 'confirm',
+            title: 'Please Confirm',
+            body: 'Are you sure you wish to remove this transaction?',
+            response: (res: boolean) => {
+                if (res) remove();
+            },
+        });
+    }
 
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
@@ -80,11 +75,7 @@
         <Description bind:description={$forms.description} />
     </Card>
     <div class="flex gap-4">
-        <Button on:click={() => update()}>
-            <span class="px-4 font-bold text-dark"> UPDATE </span>
-        </Button>
-        <Button on:click={() => modalStore.trigger(modal)}>
-            <span class="px-4 font-bold text-dark"> REMOVE </span>
-        </Button>
+        <Button on:click={update}>UPDATE</Button>
+        <Button on:click={removeHandler}>REMOVE</Button>
     </div>
 </div>
