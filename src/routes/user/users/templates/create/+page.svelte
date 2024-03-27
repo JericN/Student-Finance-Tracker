@@ -15,7 +15,7 @@
     const forms = getTemplateCreateStore();
 
     async function submit() {
-        const properties: (keyof TemplateForm)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
+        const properties: (keyof TemplateForm)[] = ['name', 'type', 'amount', 'categoryId', 'walletId', 'description'];
 
         // validate the form
         for (const property of properties) {
@@ -36,11 +36,6 @@
         }
     }
 
-    $: categories = $categoryStore.reduce((acc: { [key: string]: string }, category) => {
-        acc[category.name] = category.icon;
-        return acc;
-    }, {});
-
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
@@ -50,8 +45,8 @@
             <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
-            <Category {categories} bind:selected={$forms.category} />
-            <Wallet {wallets} bind:selected={$forms.wallet} />
+            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Wallet {wallets} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

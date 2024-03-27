@@ -174,8 +174,8 @@ export async function createUserTransactionForm(user: User) {
     await addTemplate({
         name: 'Burger',
         amount: 100,
-        category: 'Food',
+        categoryId: 'Food',
         type: TransactionType.Expense,
-        wallet: 'Cash',
+        walletId: 'Cash',
     });
 }

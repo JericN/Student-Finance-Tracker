@@ -17,7 +17,7 @@
 </script>
 
 <div class="border-bottom -my-2 flex flex-col gap-2 bg-light p-2">
-    {#each entries as { type, category, amount, description }, id}
+    {#each entries as { type, categoryId, amount, description }, id}
         <a
             href={null}
             class="grid cursor-pointer select-none grid-cols-tbody items-center text-dark hover:text-primary-500"

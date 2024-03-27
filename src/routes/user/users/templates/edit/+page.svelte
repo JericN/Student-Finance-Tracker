@@ -16,7 +16,7 @@
     const forms = getTemplateEditStore();
 
     async function update() {
-        const properties: (keyof Template)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
+        const properties: (keyof Template)[] = ['name', 'type', 'amount', 'categoryId', 'walletId', 'description'];
 
         for (const property of properties) {
             const result = safeParse(pick(Template, [property]), { [property]: $forms[property] });
@@ -60,11 +60,6 @@
         });
     }
 
-    $: categories = $categoryStore.reduce((acc: { [key: string]: string }, category) => {
-        acc[category.name] = category.icon;
-        return acc;
-    }, {});
-
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
@@ -74,8 +69,8 @@
             <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
-            <Category {categories} bind:selected={$forms.category} />
-            <Wallet {wallets} bind:selected={$forms.wallet} />
+            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Wallet {wallets} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

@@ -21,7 +21,14 @@
     const forms = getTransactionCreateStore();
 
     async function submit() {
-        const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
+        const properties: (keyof TransactionForm)[] = [
+            'type',
+            'amount',
+            'date',
+            'categoryId',
+            'walletId',
+            'description',
+        ];
 
         // validate the form
         for (const property of properties) {
@@ -54,11 +61,6 @@
         forms.reset();
     }
 
-    $: categories = $categoryStore.reduce((acc: { [key: string]: string }, category) => {
-        acc[category.name] = category.icon;
-        return acc;
-    }, {});
-
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
@@ -72,8 +74,8 @@
             <Type bind:type={$forms.type} />
             <Amount bind:amount={$forms.amount} />
             <Calendar bind:date={$forms.date} />
-            <Category {categories} bind:selected={$forms.category} />
-            <Wallet {wallets} bind:selected={$forms.wallet} />
+            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Wallet {wallets} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

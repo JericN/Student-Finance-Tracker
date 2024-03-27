@@ -41,8 +41,8 @@ export const Transaction = object({
     type: enum_(TransactionType),
     amount: number([safeInteger(), minValue(1)]),
     date: DateSchema,
-    category: string([maxLength(30)]),
-    wallet: string([maxLength(30)]),
+    categoryId: string([maxLength(30)]),
+    walletId: string([maxLength(30)]),
     description: optional(string([maxLength(50)]), ''),
 });
 export type Transaction = Output<typeof Transaction>;
@@ -63,8 +63,8 @@ export const Template = object({
     name: string([minLength(3), maxLength(12)]),
     type: enum_(TransactionType),
     amount: number([safeInteger(), minValue(1)]),
-    category: string([maxLength(30)]),
-    wallet: string([maxLength(30)]),
+    categoryId: string([maxLength(30)]),
+    walletId: string([maxLength(30)]),
     description: optional(string([maxLength(50)])),
 });
 export type Template = Output<typeof Template>;
