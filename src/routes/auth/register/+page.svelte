@@ -1,6 +1,6 @@
 <script lang="ts">
     import { error, success } from '$lib/funcs/toast';
-    import Button from '$lib/components/Button.svelte';
+    import { Button } from '$lib/components';
     import Card from '$lib/components/Card.svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
@@ -32,9 +32,7 @@
             <input bind:value={password} class="input" type="password" placeholder="Password" />
         </div>
 
-        <div class="flex font-bold text-primary-900">
-            <Button width="full" accent="bg-expense" padding="p-2" on:click={register}>Register</Button>
-        </div>
+        <Button width="full" accent="bg-expense" on:click={register}>Register</Button>
     </Card>
     <a href="/auth/login" class="underline">Return to Login</a>
 </div>
