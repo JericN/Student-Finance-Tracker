@@ -67,8 +67,8 @@
         </div>
         <Description bind:description={$forms.description} />
     </Card>
-    <div class="flex gap-4">
-        <Button on:click={update}>UPDATE</Button>
-        <Button on:click={removeHandler}>REMOVE</Button>
+    <div class="flex w-full min-w-72 max-w-sm">
+        <Button width="w-full" accent="bg-income" on:click={update}>UPDATE</Button>
+        <Button width="w-full" accent="bg-expense" on:click={removeHandler}>REMOVE</Button>
     </div>
 </div>
