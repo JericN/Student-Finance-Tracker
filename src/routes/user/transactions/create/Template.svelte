@@ -17,7 +17,8 @@
     let selected: Template;
 
     function onFormSubmit(): void {
-        const data = parse(PartialTransactionForm, { ...selected, date: new Date() });
+        const date = new Date(new Date().setHours(0, 0, 0, 0));
+        const data = parse(PartialTransactionForm, { ...selected, date });
         forms.set(data);
         modalStore.close();
         toastStore.trigger(success(`Template ${selected.name}`));

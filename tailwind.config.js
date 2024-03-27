@@ -27,8 +27,8 @@ export default {
                 dark: 'rgba(var(--color-surface-900) / 1)',
             },
             gridTemplateColumns: {
-                thead: '22px minmax(50px, 1fr) 50px 50px',
-                tbody: '22px 70px minmax(50px, 1fr) 50px 50px',
+                thead: '22px 25px minmax(50px, 1fr) 60px 60px',
+                tbody: '22px 70px minmax(50px, 1fr) 60px 60px',
             },
             borderRadius: {
                 sm: '4px',
