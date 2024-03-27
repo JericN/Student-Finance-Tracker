@@ -1,7 +1,8 @@
 <script lang="ts">
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
+    import type { Wallet } from '$lib/models/types';
 
-    export let wallets: string[];
+    export let wallets: Wallet[];
     export let selected: string | undefined;
 
     let deviceWidth = window.innerWidth;
@@ -30,14 +31,14 @@
     spacing="space-y-0"
     regionDefault="text-xs font-medium"
 >
-    {#each preview as item}
+    {#each preview as { id, name }}
         <ListBoxItem
             bind:group={selected}
-            name={item}
-            value={item}
+            {name}
+            value={id}
             rounded="rounded-lg"
             padding="p-1 px-2"
-            class="border-2 border-dark">{item}</ListBoxItem
+            class="border-2 border-dark">{name}</ListBoxItem
         >
     {/each}
     <button class="size-8 rounded-lg border-2 bg-surface-300">➕</button>

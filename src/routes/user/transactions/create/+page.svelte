@@ -60,8 +60,6 @@
     function reset() {
         forms.reset();
     }
-
-    $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -75,7 +73,7 @@
             <Amount bind:amount={$forms.amount} />
             <Calendar bind:date={$forms.date} />
             <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
-            <Wallet {wallets} bind:selected={$forms.walletId} />
+            <Wallet wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>
