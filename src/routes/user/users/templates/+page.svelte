@@ -1,13 +1,13 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as templateStore from '$lib/store/template';
     import Button from '$lib/components/Button.svelte';
     import { TransactionType } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
+    import { getTemplateStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
     const editStore = FormStore.templateEdit();
-    const templates = templateStore.get();
+    const templates = getTemplateStore();
 
     function editTemplate(id: number) {
         editStore.set(structuredClone($templates[id]));

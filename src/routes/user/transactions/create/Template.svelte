@@ -1,9 +1,9 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as TemplateStore from '$lib/store/template';
     import { ListBox, ListBoxItem, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { PartialTransactionForm, Template } from '$lib/models/types';
     import type { SvelteComponent } from 'svelte';
+    import { getTemplateStore } from '$lib/store/database';
     import { parse } from 'valibot';
     import { success } from '$lib/funcs/toast';
 
@@ -11,7 +11,7 @@
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
-    const templates = TemplateStore.get();
+    const templates = getTemplateStore();
     const createStore = FormStore.transactionCreate();
 
     let selected: Template;

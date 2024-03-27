@@ -1,6 +1,5 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as walletStore from '$lib/store/wallet';
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { Transaction, TransactionForm } from '$lib/models/types';
@@ -10,12 +9,13 @@
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import { categories } from '$lib/data/preference';
+    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
     const editStore = FormStore.transactionEdit();
-    const walletList = walletStore.get();
+    const walletList = getWalletStore();
 
     $: wallets = $walletList.map(wallet => wallet.name);
 

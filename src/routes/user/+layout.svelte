@@ -1,9 +1,6 @@
 <script>
     import * as FormStore from '$lib/store/forms';
-    import * as categoryStore from '$lib/store/category';
-    import * as templateStore from '$lib/store/template';
-    import * as transactionStore from '$lib/store/transaction';
-    import * as walletStore from '$lib/store/wallet';
+    import * as dataStore from '$lib/store/database';
     import { AppShell, Modal } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
@@ -16,11 +13,7 @@
     $: category = current.startsWith('/user/users/categories/');
 
     FormStore.init();
-    categoryStore.init();
-    templateStore.init();
-    transactionStore.init();
-    templateStore.init();
-    walletStore.init();
+    dataStore.init();
 </script>
 
 <Modal />

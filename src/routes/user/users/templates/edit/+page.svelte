@@ -1,6 +1,5 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as walletStore from '$lib/store/wallet';
     import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { error, success } from '$lib/funcs/toast';
@@ -11,10 +10,11 @@
     import Name from '$lib/components/forms/Name.svelte';
     import { Template } from '$lib/models/types';
     import { categories } from '$lib/data/preference';
+    import { getWalletStore } from '$lib/store/database';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
-    const walletList = walletStore.get();
+    const walletList = getWalletStore();
 
     $: wallets = $walletList.map(wallet => wallet.name);
     const forms = FormStore.templateEdit();

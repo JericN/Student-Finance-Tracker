@@ -1,6 +1,5 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as walletStore from '$lib/store/wallet';
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalComponent, type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { error, success } from '$lib/funcs/toast';
@@ -11,12 +10,13 @@
     import { TransactionForm } from '$lib/models/types';
     import { addTransaction } from '$lib/firebase/database';
     import { categories } from '$lib/data/preference';
+    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
     const createStore = FormStore.transactionCreate();
-    const walletList = walletStore.get();
+    const walletList = getWalletStore();
 
     $: wallets = $walletList.map(wallet => wallet.name);
 

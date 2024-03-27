@@ -1,11 +1,11 @@
 <script lang="ts">
-    import * as transactionStore from '$lib/store/transaction';
     import { Accordion } from '@skeletonlabs/skeleton';
     import Summary from './Summary.svelte';
     import Transactions from './Transactions.svelte';
+    import { getTransactionStore } from '$lib/store/database';
     import groupBy from 'object.groupby';
 
-    const transactions = transactionStore.get();
+    const transactions = getTransactionStore();
 
     // Placeholder data
     const income = 1430;

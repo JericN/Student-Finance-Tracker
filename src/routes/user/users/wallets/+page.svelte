@@ -1,14 +1,14 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as walletStore from '$lib/store/wallet';
     import Card from '$lib/components/Card.svelte';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { type Wallet } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
+    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
-    const walletList = walletStore.get();
+    const walletList = getWalletStore();
     const editStore = FormStore.walletEdit();
 
     function edit(entry: Wallet) {

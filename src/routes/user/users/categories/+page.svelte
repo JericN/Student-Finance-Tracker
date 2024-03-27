@@ -1,12 +1,12 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as categoryStore from '$lib/store/category';
     import Button from '$lib/components/Button.svelte';
     import { TransactionType } from '$lib/models/types';
+    import { getCategoryStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
     const forms = FormStore.categoryEdit();
-    const categories = categoryStore.get();
+    const categories = getCategoryStore();
 
     function editTemplate(id: number) {
         forms.set(structuredClone($categories[id]));

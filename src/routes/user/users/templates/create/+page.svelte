@@ -1,6 +1,5 @@
 <script lang="ts">
     import * as FormStore from '$lib/store/forms';
-    import * as walletStore from '$lib/store/wallet';
     import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
@@ -11,9 +10,10 @@
     import { addTemplate } from '$lib/firebase/database';
     import { categories } from '$lib/data/preference';
     import { getToastStore } from '@skeletonlabs/skeleton';
+    import { getWalletStore } from '$lib/store/database';
 
     const toastStore = getToastStore();
-    const walletList = walletStore.get();
+    const walletList = getWalletStore();
 
     $: wallets = $walletList.map(wallet => wallet.name);
     const forms = FormStore.templateCreate();
