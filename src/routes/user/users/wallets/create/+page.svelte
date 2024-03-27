@@ -1,9 +1,8 @@
 <script lang="ts">
     import { Amount, Description, Name } from '$lib/components/forms';
+    import { Button, Card } from '$lib/components';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
     import { WalletForm } from '$lib/models/types';
     import { addWallet } from '$lib/firebase/database';
     import { getToastStore } from '@skeletonlabs/skeleton';
@@ -12,10 +11,9 @@
     const toastStore = getToastStore();
     const forms = getWalletCreateStore();
 
-    async function create() {
+    async function submit() {
         const properties: (keyof WalletForm)[] = ['name', 'amount', 'description'];
 
-        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(WalletForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
@@ -26,8 +24,7 @@
 
         try {
             await addWallet(parse(WalletForm, $forms));
-            // goto('/user/users/wallets');
-            // FIXME: This is a temporary fix until we have a proper way to navigate
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Wallet added'));
@@ -45,7 +42,5 @@
         </div>
         <Description bind:description={$forms.description} />
     </Card>
-    <Button on:click={() => create()}>
-        <span class="px-4 font-bold text-dark"> SAVE </span>
-    </Button>
+    <Button on:click={submit}>SAVE</Button>
 </div>

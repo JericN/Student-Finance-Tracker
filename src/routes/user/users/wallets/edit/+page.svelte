@@ -1,45 +1,20 @@
 <script lang="ts">
     import { Amount, Description, Name } from '$lib/components/forms';
-    import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+    import { Button, Card } from '$lib/components';
     import { Wallet, WalletForm } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
+    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeWallet, updateWallet } from '$lib/firebase/database';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
     import { getWalletEditStore } from '$lib/store/forms';
-    import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
     const modalStore = getModalStore();
     const forms = getWalletEditStore();
 
-    async function remove(flag: boolean) {
-        if (!flag) return;
-        try {
-            const { id } = parse(pick(Wallet, ['id']), { id: $forms.id });
-            await removeWallet(id);
-            // goto('/user/users/wallets');
-            // FIXME: This is a temporary fix until we have a proper way to navigate
-            window.history.back();
-            forms.reset();
-            toastStore.trigger(success('Wallet removed'));
-        } catch (_) {
-            toastStore.trigger(error('Failed to remove wallet'));
-        }
-    }
-
-    const modal: ModalSettings = {
-        type: 'confirm',
-        title: 'Please Confirm',
-        body: 'Are you sure you wish to remove this wallet?',
-        response: (r: boolean) => remove(r),
-    };
-
     async function update() {
         const properties: (keyof WalletForm)[] = ['name', 'amount', 'description'];
 
-        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(WalletForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
@@ -50,8 +25,7 @@
 
         try {
             await updateWallet(parse(Wallet, $forms));
-            // goto('/user/users/wallets');
-            // FIXME: This is a temporary fix until we have a proper way to navigate
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Wallet updated'));
@@ -60,9 +34,29 @@
         }
     }
 
-    onDestroy(() => {
-        forms.reset();
-    });
+    async function remove() {
+        try {
+            const { id } = parse(pick(Wallet, ['id']), { id: $forms.id });
+            await removeWallet(id);
+            // FIXME: Temporary fix until we have a proper way to navigate
+            window.history.back();
+            forms.reset();
+            toastStore.trigger(success('Wallet removed'));
+        } catch (_) {
+            toastStore.trigger(error('Failed to remove wallet'));
+        }
+    }
+
+    function removeHandler() {
+        modalStore.trigger({
+            type: 'confirm',
+            title: 'Please Confirm',
+            body: 'Are you sure you wish to remove this wallet?',
+            response: (res: boolean) => {
+                if (res) remove();
+            },
+        });
+    }
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -74,11 +68,7 @@
         <Description bind:description={$forms.description} />
     </Card>
     <div class="flex gap-4">
-        <Button on:click={() => update()}>
-            <span class="px-4 font-bold text-dark"> UPDATE </span>
-        </Button>
-        <Button on:click={() => modalStore.trigger(modal)}>
-            <span class="px-4 font-bold text-dark"> REMOVE </span>
-        </Button>
+        <Button on:click={update}>UPDATE</Button>
+        <Button on:click={removeHandler}>REMOVE</Button>
     </div>
 </div>
