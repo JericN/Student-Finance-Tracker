@@ -50,12 +50,17 @@
         });
     }
 
+    function reset() {
+        forms.reset();
+    }
+
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
-    <div class="self-end">
-        <Button on:click={showTemplates}>Templates</Button>
+    <div class="flex w-full min-w-72 max-w-sm justify-between">
+        <Button padding="p-1" width="w-full" accent="bg-income" on:click={showTemplates}>Templates</Button>
+        <Button padding="p-1" width="w-full" accent="bg-expense" on:click={reset}>Reset</Button>
     </div>
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
