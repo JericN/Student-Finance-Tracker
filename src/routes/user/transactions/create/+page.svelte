@@ -2,14 +2,13 @@
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/funcs/toast';
+    import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import Template from './Template.svelte';
     import { TransactionForm } from '$lib/models/types';
     import { addTransaction } from '$lib/firebase/database';
-    import { categories } from '$lib/data/preference';
     import { getTransactionCreateStore } from '$lib/store/forms';
-    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
     // skeleton stores
@@ -17,6 +16,7 @@
     const toastStore = getToastStore();
 
     // data stores
+    const categoryStore = getCategoryStore();
     const walletStore = getWalletStore();
     const forms = getTransactionCreateStore();
 
@@ -53,6 +53,11 @@
     function reset() {
         forms.reset();
     }
+
+    $: categories = $categoryStore.reduce((acc: { [key: string]: string }, category) => {
+        acc[category.name] = category.icon;
+        return acc;
+    }, {});
 
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>

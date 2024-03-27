@@ -2,15 +2,15 @@
     import { Amount, Category, Description, Name, Type, Wallet } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/funcs/toast';
+    import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { parse, pick, safeParse } from 'valibot';
     import { TemplateForms } from '$lib/models/types';
     import { addTemplate } from '$lib/firebase/database';
-    import { categories } from '$lib/data/preference';
     import { getTemplateCreateStore } from '$lib/store/forms';
     import { getToastStore } from '@skeletonlabs/skeleton';
-    import { getWalletStore } from '$lib/store/database';
 
     const toastStore = getToastStore();
+    const categoryStore = getCategoryStore();
     const walletStore = getWalletStore();
     const forms = getTemplateCreateStore();
 
@@ -35,6 +35,11 @@
             toastStore.trigger(error('Failed to add Template'));
         }
     }
+
+    $: categories = $categoryStore.reduce((acc: { [key: string]: string }, category) => {
+        acc[category.name] = category.icon;
+        return acc;
+    }, {});
 
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>

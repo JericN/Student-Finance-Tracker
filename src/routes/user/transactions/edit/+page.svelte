@@ -3,16 +3,16 @@
     import { Button, Card } from '$lib/components/modules';
     import { Transaction, TransactionForm } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
+    import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTransaction, updateTransaction } from '$lib/firebase/database';
-    import { categories } from '$lib/data/preference';
     import { getTransactionEditStore } from '$lib/store/forms';
-    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
+    const categoryStore = getCategoryStore();
     const walletStore = getWalletStore();
     const forms = getTransactionEditStore();
 
@@ -59,6 +59,11 @@
             },
         });
     }
+
+    $: categories = $categoryStore.reduce((acc: { [key: string]: string }, category) => {
+        acc[category.name] = category.icon;
+        return acc;
+    }, {});
 
     $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
