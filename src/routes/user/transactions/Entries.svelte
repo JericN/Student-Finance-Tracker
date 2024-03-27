@@ -17,8 +17,12 @@
         goto('/user/transactions/edit/');
     }
 
-    function findCategory(id: string) {
+    function findCategoryName(id: string) {
         return categories.find(id)?.name || 'Unknown';
+    }
+
+    function findCategoryIcon(id: string) {
+        return categories.find(id)?.icon || '❓';
     }
 </script>
 
@@ -29,8 +33,8 @@
             class="grid cursor-pointer select-none grid-cols-tbody items-center text-dark hover:text-primary-500"
             on:click={() => edit(id)}
         >
-            <Icon src={Cloud} class="size-3" />
-            <div>{findCategory(categoryId)}</div>
+            <div>{findCategoryIcon(categoryId)}</div>
+            <div>{findCategoryName(categoryId)}</div>
             <div class="truncate text-2xs">{description}</div>
             <div class="text-income">{type === 'Income' ? currency(amount) : '-'}</div>
             <div class="text-expense">{type === 'Expense' ? currency(amount) : '-'}</div>

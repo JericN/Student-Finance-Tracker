@@ -44,6 +44,7 @@
         }
     }
 
+    // TODO: remove related transactions or archive category
     function removeHandler() {
         modalStore.trigger({
             type: 'confirm',

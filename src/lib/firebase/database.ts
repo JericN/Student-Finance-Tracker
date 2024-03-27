@@ -167,15 +167,7 @@ export async function createUserTransactionForm(user: User) {
     await addWallet({ amount: 0, name: 'Bank' });
 
     await addCategory({ name: 'Food', type: TransactionType.Expense, icon: '🍔' });
-    await addCategory({ name: 'Fare', type: TransactionType.Expense, icon: '🚗' });
+    await addCategory({ name: 'Fare', type: TransactionType.Expense, icon: '🚌' });
     await addCategory({ name: 'Utils', type: TransactionType.Expense, icon: '🏠' });
-    await addCategory({ name: 'Salary', type: TransactionType.Income, icon: '💰', description: 'hi' });
-
-    await addTemplate({
-        name: 'Burger',
-        amount: 100,
-        categoryId: 'Food',
-        type: TransactionType.Expense,
-        walletId: 'Cash',
-    });
+    await addCategory({ name: 'Salary', type: TransactionType.Income, icon: '💰' });
 }
