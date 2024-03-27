@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Button from '$lib/components/Button.svelte';
+    import { Button } from '$lib/components';
     import Entry from './Entry.svelte';
     import { LightSwitch } from '@skeletonlabs/skeleton';
     import { currency } from '$lib/funcs/helper';
@@ -48,7 +48,6 @@
     </Entry>
 
     <Button
-        font="font-bold text-dark"
         on:click={() => {
             signOutUser();
             goto('/auth/login');
