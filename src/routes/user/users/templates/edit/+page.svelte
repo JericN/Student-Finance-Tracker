@@ -1,17 +1,14 @@
 <script lang="ts">
-    import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
-    import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+    import { Amount, Category, Description, Name, Type, Wallet } from '$lib/components/forms';
+    import { Button, Card } from '$lib/components';
     import { error, success } from '$lib/funcs/toast';
+    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTemplate, updateTemplate } from '$lib/firebase/database';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
-    import Name from '$lib/components/forms/Name.svelte';
     import { Template } from '$lib/models/types';
     import { categories } from '$lib/data/preference';
     import { getTemplateEditStore } from '$lib/store/forms';
     import { getWalletStore } from '$lib/store/database';
-    import { onDestroy } from 'svelte';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
@@ -21,7 +18,6 @@
     async function update() {
         const properties: (keyof Template)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
 
-        // validate the form
         for (const property of properties) {
             const result = safeParse(pick(Template, [property]), { [property]: $forms[property] });
             if (!result.success) {
@@ -31,8 +27,7 @@
         }
         try {
             await updateTemplate(parse(Template, $forms));
-            // goto('/user/users/templates/');
-            // FIXME: This is a temporary fix until we have a proper way to navigate
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Template updated'));
@@ -41,13 +36,11 @@
         }
     }
 
-    async function remove(flag: boolean) {
-        if (!flag) return;
+    async function remove() {
         try {
             const { id } = parse(pick(Template, ['id']), { id: $forms.id });
             await removeTemplate(id);
-            // goto('/user/users/templates/');
-            // FIXME: This is a temporary fix until we have a proper way to navigate
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Template removed'));
@@ -56,18 +49,18 @@
         }
     }
 
-    const modal: ModalSettings = {
-        type: 'confirm',
-        title: 'Please Confirm',
-        body: 'Are you sure you wish to remove this template?',
-        response: (r: boolean) => remove(r),
-    };
+    function removeHandler() {
+        modalStore.trigger({
+            type: 'confirm',
+            title: 'Please Confirm',
+            body: 'Are you sure you wish to remove this template?',
+            response: (res: boolean) => {
+                if (res) remove();
+            },
+        });
+    }
 
     $: wallets = $walletStore.map(wallet => wallet.name);
-
-    onDestroy(() => {
-        forms.reset();
-    });
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -81,12 +74,8 @@
         </div>
         <Description bind:description={$forms.description} />
     </Card>
-    <div class="flex gap-4">
-        <Button on:click={() => update()}>
-            <span class="px-4 font-bold text-dark"> UPDATE </span>
-        </Button>
-        <Button on:click={() => modalStore.trigger(modal)}>
-            <span class="px-4 font-bold text-dark"> REMOVE </span>
-        </Button>
+    <div class="flex w-full">
+        <Button width="w-full" accent="bg-income" on:click={update}>UPDATE</Button>
+        <Button width="w-full" accent="bg-expense" on:click={removeHandler}>REMOVE</Button>
     </div>
 </div>

@@ -1,10 +1,8 @@
 <script lang="ts">
-    import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
+    import { Amount, Category, Description, Name, Type, Wallet } from '$lib/components/forms';
+    import { Button, Card } from '$lib/components';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
-    import Name from '$lib/components/forms/Name.svelte';
     import { TemplateForms } from '$lib/models/types';
     import { addTemplate } from '$lib/firebase/database';
     import { categories } from '$lib/data/preference';
@@ -29,8 +27,7 @@
         }
         try {
             await addTemplate(parse(TemplateForms, $forms));
-            // goto('/user/users/templates/');
-            // FIXME: This is a temporary fix until we have a proper way to navigate
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Template added'));
@@ -53,7 +50,5 @@
         </div>
         <Description bind:description={$forms.description} />
     </Card>
-    <Button on:click={() => submit()}>
-        <span class="px-4 font-bold text-dark"> SAVE </span>
-    </Button>
+    <Button on:click={submit}>SAVE</Button>
 </div>
