@@ -3,16 +3,22 @@
     import { Icon } from '@steeze-ui/svelte-icon';
     import { type Transaction } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
+    import { getCategoryStore } from '$lib/store/database';
     import { getTransactionEditStore } from '$lib/store/forms';
     import { goto } from '$app/navigation';
 
     export let entries: Transaction[];
 
+    const categories = getCategoryStore();
     const forms = getTransactionEditStore();
 
     function edit(id: number) {
         forms.set(structuredClone(entries[id]));
         goto('/user/transactions/edit/');
+    }
+
+    function findCategory(id: string) {
+        return categories.find(id)?.name || 'Unknown';
     }
 </script>
 
@@ -24,7 +30,7 @@
             on:click={() => edit(id)}
         >
             <Icon src={Cloud} class="size-3" />
-            <div>{category}</div>
+            <div>{findCategory(categoryId)}</div>
             <div class="truncate text-2xs">{description}</div>
             <div class="text-income">{type === 'Income' ? currency(amount) : '-'}</div>
             <div class="text-expense">{type === 'Expense' ? currency(amount) : '-'}</div>

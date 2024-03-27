@@ -1,11 +1,15 @@
 import { collection, onSnapshot, query } from 'firebase/firestore';
+import { get, writable } from 'svelte/store';
 import { db } from '$lib/firebase/firebase.client';
 import { safeParse } from 'valibot';
 import { session } from '$lib/store/session';
-import { writable } from 'svelte/store';
+
+interface ID {
+    id: string;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function initStore<T>(path: string, schema: any) {
+export function initStore<T extends ID>(path: string, schema: any) {
     const store = writable<T[]>([]);
     const { set, subscribe, update } = store;
 
@@ -25,7 +29,12 @@ export function initStore<T>(path: string, schema: any) {
         set(categories);
     });
 
+    function find(id: string) {
+        return get(store).find(item => item.id === id);
+    }
+
     return {
+        find,
         set,
         subscribe,
         update,
@@ -33,4 +42,4 @@ export function initStore<T>(path: string, schema: any) {
     };
 }
 
-export type Store<T> = ReturnType<typeof initStore<T>>;
+export type Store<T extends ID> = ReturnType<typeof initStore<T>>;
