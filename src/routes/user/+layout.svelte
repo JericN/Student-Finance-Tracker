@@ -32,7 +32,7 @@
     </div>
     <slot />
     <div slot="footer">
-        {#if !transaction && !wallet}
+        {#if !transaction && !wallet && !template && !category}
             <NavBar />
         {/if}
     </div>
