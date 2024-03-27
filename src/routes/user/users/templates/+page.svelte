@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, CardButton } from '$lib/components';
+    import { Button, CardButton } from '$lib/components/modules';
     import { TransactionType } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
     import { getTemplateEditStore } from '$lib/store/forms';

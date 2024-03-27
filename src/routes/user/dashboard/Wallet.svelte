@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Card from '$lib/components/Card.svelte';
+    import { Card } from '$lib/components/modules';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { currency } from '$lib/funcs/helper';

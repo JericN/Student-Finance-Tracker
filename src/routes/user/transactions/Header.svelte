@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Day from '$lib/components/Day.svelte';
+    import { Day } from '$lib/components/modules';
     import { currency } from '$lib/funcs/helper';
 
     export let time: string;

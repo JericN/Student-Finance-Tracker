@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button } from '$lib/components';
+    import { Button } from '$lib/components/modules';
     import Entry from './Entry.svelte';
     import { LightSwitch } from '@skeletonlabs/skeleton';
     import { currency } from '$lib/funcs/helper';

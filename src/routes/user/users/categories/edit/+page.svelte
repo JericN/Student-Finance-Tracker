@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Card } from '$lib/components';
+    import { Button, Card } from '$lib/components/modules';
     import { Category, CategoryForm } from '$lib/models/types';
     import { Description, Icon, Name } from '$lib/components/forms';
     import { error, success } from '$lib/funcs/toast';

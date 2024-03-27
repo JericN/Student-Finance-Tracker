@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, Card } from '$lib/components';
+    import { Button, Card } from '$lib/components/modules';
     import { Description, Icon, Name, Type } from '$lib/components/forms';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';

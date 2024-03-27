@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Amount, Description, Name } from '$lib/components/forms';
-    import { Button, Card } from '$lib/components';
+    import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import { WalletForm } from '$lib/models/types';

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Button, CardButton } from '$lib/components';
+    import { Button, CardButton } from '$lib/components/modules';
     import { TransactionType } from '$lib/models/types';
     import { getCategoryEditStore } from '$lib/store/forms';
     import { getCategoryStore } from '$lib/store/database';

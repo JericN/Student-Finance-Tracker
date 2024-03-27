@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Amount, Description, Name } from '$lib/components/forms';
-    import { Button, Card } from '$lib/components';
+    import { Button, Card } from '$lib/components/modules';
     import { Wallet, WalletForm } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';

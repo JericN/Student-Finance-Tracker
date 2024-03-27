@@ -1,7 +1,6 @@
 <script lang="ts">
+    import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/funcs/toast';
-    import { Button } from '$lib/components';
-    import Card from '$lib/components/Card.svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { registerWithMail } from '$lib/firebase/auth';

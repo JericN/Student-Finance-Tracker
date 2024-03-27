@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Card from '$lib/components/Card.svelte';
+    import { Card } from '$lib/components/modules';
     import LineChart from '$lib/charts/LineChart.svelte';
 
     // TODO: should fetch the most recent transactions

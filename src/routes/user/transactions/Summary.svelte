@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Card from '$lib/components/Card.svelte';
+    import { Card } from '$lib/components/modules';
     import { currency } from '$lib/funcs/helper';
 
     export let income: number;
