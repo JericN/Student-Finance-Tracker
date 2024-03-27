@@ -2,7 +2,7 @@
     import * as FormStore from '$lib/store/forms';
     import * as TemplateStore from '$lib/store/template';
     import { ListBox, ListBoxItem, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { PartialRecord, Template } from '$lib/models/types';
+    import { PartialTransactionForm, Template } from '$lib/models/types';
     import type { SvelteComponent } from 'svelte';
     import { parse } from 'valibot';
     import { success } from '$lib/funcs/toast';
@@ -17,7 +17,7 @@
     let selected: Template;
 
     function onFormSubmit(): void {
-        const data = parse(PartialRecord, { ...selected, date: new Date() });
+        const data = parse(PartialTransactionForm, { ...selected, date: new Date() });
         createStore.set(data);
         modalStore.close();
         toastStore.trigger(success(`Template ${selected.name}`));

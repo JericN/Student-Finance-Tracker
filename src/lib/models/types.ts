@@ -21,18 +21,19 @@ import {
 } from 'valibot';
 import { Timestamp } from 'firebase/firestore';
 
-export enum TransactionType {
-    Income = 'Income',
-    Expense = 'Expense',
-    Transfer = 'Transfer',
-}
-
 const DateSchema = coerce(date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]), input => {
     if (input instanceof Date) return new Date(input);
     if (input instanceof Timestamp) return input.toDate();
     throw new Error('Failed parsing date');
 });
 
+export enum TransactionType {
+    Income = 'Income',
+    Expense = 'Expense',
+    Transfer = 'Transfer',
+}
+
+// Defines the schema for validating a transaction object in the database.
 export const Transaction = object({
     id: string([length(20)]),
     createdAt: DateSchema,
@@ -46,13 +47,15 @@ export const Transaction = object({
 });
 export type Transaction = Output<typeof Transaction>;
 
-// This is used for validating a new transaction
-export const Record = omit(Transaction, ['id', 'createdAt', 'updatedAt']);
-export type Record = Output<typeof Record>;
-export const PartialRecord = partial(Record);
-export type PartialRecord = Output<typeof Record>;
+// Defines the schema for validating a transaction object from input forms
+export const TransactionForm = omit(Transaction, ['id', 'createdAt', 'updatedAt']);
+export type TransactionForm = Output<typeof TransactionForm>;
 
-// This is used for validating a transaction template
+// Defines the schema for validating a partial transaction object from an input form,
+export const PartialTransactionForm = partial(TransactionForm);
+export type PartialTransactionForm = Output<typeof TransactionForm>;
+
+// Defines the schema for validating a transaction template in the database.
 export const Template = object({
     id: string([length(20)]),
     createdAt: DateSchema,
@@ -66,10 +69,11 @@ export const Template = object({
 });
 export type Template = Output<typeof Template>;
 
+// Defines the schema for validating a transaction template from input forms
 export const TemplateForms = omit(Template, ['id', 'createdAt', 'updatedAt']);
 export type TemplateForms = Output<typeof TemplateForms>;
-export type PartialTemplateForms = Partial<Output<typeof TemplateForms>>;
 
+// Defines the schema for validating a wallet object in the database.
 export const Wallet = object({
     id: string([length(20)]),
     createdAt: DateSchema,
@@ -80,9 +84,11 @@ export const Wallet = object({
 });
 export type Wallet = Output<typeof Wallet>;
 
-export const WalletRecord = omit(Wallet, ['id', 'createdAt', 'updatedAt']);
-export type WalletRecord = Output<typeof WalletRecord>;
+// Defines the schema for validating a wallet object from input forms
+export const WalletForm = omit(Wallet, ['id', 'createdAt', 'updatedAt']);
+export type WalletForm = Output<typeof WalletForm>;
 
+// Defines the schema for validating a category object in the database.
 export const Category = object({
     id: string([length(20)]),
     createdAt: DateSchema,
@@ -94,9 +100,11 @@ export const Category = object({
 });
 export type Category = Output<typeof Category>;
 
+// Defines the schema for validating a category object from input forms
 export const CategoryForm = omit(Category, ['id', 'createdAt', 'updatedAt']);
 export type CategoryForm = Output<typeof CategoryForm>;
 
+// Defines the session object for the client
 export const Session = object({
     loggedIn: boolean(),
     username: nullish(string()),

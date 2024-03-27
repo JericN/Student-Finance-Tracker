@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth } from '$lib/firebase/firebase.client';
-import { createUserRecord } from '$lib/firebase/database';
+import { createUserTransactionForm } from '$lib/firebase/database';
 import { session } from '$lib/store/session';
 
 export async function loginWithMail(email: string, password: string) {
@@ -17,7 +17,7 @@ export async function registerWithMail(username: string, email: string, password
     try {
         const { user } = await createUserWithEmailAndPassword(auth, email, password);
         await updateProfile(user, { displayName: username });
-        createUserRecord(user);
+        createUserTransactionForm(user);
         session.create(user);
     } catch (error) {
         throw new Error('Failed registering user');

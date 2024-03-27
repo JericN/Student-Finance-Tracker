@@ -2,7 +2,7 @@
     import * as FormStore from '$lib/store/forms';
     import { Amount, Description, Name } from '$lib/components/forms';
     import { type ModalSettings, type ToastSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { Wallet, WalletRecord } from '$lib/models/types';
+    import { Wallet, WalletForm } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
     import { removeWallet, updateWallet } from '$lib/firebase/database';
@@ -45,11 +45,11 @@
     };
 
     async function update() {
-        const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
+        const properties: (keyof WalletForm)[] = ['name', 'amount', 'description'];
 
         // validate the form
         for (const property of properties) {
-            const result = safeParse(pick(WalletRecord, [property]), { [property]: $editStore[property] });
+            const result = safeParse(pick(WalletForm, [property]), { [property]: $editStore[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;

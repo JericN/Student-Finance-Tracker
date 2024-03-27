@@ -7,8 +7,8 @@
     import { parse, pick, safeParse } from 'valibot';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import { Record } from '$lib/models/types';
     import Template from './Template.svelte';
+    import { TransactionForm } from '$lib/models/types';
     import { addTransaction } from '$lib/firebase/database';
     import { categories } from '$lib/data/preference';
     import { goto } from '$app/navigation';
@@ -29,11 +29,11 @@
     };
 
     async function submit() {
-        const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
+        const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
 
         // validate the form
         for (const property of properties) {
-            const result = safeParse(pick(Record, [property]), { [property]: $createStore[property] });
+            const result = safeParse(pick(TransactionForm, [property]), { [property]: $createStore[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;
@@ -41,7 +41,7 @@
         }
 
         try {
-            await addTransaction(parse(Record, $createStore));
+            await addTransaction(parse(TransactionForm, $createStore));
             goto('/user/transactions');
             createStore.reset();
             toastStore.trigger(success('Transaction added'));

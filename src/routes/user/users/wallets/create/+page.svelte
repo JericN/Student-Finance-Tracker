@@ -5,7 +5,7 @@
     import { parse, pick, safeParse } from 'valibot';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
-    import { WalletRecord } from '$lib/models/types';
+    import { WalletForm } from '$lib/models/types';
     import { addWallet } from '$lib/firebase/database';
     import { getToastStore } from '@skeletonlabs/skeleton';
 
@@ -13,11 +13,11 @@
     const createStore = FormStore.walletCreate();
 
     async function create() {
-        const properties: (keyof WalletRecord)[] = ['name', 'amount', 'description'];
+        const properties: (keyof WalletForm)[] = ['name', 'amount', 'description'];
 
         // validate the form
         for (const property of properties) {
-            const result = safeParse(pick(WalletRecord, [property]), { [property]: $createStore[property] });
+            const result = safeParse(pick(WalletForm, [property]), { [property]: $createStore[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;
@@ -25,7 +25,7 @@
         }
 
         try {
-            await addWallet(parse(WalletRecord, $createStore));
+            await addWallet(parse(WalletForm, $createStore));
             // goto('/user/users/wallets');
             // FIXME: This is a temporary fix until we have a proper way to navigate
             window.history.back();
