@@ -27,7 +27,7 @@
             on:click={() => edit(id)}
         >
             <div class="border-small size-8 bg-surface-400 p-0.5">{icon}</div>
-            <div class="text-2xl font-bold text-dark">{name}</div>
+            <div class="text-xl font-bold text-dark">{name}</div>
         </CardButton>
     {/each}
 </div>
