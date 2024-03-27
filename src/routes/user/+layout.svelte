@@ -1,19 +1,20 @@
 <script>
+    import * as DataStore from '$lib/store/database';
     import * as FormStore from '$lib/store/forms';
-    import * as dataStore from '$lib/store/database';
     import { AppShell, Modal } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
     import { page } from '$app/stores';
 
+    // TODO: fix header routing
     $: current = $page.url.pathname;
     $: transaction = current === '/user/transactions/create/' || current === '/user/transactions/edit/';
     $: wallet = current.startsWith('/user/users/wallets/');
     $: template = current.startsWith('/user/users/templates/');
     $: category = current.startsWith('/user/users/categories/');
 
+    DataStore.init();
     FormStore.init();
-    dataStore.init();
 </script>
 
 <Modal />

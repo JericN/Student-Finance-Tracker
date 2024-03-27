@@ -8,10 +8,12 @@
     export let entries: Transaction[];
     export let id: number;
 
+    // TODO: make reactive
     const income = currency(entries.reduce((acc, { amount, type }) => (type === 'Income' ? acc + amount : acc), 0));
     const expenses = currency(entries.reduce((acc, { amount, type }) => (type === 'Expense' ? acc + amount : acc), 0));
     const [{ date }] = entries;
 
+    // TODO: simplify
     const values = Object.values(colors);
     const bg = values[id % values.length];
 </script>

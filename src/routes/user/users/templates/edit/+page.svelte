@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { error, success } from '$lib/funcs/toast';
@@ -10,14 +9,14 @@
     import Name from '$lib/components/forms/Name.svelte';
     import { Template } from '$lib/models/types';
     import { categories } from '$lib/data/preference';
+    import { getTemplateEditStore } from '$lib/store/forms';
     import { getWalletStore } from '$lib/store/database';
     import { onDestroy } from 'svelte';
 
+    const modalStore = getModalStore();
     const toastStore = getToastStore();
-    const walletList = getWalletStore();
-
-    $: wallets = $walletList.map(wallet => wallet.name);
-    const forms = FormStore.templateEdit();
+    const walletStore = getWalletStore();
+    const forms = getTemplateEditStore();
 
     async function update() {
         const properties: (keyof Template)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
@@ -57,14 +56,14 @@
         }
     }
 
-    const modalStore = getModalStore();
-
     const modal: ModalSettings = {
         type: 'confirm',
         title: 'Please Confirm',
         body: 'Are you sure you wish to remove this template?',
         response: (r: boolean) => remove(r),
     };
+
+    $: wallets = $walletStore.map(wallet => wallet.name);
 
     onDestroy(() => {
         forms.reset();
@@ -77,8 +76,8 @@
             <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
-            <Category {categories} bind:category={$forms.category} />
-            <Wallet {wallets} bind:wallet={$forms.wallet} />
+            <Category {categories} bind:selected={$forms.category} />
+            <Wallet {wallets} bind:selected={$forms.wallet} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

@@ -32,41 +32,41 @@ export function init() {
     setContext(EDITCATEGORY, initStore<TransactionForm>());
 }
 
-export function transactionCreate() {
+export function getTransactionCreateStore() {
     assert(hasContext(CREATETRANSACTION), 'Create transaction store not initialized');
     return getContext<Store<TransactionForm>>(CREATETRANSACTION);
 }
 
-export function transactionEdit() {
+export function getTransactionEditStore() {
     assert(hasContext(EDITTRANSACTION), 'Edit transaction store not initialized');
     return getContext<Store<Transaction>>(EDITTRANSACTION);
 }
 
-export function walletCreate() {
+export function getWalletCreateStore() {
     assert(hasContext(CREATEWALLET), 'Create wallet store not initialized');
     return getContext<Store<WalletForm>>(CREATEWALLET);
 }
-export function walletEdit() {
+export function getWalletEditStore() {
     assert(hasContext(EDITWALLET), 'Edit wallet store not initialized');
     return getContext<Store<Wallet>>(EDITWALLET);
 }
 
-export function templateCreate() {
+export function getTemplateCreateStore() {
     assert(hasContext(CREATETEMPLATE), 'Create template store not initialized');
     return getContext<Store<TemplateForms>>(CREATETEMPLATE);
 }
 
-export function templateEdit() {
+export function getTemplateEditStore() {
     assert(hasContext(EDITTEMPLATE), 'Edit template store not initialized');
     return getContext<Store<Template>>(EDITTEMPLATE);
 }
 
-export function categoryCreate() {
+export function getCategoryCreateStore() {
     assert(hasContext(CREATECATEGORY), 'Create category store not initialized');
     return getContext<Store<CategoryForm>>(CREATECATEGORY);
 }
 
-export function categoryEdit() {
+export function getCategoryEditStore() {
     assert(hasContext(EDITCATEGORY), 'Edit category store not initialized');
     return getContext<Store<Category>>(EDITCATEGORY);
 }

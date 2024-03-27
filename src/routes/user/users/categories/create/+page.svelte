@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import { Description, Icon, Name, Type } from '$lib/components/forms';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
@@ -7,10 +6,11 @@
     import Card from '$lib/components/Card.svelte';
     import { CategoryForm } from '$lib/models/types';
     import { addCategory } from '$lib/firebase/database';
+    import { getCategoryCreateStore } from '$lib/store/forms';
     import { getToastStore } from '@skeletonlabs/skeleton';
 
     const toastStore = getToastStore();
-    const forms = FormStore.categoryCreate();
+    const forms = getCategoryCreateStore();
 
     async function submit() {
         const properties: (keyof CategoryForm)[] = ['name', 'icon', 'description'];

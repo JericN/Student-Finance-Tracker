@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import { Category, CategoryForm } from '$lib/models/types';
     import { Description, Icon, Name } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
@@ -8,10 +7,11 @@
     import { removeCategory, updateCategory } from '$lib/firebase/database';
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
+    import { getCategoryEditStore } from '$lib/store/forms';
     import { onDestroy } from 'svelte';
 
     const toastStore = getToastStore();
-    const forms = FormStore.categoryEdit();
+    const forms = getCategoryEditStore();
 
     async function update() {
         const properties: (keyof CategoryForm)[] = ['name', 'icon', 'description'];

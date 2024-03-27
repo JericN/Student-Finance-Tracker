@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import { Amount, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { error, success } from '$lib/funcs/toast';
     import { parse, pick, safeParse } from 'valibot';
@@ -9,14 +8,13 @@
     import { TemplateForms } from '$lib/models/types';
     import { addTemplate } from '$lib/firebase/database';
     import { categories } from '$lib/data/preference';
+    import { getTemplateCreateStore } from '$lib/store/forms';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { getWalletStore } from '$lib/store/database';
 
     const toastStore = getToastStore();
-    const walletList = getWalletStore();
-
-    $: wallets = $walletList.map(wallet => wallet.name);
-    const forms = FormStore.templateCreate();
+    const walletStore = getWalletStore();
+    const forms = getTemplateCreateStore();
 
     async function submit() {
         const properties: (keyof TemplateForms)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
@@ -40,6 +38,8 @@
             toastStore.trigger(error('Failed to add Template'));
         }
     }
+
+    $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -48,8 +48,8 @@
             <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
-            <Category {categories} bind:category={$forms.category} />
-            <Wallet {wallets} bind:wallet={$forms.wallet} />
+            <Category {categories} bind:selected={$forms.category} />
+            <Wallet {wallets} bind:selected={$forms.wallet} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

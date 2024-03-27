@@ -1,6 +1,7 @@
 <script lang="ts">
     import Day from '$lib/components/Day.svelte';
 
+    // FIXME: should not be UTC date
     export let date: Date;
     export let income: string;
     export let expenses: string;

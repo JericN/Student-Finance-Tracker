@@ -1,15 +1,15 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import Button from '$lib/components/Button.svelte';
     import { TransactionType } from '$lib/models/types';
+    import { getCategoryEditStore } from '$lib/store/forms';
     import { getCategoryStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
-    const forms = FormStore.categoryEdit();
-    const categories = getCategoryStore();
+    const categoryStore = getCategoryStore();
+    const forms = getCategoryEditStore();
 
     function editTemplate(id: number) {
-        forms.set(structuredClone($categories[id]));
+        forms.set(structuredClone($categoryStore[id]));
         goto('/user/users/categories/edit/');
     }
 
@@ -24,7 +24,7 @@
         <div>➕</div>
     </Button>
 
-    {#each $categories as { name, icon, type }, id}
+    {#each $categoryStore as { name, icon, type }, id}
         <Button
             width="max-w-screen-sm"
             padding="p-4"

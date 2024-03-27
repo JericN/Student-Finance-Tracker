@@ -1,9 +1,9 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import { ListBox, ListBoxItem, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { PartialTransactionForm, Template } from '$lib/models/types';
     import type { SvelteComponent } from 'svelte';
     import { getTemplateStore } from '$lib/store/database';
+    import { getTransactionCreateStore } from '$lib/store/forms';
     import { parse } from 'valibot';
     import { success } from '$lib/funcs/toast';
 
@@ -11,14 +11,14 @@
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
-    const templates = getTemplateStore();
-    const createStore = FormStore.transactionCreate();
+    const templateStore = getTemplateStore();
+    const forms = getTransactionCreateStore();
 
     let selected: Template;
 
     function onFormSubmit(): void {
         const data = parse(PartialTransactionForm, { ...selected, date: new Date() });
-        createStore.set(data);
+        forms.set(data);
         modalStore.close();
         toastStore.trigger(success(`Template ${selected.name}`));
     }
@@ -28,7 +28,7 @@
     <div class="modal-example-form card w-modal space-y-4 p-4 shadow-xl">
         <header class="text-center text-2xl font-bold">{$modalStore[0].title}</header>
         <ListBox class="border border-surface-500 p-4 rounded-container-token">
-            {#each $templates as template}
+            {#each $templateStore as template}
                 <ListBoxItem bind:group={selected} name={template.id} value={template}>{template.name}</ListBoxItem>
             {/each}
         </ListBox>

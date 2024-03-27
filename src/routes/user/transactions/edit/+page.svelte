@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { Transaction, TransactionForm } from '$lib/models/types';
@@ -9,22 +8,22 @@
     import Button from '$lib/components/Button.svelte';
     import Card from '$lib/components/Card.svelte';
     import { categories } from '$lib/data/preference';
+    import { getTransactionEditStore } from '$lib/store/forms';
     import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
     import { onDestroy } from 'svelte';
 
+    const modalStore = getModalStore();
     const toastStore = getToastStore();
-    const editStore = FormStore.transactionEdit();
-    const walletList = getWalletStore();
-
-    $: wallets = $walletList.map(wallet => wallet.name);
+    const walletStore = getWalletStore();
+    const forms = getTransactionEditStore();
 
     async function update() {
         const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
 
         // validate the form
         for (const property of properties) {
-            const result = safeParse(pick(TransactionForm, [property]), { [property]: $editStore[property] });
+            const result = safeParse(pick(TransactionForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;
@@ -32,9 +31,9 @@
         }
 
         try {
-            await updateTransaction(parse(Transaction, $editStore));
+            await updateTransaction(parse(Transaction, $forms));
             goto('/user/transactions');
-            editStore.reset();
+            forms.reset();
             toastStore.trigger(success('Transaction updated'));
         } catch (_) {
             toastStore.trigger(error('Failed to update transaction'));
@@ -44,18 +43,16 @@
     async function remove(r: boolean) {
         try {
             if (r) {
-                const { id } = parse(pick(Transaction, ['id']), { id: $editStore.id });
+                const { id } = parse(pick(Transaction, ['id']), { id: $forms.id });
                 await removeTransaction(id);
                 goto('/user/transactions');
-                editStore.reset();
+                forms.reset();
                 toastStore.trigger(success('Transaction removed'));
             }
         } catch (_) {
             toastStore.trigger(error('Failed to remove transaction'));
         }
     }
-
-    const modalStore = getModalStore();
 
     const modal: ModalSettings = {
         type: 'confirm',
@@ -65,20 +62,22 @@
     };
 
     onDestroy(() => {
-        editStore.reset();
+        forms.reset();
     });
+
+    $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
-            <Type bind:type={$editStore.type} />
-            <Amount bind:amount={$editStore.amount} />
-            <Calendar bind:date={$editStore.date} />
-            <Category {categories} bind:category={$editStore.category} />
-            <Wallet {wallets} bind:wallet={$editStore.wallet} />
+            <Type bind:type={$forms.type} />
+            <Amount bind:amount={$forms.amount} />
+            <Calendar bind:date={$forms.date} />
+            <Category {categories} bind:selected={$forms.category} />
+            <Wallet {wallets} bind:selected={$forms.wallet} />
         </div>
-        <Description bind:description={$editStore.description} />
+        <Description bind:description={$forms.description} />
     </Card>
     <div class="flex gap-4">
         <Button on:click={() => update()}>

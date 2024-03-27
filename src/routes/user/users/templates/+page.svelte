@@ -1,16 +1,16 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import Button from '$lib/components/Button.svelte';
     import { TransactionType } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
+    import { getTemplateEditStore } from '$lib/store/forms';
     import { getTemplateStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
-    const editStore = FormStore.templateEdit();
-    const templates = getTemplateStore();
+    const templateStore = getTemplateStore();
+    const forms = getTemplateEditStore();
 
     function editTemplate(id: number) {
-        editStore.set(structuredClone($templates[id]));
+        forms.set(structuredClone($templateStore[id]));
         goto('/user/users/templates/edit/');
     }
 
@@ -25,7 +25,7 @@
         <div>➕</div>
     </Button>
 
-    {#each $templates as { name, type, amount, category, wallet }, id}
+    {#each $templateStore as { name, type, amount, category, wallet }, id}
         <Button
             width="max-w-screen-sm"
             padding="p-4"
