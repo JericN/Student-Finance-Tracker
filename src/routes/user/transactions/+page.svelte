@@ -3,7 +3,7 @@
     import { Accordion } from '@skeletonlabs/skeleton';
     import Summary from './Summary.svelte';
     import Transactions from './Transactions.svelte';
-    import { getTransactionStore } from '$lib/store/database';
+    import { getTransactionStore } from '$lib/store/transactions';
 
     const transactionStore = getTransactionStore();
 

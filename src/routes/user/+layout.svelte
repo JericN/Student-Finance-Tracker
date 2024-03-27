@@ -1,6 +1,7 @@
 <script>
     import * as DataStore from '$lib/store/database';
     import * as FormStore from '$lib/store/forms';
+    import * as TransactionStore from '$lib/store/transactions';
     import { AppShell, Modal } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
@@ -15,6 +16,7 @@
 
     DataStore.init();
     FormStore.init();
+    TransactionStore.init();
 </script>
 
 <Modal />
