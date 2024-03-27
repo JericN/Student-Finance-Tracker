@@ -2,7 +2,7 @@ import {
     Category,
     CategoryForm,
     Template,
-    TemplateForms,
+    TemplateForm,
     Transaction,
     TransactionForm,
     Wallet,
@@ -53,7 +53,7 @@ export function getWalletEditStore() {
 
 export function getTemplateCreateStore() {
     assert(hasContext(CREATETEMPLATE), 'Create template store not initialized');
-    return getContext<Store<TemplateForms>>(CREATETEMPLATE);
+    return getContext<Store<TemplateForm>>(CREATETEMPLATE);
 }
 
 export function getTemplateEditStore() {

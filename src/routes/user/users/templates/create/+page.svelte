@@ -4,7 +4,7 @@
     import { error, success } from '$lib/funcs/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { parse, pick, safeParse } from 'valibot';
-    import { TemplateForms } from '$lib/models/types';
+    import { TemplateForm } from '$lib/models/types';
     import { addTemplate } from '$lib/firebase/database';
     import { getTemplateCreateStore } from '$lib/store/forms';
     import { getToastStore } from '@skeletonlabs/skeleton';
@@ -15,18 +15,18 @@
     const forms = getTemplateCreateStore();
 
     async function submit() {
-        const properties: (keyof TemplateForms)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
+        const properties: (keyof TemplateForm)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
 
         // validate the form
         for (const property of properties) {
-            const result = safeParse(pick(TemplateForms, [property]), { [property]: $forms[property] });
+            const result = safeParse(pick(TemplateForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;
             }
         }
         try {
-            await addTemplate(parse(TemplateForms, $forms));
+            await addTemplate(parse(TemplateForm, $forms));
             // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();

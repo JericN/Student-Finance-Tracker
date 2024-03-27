@@ -65,13 +65,13 @@ export const Template = object({
     amount: number([safeInteger(), minValue(1)]),
     category: string([maxLength(30)]),
     wallet: string([maxLength(30)]),
-    description: optional(string([maxLength(50)]), ''),
+    description: optional(string([maxLength(50)])),
 });
 export type Template = Output<typeof Template>;
 
 // Defines the schema for validating a transaction template from input forms
-export const TemplateForms = omit(Template, ['id', 'createdAt', 'updatedAt']);
-export type TemplateForms = Output<typeof TemplateForms>;
+export const TemplateForm = omit(Template, ['id', 'createdAt', 'updatedAt']);
+export type TemplateForm = Output<typeof TemplateForm>;
 
 // Defines the schema for validating a wallet object in the database.
 export const Wallet = object({

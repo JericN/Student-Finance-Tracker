@@ -1,28 +1,18 @@
 import {
-    Category,
-    CategoryForm,
+    type Category,
+    type CategoryForm,
     type Template,
-    type TemplateForms,
-    Transaction,
+    type TemplateForm,
+    type Transaction,
     type TransactionForm,
-    Wallet,
-    WalletForm,
+    TransactionType,
+    type Wallet,
+    type WalletForm,
 } from '$lib/models/types';
-import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { db } from '$lib/firebase/firebase.client';
-import { safeParse } from 'valibot';
 import { session } from '$lib/store/session';
-
-// This function is used to create a user record when a new user registers
-export async function createUserTransactionForm(user: User) {
-    const { uid, email, displayName } = user;
-    await setDoc(doc(db, `UserData/${uid}`), {
-        uid: uid,
-        email: email,
-        username: displayName,
-    });
-}
 
 // This function is used to create a new transaction
 export async function addTransaction(data: TransactionForm) {
@@ -59,27 +49,8 @@ export async function updateTransaction(transaction: Transaction) {
     }
 }
 
-// This function is used to retrieve all transactions
-export async function getTransactions(): Promise<Transaction[]> {
-    const docRef = collection(db, `UserData/${session.uid()}/transactions`);
-    const transactions: Transaction[] = [];
-
-    try {
-        const docSnap = await getDocs(docRef);
-        docSnap.forEach(doc => {
-            const value = { ...doc.data(), id: doc.id };
-            const json = safeParse(Transaction, value);
-            if (json.success) transactions.push(json.output);
-            else throw new Error('Failed parsing transaction');
-        });
-        return transactions;
-    } catch (e) {
-        throw new Error('Failed retrieving transactions');
-    }
-}
-
 // This function is used to create a new template
-export async function addTemplate(template: TemplateForms) {
+export async function addTemplate(template: TemplateForm) {
     const path = `UserData/${session.uid()}/transaction-templates`;
     const payload = { ...template, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
 
@@ -147,25 +118,6 @@ export async function updateWallet(wallet: Wallet) {
     }
 }
 
-// This function is used to retrieve all wallets
-export async function getWallets(): Promise<Wallet[]> {
-    const docRef = collection(db, `UserData/${session.uid()}/wallets`);
-    const wallets: Wallet[] = [];
-
-    try {
-        const docSnap = await getDocs(docRef);
-        docSnap.forEach(doc => {
-            const value = { ...doc.data(), id: doc.id };
-            const json = safeParse(Wallet, value);
-            if (json.success) wallets.push(json.output);
-            else throw new Error('Failed parsing wallet');
-        });
-        return wallets;
-    } catch (e) {
-        throw new Error('Failed retrieving wallets');
-    }
-}
-
 // This function is used to create a new category
 export async function addCategory(category: CategoryForm) {
     const path = `UserData/${session.uid()}/categories`;
@@ -199,4 +151,31 @@ export async function updateCategory(category: Category) {
     } catch (e) {
         throw new Error('Failed updating category');
     }
+}
+
+// This function is used to create a user record when a new user registers
+export async function createUserTransactionForm(user: User) {
+    const { uid, email, displayName } = user;
+
+    await setDoc(doc(db, `UserData/${uid}`), {
+        uid: uid,
+        email: email,
+        username: displayName,
+    });
+
+    await addWallet({ amount: 0, name: 'Cash' });
+    await addWallet({ amount: 0, name: 'Bank' });
+
+    await addCategory({ name: 'Food', type: TransactionType.Expense, icon: '🍔' });
+    await addCategory({ name: 'Fare', type: TransactionType.Expense, icon: '🚗' });
+    await addCategory({ name: 'Utils', type: TransactionType.Expense, icon: '🏠' });
+    await addCategory({ name: 'Salary', type: TransactionType.Income, icon: '💰', description: 'hi' });
+
+    await addTemplate({
+        name: 'Burger',
+        amount: 100,
+        category: 'Food',
+        type: TransactionType.Expense,
+        wallet: 'Cash',
+    });
 }
