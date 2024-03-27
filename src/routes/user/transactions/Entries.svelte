@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { Cloud } from '@steeze-ui/heroicons';
-    import { Icon } from '@steeze-ui/svelte-icon';
     import { type Transaction } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
     import { getCategoryStore } from '$lib/store/database';
