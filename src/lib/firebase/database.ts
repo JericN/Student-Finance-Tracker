@@ -3,15 +3,16 @@ import {
     type CategoryForm,
     type Template,
     type TemplateForm,
-    type Transaction,
+    Transaction,
     type TransactionForm,
     TransactionType,
     type Wallet,
     type WalletForm,
 } from '$lib/models/types';
-import { addDoc, collection, deleteDoc, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { db } from '$lib/firebase/firebase.client';
+import { safeParse } from 'valibot';
 import { session } from '$lib/store/session';
 
 // This function is used to create a new transaction
@@ -46,6 +47,26 @@ export async function updateTransaction(transaction: Transaction) {
         await setDoc(doc(db, path), payload);
     } catch (e) {
         throw new Error('Failed updating transaction');
+    }
+}
+
+// This function is used to fetch all transactions
+export async function getTransactions() {
+    const path = `UserData/${session.uid()}/transactions`;
+
+    try {
+        const snap = await getDocs(collection(db, path));
+        const transactions: Transaction[] = [];
+
+        snap.forEach(doc => {
+            const value = { ...doc.data(), id: doc.id };
+            const json = safeParse(Transaction, value);
+            if (json.success) transactions.push(json.output);
+            else throw new Error('Failed parsing transaction');
+        });
+        return transactions;
+    } catch (e) {
+        throw new Error('Failed fetching transactions');
     }
 }
 
@@ -118,6 +139,26 @@ export async function updateWallet(wallet: Wallet) {
     }
 }
 
+// This function is used to fetch all wallets
+export async function getWallets() {
+    const path = `UserData/${session.uid()}/wallets`;
+
+    try {
+        const snap = await getDocs(collection(db, path));
+        const wallets: Wallet[] = [];
+
+        snap.forEach(doc => {
+            const value = { ...doc.data(), id: doc.id };
+            // TODO: parse the value to the Wallet type
+            wallets.push(value as Wallet);
+        });
+
+        return wallets;
+    } catch (e) {
+        throw new Error('Failed fetching wallets');
+    }
+}
+
 // This function is used to create a new category
 export async function addCategory(category: CategoryForm) {
     const path = `UserData/${session.uid()}/categories`;
@@ -150,6 +191,26 @@ export async function updateCategory(category: Category) {
         await setDoc(doc(db, path), payload);
     } catch (e) {
         throw new Error('Failed updating category');
+    }
+}
+
+// This function is used to fetch all categories
+export async function getCategories() {
+    const path = `UserData/${session.uid()}/categories`;
+
+    try {
+        const snap = await getDocs(collection(db, path));
+        const categories: Category[] = [];
+
+        snap.forEach(doc => {
+            const value = { ...doc.data(), id: doc.id };
+            // TODO: parse the value to the Category type
+            categories.push(value as Category);
+        });
+
+        return categories;
+    } catch (e) {
+        throw new Error('Failed fetching categories');
     }
 }
 
