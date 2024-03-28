@@ -26,7 +26,7 @@
 
 <div class="input-label">Wallet</div>
 <ListBox
-    class="flex items-center gap-1 justify-self-start text-dark"
+    class="flex gap-1 justify-self-start text-dark"
     active="bg-surface-700 text-light"
     spacing="space-y-0"
     regionDefault="text-xs font-medium"

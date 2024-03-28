@@ -27,12 +27,7 @@
 </script>
 
 <div class="input-label">Category</div>
-<ListBox
-    class="flex items-center justify-self-start"
-    active="bg-surface-700"
-    spacing="space-y-0"
-    regionDefault="text-center"
->
+<ListBox class="flex justify-self-start" active="bg-surface-700" spacing="space-y-0" regionDefault="text-center">
     {#each preview as { id, name, icon }}
         <ListBoxItem bind:group={selected} {name} value={id} rounded="rounded-lg" padding="p-1" class="h-8 w-8"
             >{icon}</ListBoxItem
