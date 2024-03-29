@@ -1,16 +1,27 @@
 <script lang="ts">
-    import Button from '$lib/components/Button.svelte';
+    import { LightSwitch, getToastStore } from '@skeletonlabs/skeleton';
+    import { Button } from '$lib/components/modules';
     import Entry from './Entry.svelte';
-    import { LightSwitch } from '@skeletonlabs/skeleton';
     import { currency } from '$lib/funcs/helper';
+    import { error } from '$lib/funcs/toast';
     import { goto } from '$app/navigation';
     import { session } from '$lib/store/session';
     import { signOutUser } from '$lib/firebase/auth';
+
+    const toast = getToastStore();
+    async function logout() {
+        try {
+            await signOutUser();
+            goto('/');
+        } catch (e) {
+            toast.trigger(error('Logout Failed'));
+        }
+    }
 </script>
 
 <div class="flex h-full flex-col items-center justify-center gap-2 p-10">
     <div class="space-y-2 text-center font-bold">
-        <div class="text-3xl">User Page</div>
+        <div class="text-3xl">USER PAGE</div>
         <div class="uppercase underline">
             {$session.username}
         </div>
@@ -47,13 +58,5 @@
         <LightSwitch class={'select-none'} />
     </Entry>
 
-    <Button
-        font="font-bold text-dark"
-        on:click={() => {
-            signOutUser();
-            goto('/auth/login');
-        }}
-    >
-        Logout
-    </Button>
+    <Button on:click={logout}>Logout</Button>
 </div>

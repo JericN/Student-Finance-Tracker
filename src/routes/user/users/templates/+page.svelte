@@ -1,37 +1,29 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
-    import * as templateStore from '$lib/store/template';
-    import Button from '$lib/components/Button.svelte';
+    import { Button, CardButton } from '$lib/components/modules';
     import { TransactionType } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
+    import { getTemplateEditStore } from '$lib/store/forms';
+    import { getTemplateStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
-    const editStore = FormStore.templateEdit();
-    const templates = templateStore.get();
+    const templateStore = getTemplateStore();
+    const forms = getTemplateEditStore();
 
-    function editTemplate(id: number) {
-        editStore.set(structuredClone($templates[id]));
-        goto('/user/users/templates/edit/');
+    function add() {
+        goto('/user/users/templates/create/');
     }
 
-    function addTemplate() {
-        goto('/user/users/templates/create/');
+    function edit(id: number) {
+        forms.set(structuredClone($templateStore[id]));
+        goto('/user/users/templates/edit/');
     }
 </script>
 
 <div class="flex h-full flex-col items-center gap-2 p-10">
-    <Button width="max-w-52" layout="justify-between" padding="px-4 py-3" on:click={addTemplate}>
-        <div class="text-4x1 font-bold text-dark">Add Template</div>
-        <div>➕</div>
-    </Button>
+    <Button on:click={add}>Add Template ➕</Button>
 
-    {#each $templates as { name, type, amount, category, wallet }, id}
-        <Button
-            width="max-w-screen-sm"
-            padding="p-4"
-            accent={type === TransactionType.Expense ? 'bg-expense' : 'bg-income'}
-            on:click={() => editTemplate(id)}
-        >
+    {#each $templateStore as { name, type, amount, category, wallet }, id}
+        <CardButton accent={type === TransactionType.Expense ? 'bg-expense' : 'bg-income'} on:click={() => edit(id)}>
             <div class="grid w-full grid-cols-[1fr_auto] grid-rows-[1fr_auto] gap-2 text-xs text-dark">
                 <div class="text-left text-xl font-bold">{name}</div>
                 <div class="place-self-end text-sm font-bold">{currency(amount)}</div>
@@ -41,6 +33,6 @@
                 </div>
                 <div>{type}</div>
             </div>
-        </Button>
+        </CardButton>
     {/each}
 </div>

@@ -1,17 +1,17 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
     import { Cloud } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { type Transaction } from '$lib/models/types';
     import { currency } from '$lib/funcs/helper';
+    import { getTransactionEditStore } from '$lib/store/forms';
     import { goto } from '$app/navigation';
 
     export let entries: Transaction[];
 
-    const editStore = FormStore.transactionEdit();
+    const forms = getTransactionEditStore();
 
-    function edit(entry: Transaction) {
-        editStore.set(structuredClone(entry));
+    function edit(id: number) {
+        forms.set(structuredClone(entries[id]));
         goto('/user/transactions/edit/');
     }
 </script>
@@ -21,7 +21,7 @@
         <a
             href={null}
             class="grid cursor-pointer select-none grid-cols-tbody items-center text-dark hover:text-primary-500"
-            on:click={() => edit(entries[id])}
+            on:click={() => edit(id)}
         >
             <Icon src={Cloud} class="size-3" />
             <div>{category}</div>

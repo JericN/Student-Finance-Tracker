@@ -1,12 +1,12 @@
 import {
     Category,
     CategoryForm,
-    type Record,
     type Template,
     type TemplateForms,
     Transaction,
+    type TransactionForm,
     Wallet,
-    WalletRecord,
+    WalletForm,
 } from '$lib/models/types';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
@@ -15,7 +15,7 @@ import { safeParse } from 'valibot';
 import { session } from '$lib/store/session';
 
 // This function is used to create a user record when a new user registers
-export async function createUserRecord(user: User) {
+export async function createUserTransactionForm(user: User) {
     const { uid, email, displayName } = user;
     await setDoc(doc(db, `UserData/${uid}`), {
         uid: uid,
@@ -25,7 +25,7 @@ export async function createUserRecord(user: User) {
 }
 
 // This function is used to create a new transaction
-export async function addTransaction(data: Record) {
+export async function addTransaction(data: TransactionForm) {
     const path = `UserData/${session.uid()}/transactions`;
     const payload = { ...data, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
 
@@ -114,7 +114,7 @@ export async function updateTemplate(template: Template) {
 }
 
 // This function is used to create a new wallet
-export async function addWallet(wallet: WalletRecord) {
+export async function addWallet(wallet: WalletForm) {
     const path = `UserData/${session.uid()}/wallets`;
     const payload = { ...wallet, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
     try {

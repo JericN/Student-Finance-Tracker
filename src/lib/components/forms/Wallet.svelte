@@ -2,7 +2,7 @@
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 
     export let wallets: string[];
-    export let wallet: string | undefined;
+    export let selected: string | undefined;
 
     let deviceWidth = window.innerWidth;
     window.addEventListener('resize', () => {
@@ -32,7 +32,7 @@
 >
     {#each preview as item}
         <ListBoxItem
-            bind:group={wallet}
+            bind:group={selected}
             name={item}
             value={item}
             rounded="rounded-lg"

@@ -1,12 +1,12 @@
 import {
     Category,
     CategoryForm,
-    Record,
     Template,
     TemplateForms,
     Transaction,
+    TransactionForm,
     Wallet,
-    WalletRecord,
+    WalletForm,
 } from '$lib/models/types';
 import { type Store, initStore } from './model/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
@@ -22,51 +22,51 @@ const CREATECATEGORY = Symbol('createcategory');
 const EDITCATEGORY = Symbol('editcategory');
 
 export function init() {
-    setContext(CREATETRANSACTION, initStore<Record>());
+    setContext(CREATETRANSACTION, initStore<TransactionForm>());
     setContext(EDITTRANSACTION, initStore<Transaction>());
-    setContext(CREATEWALLET, initStore<WalletRecord>());
+    setContext(CREATEWALLET, initStore<WalletForm>());
     setContext(EDITWALLET, initStore<Wallet>());
     setContext(CREATETEMPLATE, initStore<Template>());
     setContext(EDITTEMPLATE, initStore<Template>());
-    setContext(CREATECATEGORY, initStore<Record>());
-    setContext(EDITCATEGORY, initStore<Record>());
+    setContext(CREATECATEGORY, initStore<TransactionForm>());
+    setContext(EDITCATEGORY, initStore<TransactionForm>());
 }
 
-export function transactionCreate() {
+export function getTransactionCreateStore() {
     assert(hasContext(CREATETRANSACTION), 'Create transaction store not initialized');
-    return getContext<Store<Record>>(CREATETRANSACTION);
+    return getContext<Store<TransactionForm>>(CREATETRANSACTION);
 }
 
-export function transactionEdit() {
+export function getTransactionEditStore() {
     assert(hasContext(EDITTRANSACTION), 'Edit transaction store not initialized');
     return getContext<Store<Transaction>>(EDITTRANSACTION);
 }
 
-export function walletCreate() {
+export function getWalletCreateStore() {
     assert(hasContext(CREATEWALLET), 'Create wallet store not initialized');
-    return getContext<Store<WalletRecord>>(CREATEWALLET);
+    return getContext<Store<WalletForm>>(CREATEWALLET);
 }
-export function walletEdit() {
+export function getWalletEditStore() {
     assert(hasContext(EDITWALLET), 'Edit wallet store not initialized');
     return getContext<Store<Wallet>>(EDITWALLET);
 }
 
-export function templateCreate() {
+export function getTemplateCreateStore() {
     assert(hasContext(CREATETEMPLATE), 'Create template store not initialized');
     return getContext<Store<TemplateForms>>(CREATETEMPLATE);
 }
 
-export function templateEdit() {
+export function getTemplateEditStore() {
     assert(hasContext(EDITTEMPLATE), 'Edit template store not initialized');
     return getContext<Store<Template>>(EDITTEMPLATE);
 }
 
-export function categoryCreate() {
+export function getCategoryCreateStore() {
     assert(hasContext(CREATECATEGORY), 'Create category store not initialized');
     return getContext<Store<CategoryForm>>(CREATECATEGORY);
 }
 
-export function categoryEdit() {
+export function getCategoryEditStore() {
     assert(hasContext(EDITCATEGORY), 'Edit category store not initialized');
     return getContext<Store<Category>>(EDITCATEGORY);
 }

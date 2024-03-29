@@ -1,7 +1,6 @@
 <script lang="ts">
+    import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/funcs/toast';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
     import { loginWithMail } from '$lib/firebase/auth';
@@ -34,9 +33,9 @@
             <input bind:value={password} class="input" type="password" placeholder="Password" />
         </div>
 
-        <div class="flex font-bold text-primary-900">
-            <Button width="w-full" accent="bg-income" padding="p-2" on:click={login}>Login</Button>
-            <Button width="w-full" accent="bg-expense" padding="p-2" on:click={toregister}>Signup</Button>
+        <div class="flex">
+            <Button width="w-full" accent="bg-income" on:click={login}>Login</Button>
+            <Button width="w-full" accent="bg-expense" on:click={toregister}>Signup</Button>
         </div>
     </Card>
 </div>

@@ -1,26 +1,20 @@
 <script>
+    import * as DataStore from '$lib/store/database';
     import * as FormStore from '$lib/store/forms';
-    import * as categoryStore from '$lib/store/category';
-    import * as templateStore from '$lib/store/template';
-    import * as transactionStore from '$lib/store/transaction';
-    import * as walletStore from '$lib/store/wallet';
     import { AppShell, Modal } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
     import { page } from '$app/stores';
 
+    // TODO: fix header routing
     $: current = $page.url.pathname;
     $: transaction = current === '/user/transactions/create/' || current === '/user/transactions/edit/';
     $: wallet = current.startsWith('/user/users/wallets/');
     $: template = current.startsWith('/user/users/templates/');
     $: category = current.startsWith('/user/users/categories/');
 
+    DataStore.init();
     FormStore.init();
-    categoryStore.init();
-    templateStore.init();
-    transactionStore.init();
-    templateStore.init();
-    walletStore.init();
 </script>
 
 <Modal />
@@ -38,7 +32,7 @@
     </div>
     <slot />
     <div slot="footer">
-        {#if !transaction && !wallet}
+        {#if !transaction && !wallet && !template && !category}
             <NavBar />
         {/if}
     </div>

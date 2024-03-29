@@ -1,30 +1,26 @@
 <script lang="ts">
-    import * as FormStore from '$lib/store/forms';
-    import * as walletStore from '$lib/store/wallet';
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
-    import { type ModalSettings, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { Record, Transaction } from '$lib/models/types';
+    import { Button, Card } from '$lib/components/modules';
+    import { Transaction, TransactionForm } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
+    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTransaction, updateTransaction } from '$lib/firebase/database';
-    import Button from '$lib/components/Button.svelte';
-    import Card from '$lib/components/Card.svelte';
     import { categories } from '$lib/data/preference';
+    import { getTransactionEditStore } from '$lib/store/forms';
+    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
-    import { onDestroy } from 'svelte';
 
+    const modalStore = getModalStore();
     const toastStore = getToastStore();
-    const editStore = FormStore.transactionEdit();
-    const walletList = walletStore.get();
-
-    $: wallets = $walletList.map(wallet => wallet.name);
+    const walletStore = getWalletStore();
+    const forms = getTransactionEditStore();
 
     async function update() {
-        const properties: (keyof Record)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
+        const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
 
-        // validate the form
         for (const property of properties) {
-            const result = safeParse(pick(Record, [property]), { [property]: $editStore[property] });
+            const result = safeParse(pick(TransactionForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;
@@ -32,60 +28,54 @@
         }
 
         try {
-            await updateTransaction(parse(Transaction, $editStore));
+            await updateTransaction(parse(Transaction, $forms));
             goto('/user/transactions');
-            editStore.reset();
+            forms.reset();
             toastStore.trigger(success('Transaction updated'));
         } catch (_) {
             toastStore.trigger(error('Failed to update transaction'));
         }
     }
 
-    async function remove(r: boolean) {
+    async function remove() {
         try {
-            if (r) {
-                const { id } = parse(pick(Transaction, ['id']), { id: $editStore.id });
-                await removeTransaction(id);
-                goto('/user/transactions');
-                editStore.reset();
-                toastStore.trigger(success('Transaction removed'));
-            }
+            const { id } = parse(pick(Transaction, ['id']), { id: $forms.id });
+            await removeTransaction(id);
+            goto('/user/transactions');
+            forms.reset();
+            toastStore.trigger(success('Transaction removed'));
         } catch (_) {
             toastStore.trigger(error('Failed to remove transaction'));
         }
     }
 
-    const modalStore = getModalStore();
+    function removeHandler() {
+        modalStore.trigger({
+            type: 'confirm',
+            title: 'Please Confirm',
+            body: 'Are you sure you wish to remove this transaction?',
+            response: (res: boolean) => {
+                if (res) remove();
+            },
+        });
+    }
 
-    const modal: ModalSettings = {
-        type: 'confirm',
-        title: 'Please Confirm',
-        body: 'Are you sure you wish to remove this transaction?',
-        response: (r: boolean) => remove(r),
-    };
-
-    onDestroy(() => {
-        editStore.reset();
-    });
+    $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
-            <Type bind:type={$editStore.type} />
-            <Amount bind:amount={$editStore.amount} />
-            <Calendar bind:date={$editStore.date} />
-            <Category {categories} bind:category={$editStore.category} />
-            <Wallet {wallets} bind:wallet={$editStore.wallet} />
+            <Type bind:type={$forms.type} />
+            <Amount bind:amount={$forms.amount} />
+            <Calendar bind:date={$forms.date} />
+            <Category {categories} bind:selected={$forms.category} />
+            <Wallet {wallets} bind:selected={$forms.wallet} />
         </div>
-        <Description bind:description={$editStore.description} />
+        <Description bind:description={$forms.description} />
     </Card>
     <div class="flex gap-4">
-        <Button on:click={() => update()}>
-            <span class="px-4 font-bold text-dark"> UPDATE </span>
-        </Button>
-        <Button on:click={() => modalStore.trigger(modal)}>
-            <span class="px-4 font-bold text-dark"> REMOVE </span>
-        </Button>
+        <Button on:click={update}>UPDATE</Button>
+        <Button on:click={removeHandler}>REMOVE</Button>
     </div>
 </div>

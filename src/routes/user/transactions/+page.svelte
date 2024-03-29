@@ -1,25 +1,23 @@
 <script lang="ts">
-    import * as transactionStore from '$lib/store/transaction';
+    import { getTotalExpenses, getTotalIncome, groupTransactions } from '$lib/funcs/helper';
     import { Accordion } from '@skeletonlabs/skeleton';
     import Summary from './Summary.svelte';
     import Transactions from './Transactions.svelte';
-    import groupBy from 'object.groupby';
+    import { getTransactionStore } from '$lib/store/database';
 
-    const transactions = transactionStore.get();
+    const transactionStore = getTransactionStore();
 
-    // Placeholder data
-    const income = 1430;
-    const expenses = 870;
-    const balance = income - expenses;
-
-    $: records = groupBy($transactions, ({ date }) => date.getDate());
+    $: transactions = groupTransactions($transactionStore);
+    $: income = getTotalIncome($transactionStore);
+    $: expenses = getTotalExpenses($transactionStore);
+    $: balance = income - expenses;
 </script>
 
 <div class="flex flex-col items-center gap-4 p-10">
     <Summary {income} {expenses} {balance} />
     <Accordion class="max-w-screen-sm text-xs" spacing={'space-y-4'} regionCaret={'hidden'} hover="">
-        {#each Object.values(records) as entries, id}
-            <Transactions {entries} {id} />
+        {#each Object.entries(transactions) as [time, entries], id}
+            <Transactions {time} {entries} {id} />
         {/each}
     </Accordion>
 </div>

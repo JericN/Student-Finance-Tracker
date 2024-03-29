@@ -1,7 +1,7 @@
 <script lang="ts">
     import { type Days, days } from '$lib/models/types';
 
-    export let date: Date;
+    export let day: number;
 
     const colors: Record<Days, string> = {
         Sun: 'text-red-900',
@@ -14,12 +14,12 @@
     };
 
     // FIXME: correct the day mapping
-    const day = days[date.getDate() % 7];
-    const color = colors[day];
+    const text = days[day % 7];
+    const color = colors[text as Days];
 </script>
 
-<span class={`grid h-3 w-4 place-items-center rounded-sm bg-white leading-none`}>
+<span class={`grid h-3 w-5 place-items-center rounded-sm bg-white leading-none`}>
     <span class={`${color} text-3xs font-bold`}>
-        {day}
+        {text}
     </span>
 </span>
