@@ -56,7 +56,7 @@ export async function getTransactions() {
 
     try {
         const snap = await getDocs(collection(db, path));
-        const transactions: Transaction[] = [];
+        const transactions = [] as Transaction[];
 
         snap.forEach(doc => {
             const value = { ...doc.data(), id: doc.id };
@@ -145,7 +145,7 @@ export async function getWallets() {
 
     try {
         const snap = await getDocs(collection(db, path));
-        const wallets: Wallet[] = [];
+        const wallets = [] as Wallet[];
 
         snap.forEach(doc => {
             const value = { ...doc.data(), id: doc.id };
@@ -200,7 +200,7 @@ export async function getCategories() {
 
     try {
         const snap = await getDocs(collection(db, path));
-        const categories: Category[] = [];
+        const categories = [] as Category[];
 
         snap.forEach(doc => {
             const value = { ...doc.data(), id: doc.id };
