@@ -16,17 +16,17 @@ export function initStore<T extends ID>(path: string, schema: any) {
     const q = query(collection(db, `UserData/${session.uid()}/${path}`));
 
     const unsubscribe = onSnapshot(q, snap => {
-        const categories: T[] = [];
+        const data: T[] = [];
         if (snap.metadata.hasPendingWrites) return;
 
         snap.forEach(doc => {
             const value = { ...doc.data(), id: doc.id };
             const json = safeParse(schema, value);
-            if (json.success) categories.push(json.output);
+            if (json.success) data.push(json.output);
             else throw new Error('Failed parsing data from database');
         });
 
-        set(categories);
+        set(data);
     });
 
     function find(id: string) {

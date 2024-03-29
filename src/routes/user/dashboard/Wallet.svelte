@@ -2,7 +2,7 @@
     import { Card } from '$lib/components/modules';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import { currency } from '$lib/funcs/helper';
+    import { currency } from '$lib/functions/helper';
 
     export let name: string;
     export let value: number;

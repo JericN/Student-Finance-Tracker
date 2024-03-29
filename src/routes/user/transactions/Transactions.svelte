@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type Transaction, colors } from '$lib/models/types';
-    import { getTotalExpenses, getTotalIncome } from '$lib/funcs/helper';
+    import { getTotalExpenses, getTotalIncome } from '$lib/functions/helper';
     import { AccordionItem } from '@skeletonlabs/skeleton';
     import Entries from './Entries.svelte';
     import Header from './Header.svelte';

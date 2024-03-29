@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Day } from '$lib/components/modules';
-    import { currency } from '$lib/funcs/helper';
+    import { currency } from '$lib/functions/helper';
 
     export let time: string;
     export let income: number;

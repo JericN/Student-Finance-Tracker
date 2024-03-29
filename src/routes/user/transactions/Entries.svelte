@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type Transaction } from '$lib/models/types';
-    import { currency } from '$lib/funcs/helper';
+    import { currency } from '$lib/functions/helper';
     import { getCategoryStore } from '$lib/store/database';
     import { getTransactionEditStore } from '$lib/store/forms';
     import { goto } from '$app/navigation';

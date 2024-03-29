@@ -2,7 +2,7 @@
     import { Button, CardButton } from '$lib/components/modules';
     import { CreditCard } from '@steeze-ui/heroicons';
     import { Icon } from '@steeze-ui/svelte-icon';
-    import { currency } from '$lib/funcs/helper';
+    import { currency } from '$lib/functions/helper';
     import { getWalletEditStore } from '$lib/store/forms';
     import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';

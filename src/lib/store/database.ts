@@ -1,5 +1,5 @@
 import { Category, Template, Wallet } from '$lib/models/types';
-import { type Store, initStore } from '$lib/store/model/DatabaseTemplate';
+import { type Store, initStore } from '$lib/store/templates/DatabaseTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
 
 const CATEGORY = Symbol('category');

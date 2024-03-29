@@ -9,7 +9,7 @@
     import WalletFilter from '$lib/modals/filters/WalletFilter.svelte';
     import { filterStore } from '$lib/store/filter';
     import { getTransactionStore } from '$lib/store/transaction';
-    import { success } from '$lib/funcs/toast';
+    import { success } from '$lib/functions/toast';
 
     export let parent: SvelteComponent;
 
@@ -27,7 +27,7 @@
 </script>
 
 {#if $modalStore[0]}
-    <div class="card w-modal m-6 space-y-4 p-4 shadow-xl">
+    <div class="card m-6 w-full max-w-sm space-y-4 p-4 shadow-xl">
         <header class="text-center text-xl font-bold">{$modalStore[0].title}</header>
 
         <AmountRangeFilter bind:min={$filterStore.amountMin} bind:max={$filterStore.amountMax} />

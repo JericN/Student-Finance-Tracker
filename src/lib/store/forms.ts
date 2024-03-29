@@ -8,9 +8,9 @@ import {
     Wallet,
     WalletForm,
 } from '$lib/models/types';
-import { type Store, initStore } from './model/FormTemplate';
+import { type Store, initStore } from './templates/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
-import { assert } from '$lib/assert';
+import { assert } from '$lib/functions/assert';
 
 const CREATETRANSACTION = Symbol('createtransaction');
 const EDITTRANSACTION = Symbol('edittransaction');

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { error, success } from '$lib/funcs/toast';
+    import { error, success } from '$lib/functions/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
