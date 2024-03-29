@@ -1,5 +1,6 @@
-import { Category, Filters, TransactionType, Wallet } from '$lib/models/types';
+import { Filters, TransactionType } from '$lib/models/types';
 import { get, writable } from 'svelte/store';
+import { getCategories, getWallets } from '$lib/firebase/database';
 
 const initial: Filters = {
     amountMin: null,
@@ -12,7 +13,7 @@ const initial: Filters = {
 };
 
 export function initStore() {
-    const store = writable<Filters>(initial);
+    const store = writable<Filters>(structuredClone(initial));
 
     const { set, subscribe } = store;
 
@@ -20,16 +21,28 @@ export function initStore() {
         return get(store);
     }
 
+    async function reset() {
+        const categories = await getCategories();
+        const wallets = await getWallets();
+        initial.categoryIds = categories.map(c => c.id);
+        initial.walletIds = wallets.map(w => w.id);
+        set(structuredClone(initial));
+    }
+
     return {
         set,
         subscribe,
         values,
+        reset,
     };
 }
 
-export function load(categories: Category[], wallets: Wallet[]) {
+export const filterStore = initStore();
+
+export async function load() {
+    const categories = await getCategories();
+    const wallets = await getWallets();
     initial.categoryIds = categories.map(c => c.id);
     initial.walletIds = wallets.map(w => w.id);
+    filterStore.set(structuredClone(initial));
 }
-
-export const filterStore = initStore();
