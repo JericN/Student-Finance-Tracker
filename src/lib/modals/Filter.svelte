@@ -1,12 +1,12 @@
 <script lang="ts">
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import AmountRangeFilter from './AmountRangeFilter.svelte';
-    import CategoryFilter from './CategoryFilter.svelte';
-    import DateRangeFilter from './DateRangeFilter.svelte';
+    import AmountRangeFilter from '$lib/modals/filters/AmountRangeFilter.svelte';
+    import CategoryFilter from '$lib/modals/filters/CategoryFilter.svelte';
+    import DateRangeFilter from '$lib/modals/filters/DateRangeFilter.svelte';
     import type { SvelteComponent } from 'svelte';
-    import TypeFilter from './TypeFilter.svelte';
-    import WalletFilter from './WalletFilter.svelte';
+    import TypeFilter from '$lib/modals/filters/TypeFilter.svelte';
+    import WalletFilter from '$lib/modals/filters/WalletFilter.svelte';
     import { filterStore } from '$lib/store/filter';
     import { getTransactionStore } from '$lib/store/transaction';
     import { success } from '$lib/funcs/toast';

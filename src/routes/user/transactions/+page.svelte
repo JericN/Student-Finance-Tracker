@@ -2,7 +2,6 @@
     import { Accordion, getModalStore } from '@skeletonlabs/skeleton';
     import { getTotalExpenses, getTotalIncome, groupTransactions } from '$lib/funcs/helper';
     import { Button } from '$lib/components/modules';
-    import Filter from './Filter.svelte';
     import Summary from './Summary.svelte';
     import Transactions from './Transactions.svelte';
     import { getTransactionStore } from '$lib/store/transaction';
@@ -11,7 +10,7 @@
     const transactionStore = getTransactionStore();
 
     function showFilters() {
-        modalStore.trigger({ type: 'component', component: { ref: Filter }, title: 'Filters' });
+        modalStore.trigger({ type: 'component', component: 'filter', title: 'Filters' });
     }
 
     $: transactions = groupTransactions($transactionStore);
