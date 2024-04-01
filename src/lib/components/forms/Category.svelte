@@ -1,7 +1,8 @@
 <script lang="ts">
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
+    import type { Category } from '$lib/models/types';
 
-    export let categories: Record<string, string>;
+    export let categories: Category[];
     export let selected: string | undefined;
 
     let deviceWidth = window.innerWidth;
@@ -22,7 +23,7 @@
         }
     }
 
-    $: preview = Object.keys(categories).slice(0, update(deviceWidth));
+    $: preview = categories.slice(0, update(deviceWidth));
 </script>
 
 <div class="input-label">Category</div>
@@ -32,9 +33,9 @@
     spacing="space-y-0"
     regionDefault="text-center"
 >
-    {#each preview as item}
-        <ListBoxItem bind:group={selected} name={item} value={item} rounded="rounded-lg" padding="p-1" class="h-8 w-8"
-            >{categories[item]}</ListBoxItem
+    {#each preview as { id, name, icon }}
+        <ListBoxItem bind:group={selected} {name} value={id} rounded="rounded-lg" padding="p-1" class="h-8 w-8"
+            >{icon}</ListBoxItem
         >
     {/each}
     <button class="h-8 w-8 rounded-lg border-2 bg-surface-300"> ➕ </button>

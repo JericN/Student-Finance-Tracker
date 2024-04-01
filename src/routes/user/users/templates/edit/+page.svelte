@@ -2,21 +2,21 @@
     import { Amount, Category, Description, Name, Type, Wallet } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/funcs/toast';
+    import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTemplate, updateTemplate } from '$lib/firebase/database';
     import { Template } from '$lib/models/types';
-    import { categories } from '$lib/data/preference';
     import { getTemplateEditStore } from '$lib/store/forms';
-    import { getWalletStore } from '$lib/store/database';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
+    const categoryStore = getCategoryStore();
     const walletStore = getWalletStore();
     const forms = getTemplateEditStore();
 
     async function update() {
-        const properties: (keyof Template)[] = ['name', 'type', 'amount', 'category', 'wallet', 'description'];
+        const properties: (keyof Template)[] = ['name', 'type', 'amount', 'categoryId', 'walletId', 'description'];
 
         for (const property of properties) {
             const result = safeParse(pick(Template, [property]), { [property]: $forms[property] });
@@ -59,8 +59,6 @@
             },
         });
     }
-
-    $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -69,8 +67,8 @@
             <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
-            <Category {categories} bind:selected={$forms.category} />
-            <Wallet {wallets} bind:selected={$forms.wallet} />
+            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Wallet wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

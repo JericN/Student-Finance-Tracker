@@ -2,14 +2,13 @@
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/funcs/toast';
+    import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import Template from './Template.svelte';
     import { TransactionForm } from '$lib/models/types';
     import { addTransaction } from '$lib/firebase/database';
-    import { categories } from '$lib/data/preference';
     import { getTransactionCreateStore } from '$lib/store/forms';
-    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
     // skeleton stores
@@ -17,11 +16,19 @@
     const toastStore = getToastStore();
 
     // data stores
+    const categoryStore = getCategoryStore();
     const walletStore = getWalletStore();
     const forms = getTransactionCreateStore();
 
     async function submit() {
-        const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
+        const properties: (keyof TransactionForm)[] = [
+            'type',
+            'amount',
+            'date',
+            'categoryId',
+            'walletId',
+            'description',
+        ];
 
         // validate the form
         for (const property of properties) {
@@ -50,20 +57,23 @@
         });
     }
 
-    $: wallets = $walletStore.map(wallet => wallet.name);
+    function reset() {
+        forms.reset();
+    }
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
-    <div class="self-end">
-        <Button on:click={showTemplates}>Templates</Button>
+    <div class="flex w-full min-w-72 max-w-sm justify-between">
+        <Button padding="p-1" width="w-full" accent="bg-income" on:click={showTemplates}>Templates</Button>
+        <Button padding="p-1" width="w-full" accent="bg-expense" on:click={reset}>Reset</Button>
     </div>
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
             <Type bind:type={$forms.type} />
             <Amount bind:amount={$forms.amount} />
             <Calendar bind:date={$forms.date} />
-            <Category {categories} bind:selected={$forms.category} />
-            <Wallet {wallets} bind:selected={$forms.wallet} />
+            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Wallet wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

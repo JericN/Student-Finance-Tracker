@@ -47,6 +47,7 @@
         }
     }
 
+    // TODO: remove related transactions or archive wallet
     function removeHandler() {
         modalStore.trigger({
             type: 'confirm',

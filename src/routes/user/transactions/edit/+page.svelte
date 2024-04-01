@@ -3,21 +3,28 @@
     import { Button, Card } from '$lib/components/modules';
     import { Transaction, TransactionForm } from '$lib/models/types';
     import { error, success } from '$lib/funcs/toast';
+    import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTransaction, updateTransaction } from '$lib/firebase/database';
-    import { categories } from '$lib/data/preference';
     import { getTransactionEditStore } from '$lib/store/forms';
-    import { getWalletStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
+    const categoryStore = getCategoryStore();
     const walletStore = getWalletStore();
     const forms = getTransactionEditStore();
 
     async function update() {
-        const properties: (keyof TransactionForm)[] = ['type', 'amount', 'date', 'category', 'wallet', 'description'];
+        const properties: (keyof TransactionForm)[] = [
+            'type',
+            'amount',
+            'date',
+            'categoryId',
+            'walletId',
+            'description',
+        ];
 
         for (const property of properties) {
             const result = safeParse(pick(TransactionForm, [property]), { [property]: $forms[property] });
@@ -59,8 +66,6 @@
             },
         });
     }
-
-    $: wallets = $walletStore.map(wallet => wallet.name);
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -69,8 +74,8 @@
             <Type bind:type={$forms.type} />
             <Amount bind:amount={$forms.amount} />
             <Calendar bind:date={$forms.date} />
-            <Category {categories} bind:selected={$forms.category} />
-            <Wallet {wallets} bind:selected={$forms.wallet} />
+            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Wallet wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>
