@@ -1,5 +1,6 @@
 import {
     type Output,
+    array,
     boolean,
     coerce,
     date,
@@ -10,6 +11,7 @@ import {
     maxValue,
     minLength,
     minValue,
+    nullable,
     nullish,
     number,
     object,
@@ -112,6 +114,18 @@ export const Session = object({
     uid: nullish(string()),
 });
 export type Session = Output<typeof Session>;
+
+// Defines transaction filters schema
+export const Filters = object({
+    amountMin: nullable(number([safeInteger()])),
+    amountMax: nullable(number([safeInteger()])),
+    dateStart: nullable(DateSchema),
+    dateEnd: nullable(DateSchema),
+    categoryIds: array(string([maxLength(20)])),
+    walletIds: array(string([maxLength(20)])),
+    types: array(enum_(TransactionType)),
+});
+export type Filters = Output<typeof Filters>;
 
 // TODO: move this
 export const colors = {

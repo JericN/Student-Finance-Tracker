@@ -2,7 +2,7 @@
     import { Amount, Description, Name } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { Wallet, WalletForm } from '$lib/models/types';
-    import { error, success } from '$lib/funcs/toast';
+    import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeWallet, updateWallet } from '$lib/firebase/database';

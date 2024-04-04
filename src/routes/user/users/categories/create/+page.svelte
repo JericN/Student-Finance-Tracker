@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Button, Card } from '$lib/components/modules';
     import { Description, Icon, Name, Type } from '$lib/components/forms';
-    import { error, success } from '$lib/funcs/toast';
+    import { error, success } from '$lib/functions/toast';
     import { parse, pick, safeParse } from 'valibot';
     import { CategoryForm } from '$lib/models/types';
     import { addCategory } from '$lib/firebase/database';

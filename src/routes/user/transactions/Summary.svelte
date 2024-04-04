@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Card } from '$lib/components/modules';
-    import { currency } from '$lib/funcs/helper';
+    import { currency } from '$lib/functions/helper';
 
     export let income: number;
     export let expenses: number;

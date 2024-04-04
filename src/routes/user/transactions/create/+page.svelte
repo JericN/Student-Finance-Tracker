@@ -1,11 +1,10 @@
 <script lang="ts">
     import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { error, success } from '$lib/funcs/toast';
+    import { error, success } from '$lib/functions/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import Template from './Template.svelte';
     import { TransactionForm } from '$lib/models/types';
     import { addTransaction } from '$lib/firebase/database';
     import { getTransactionCreateStore } from '$lib/store/forms';
@@ -50,11 +49,7 @@
     }
 
     function showTemplates() {
-        modalStore.trigger({
-            type: 'component',
-            component: { ref: Template },
-            title: 'Templates',
-        });
+        modalStore.trigger({ type: 'component', component: 'template', title: 'Templates' });
     }
 
     function reset() {

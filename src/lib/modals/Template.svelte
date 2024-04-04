@@ -5,7 +5,7 @@
     import { getTemplateStore } from '$lib/store/database';
     import { getTransactionCreateStore } from '$lib/store/forms';
     import { parse } from 'valibot';
-    import { success } from '$lib/funcs/toast';
+    import { success } from '$lib/functions/toast';
 
     export let parent: SvelteComponent;
 

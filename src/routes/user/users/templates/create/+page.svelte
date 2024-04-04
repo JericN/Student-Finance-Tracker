@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Amount, Category, Description, Name, Type, Wallet } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { error, success } from '$lib/funcs/toast';
+    import { error, success } from '$lib/functions/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { parse, pick, safeParse } from 'valibot';
     import { TemplateForm } from '$lib/models/types';
