@@ -14,6 +14,22 @@ module.exports = {
         es2017: true,
         node: true,
     },
+    ignorePatterns: [
+        '.DS_Store',
+        'node_modules',
+        '/build',
+        '/android',
+        '/ios',
+        '/.vercel',
+        '/.svelte-kit',
+        '/package',
+        '.env',
+        '.env.*',
+        '!.env.example',
+        'pnpm-lock.yaml',
+        'package-lock.json',
+        'yarn.lock',
+    ],
     overrides: [
         {
             files: ['*.svelte'],
