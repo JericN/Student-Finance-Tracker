@@ -28,6 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
       - name: Running Tests
         run: pnpm test
