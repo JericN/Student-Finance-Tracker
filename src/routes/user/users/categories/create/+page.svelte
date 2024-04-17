@@ -3,7 +3,7 @@
     import { Description, Icon, Name, Type } from '$lib/components/forms';
     import { error, success } from '$lib/functions/toast';
     import { parse, pick, safeParse } from 'valibot';
-    import { CategoryForm } from '$lib/models/types';
+    import { CategoryForm } from '$lib/models/sft';
     import { addCategory } from '$lib/firebase/database';
     import { getCategoryCreateStore } from '$lib/store/forms';
     import { getToastStore } from '@skeletonlabs/skeleton';

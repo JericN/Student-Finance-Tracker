@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Button, CardButton } from '$lib/components/modules';
     import { getCategoryStore, getTemplateStore, getWalletStore } from '$lib/store/database';
-    import { TransactionType } from '$lib/models/types';
+    import { TransactionType } from '$lib/models/sft';
     import { currency } from '$lib/functions/helper';
     import { getTemplateEditStore } from '$lib/store/forms';
     import { goto } from '$app/navigation';

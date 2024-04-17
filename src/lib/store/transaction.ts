@@ -1,6 +1,6 @@
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { getContext, hasContext, setContext } from 'svelte';
-import { Transaction } from '$lib/models/types';
+import { Transaction } from '$lib/models/sft';
 import { db } from '$lib/firebase/firebase.client';
 import { filterStore } from '$lib/store/filter';
 import { getTransactions } from '$lib/firebase/database';

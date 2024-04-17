@@ -1,6 +1,6 @@
 <script lang="ts">
     import { ListBox, ListBoxItem, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
-    import { PartialTransactionForm, Template } from '$lib/models/types';
+    import { PartialTransactionForm, Template } from '$lib/models/sft';
     import type { SvelteComponent } from 'svelte';
     import { getTemplateStore } from '$lib/store/database';
     import { getTransactionCreateStore } from '$lib/store/forms';

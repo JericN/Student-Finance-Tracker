@@ -5,7 +5,7 @@
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import { TransactionForm } from '$lib/models/types';
+    import { TransactionForm } from '$lib/models/sft';
     import { addTransaction } from '$lib/firebase/database';
     import { getTransactionCreateStore } from '$lib/store/forms';
     import { goto } from '$app/navigation';

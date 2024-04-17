@@ -1,4 +1,4 @@
-import { Filters, TransactionType } from '$lib/models/types';
+import { Filters, TransactionType } from '$lib/models/sft';
 import { get, writable } from 'svelte/store';
 import { getCategories, getWallets } from '$lib/firebase/database';
 

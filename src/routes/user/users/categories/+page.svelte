@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, CardButton } from '$lib/components/modules';
-    import { TransactionType } from '$lib/models/types';
+    import { TransactionType } from '$lib/models/sft';
     import { getCategoryEditStore } from '$lib/store/forms';
     import { getCategoryStore } from '$lib/store/database';
     import { goto } from '$app/navigation';
