@@ -90,6 +90,21 @@ export type Wallet = Output<typeof Wallet>;
 export const WalletForm = omit(Wallet, ['id', 'createdAt', 'updatedAt']);
 export type WalletForm = Output<typeof WalletForm>;
 
+//Defines the schema for validating a wishlist item in the database.
+export const Wishlist = object({
+    id: string([length(20)]),
+    createdAt: DateSchema,
+    updatedAt: DateSchema,
+    name: string([minLength(3), maxLength(10)]),
+    amount: number([safeInteger(), minValue(0)]),
+    description: optional(string([maxLength(50)])),
+});
+export type Wishlist = Output<typeof Wallet>;
+
+// Defines the schema for validating a wishlist object from input forms
+export const WishlistForm = omit(Wishlist, ['id', 'createdAt', 'updatedAt']);
+export type WishlistForm = Output<typeof WishlistForm>;
+
 // Defines the schema for validating a category object in the database.
 export const Category = object({
     id: string([length(20)]),
