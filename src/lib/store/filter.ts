@@ -39,6 +39,6 @@ export async function loadDefault() {
     filterStore.set(structuredClone(initial));
 }
 
-export function getDefault() {
+export function getDefault(): Filters {
     return structuredClone(initial);
 }
