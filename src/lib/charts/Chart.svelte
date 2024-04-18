@@ -45,4 +45,6 @@
     });
 </script>
 
-<canvas bind:this={chartCanvas}></canvas>
+<div class="card relative h-full w-full p-4">
+    <canvas bind:this={chartCanvas}></canvas>
+</div>
