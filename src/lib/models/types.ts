@@ -3,6 +3,7 @@ import {
     array,
     boolean,
     coerce,
+    custom,
     date,
     email,
     enum_,
@@ -23,6 +24,7 @@ import {
     string,
 } from 'valibot';
 import { Timestamp } from 'firebase/firestore';
+import {hasValidDecimalPlaces} from '$lib/functions/helper';
 
 const DateSchema = coerce(date([minValue(new Date(2000, 0, 1)), maxValue(new Date(2100, 0, 1))]), input => {
     if (input instanceof Date) return new Date(input);
@@ -42,7 +44,7 @@ export const Transaction = object({
     createdAt: DateSchema,
     updatedAt: DateSchema,
     type: enum_(TransactionType),
-    amount: number([safeInteger(), minValue(1)]),
+    amount: number([minValue(0.01), custom(hasValidDecimalPlaces)]),
     date: DateSchema,
     categoryId: string([maxLength(30)]),
     walletId: string([maxLength(30)]),
@@ -65,10 +67,10 @@ export const Template = object({
     updatedAt: DateSchema,
     name: string([minLength(3), maxLength(12)]),
     type: enum_(TransactionType),
-    amount: number([safeInteger(), minValue(1)]),
+    amount: number([minValue(0.01), custom(hasValidDecimalPlaces)]),
     categoryId: string([maxLength(30)]),
     walletId: string([maxLength(30)]),
-    description: optional(string([maxLength(50)])),
+    description: optional(string([maxLength(200)])),
 });
 export type Template = Output<typeof Template>;
 
@@ -82,8 +84,8 @@ export const Wallet = object({
     createdAt: DateSchema,
     updatedAt: DateSchema,
     name: string([minLength(1), maxLength(10), regex(/[a-zA-Z]/)]),
-    amount: number([safeInteger()]),
-    description: optional(string([maxLength(50)])),
+    amount: number([custom(hasValidDecimalPlaces)]),
+    description: optional(string([maxLength(200)])),
 });
 export type Wallet = Output<typeof Wallet>;
 
@@ -99,7 +101,7 @@ export const Category = object({
     type: enum_(TransactionType),
     name: string([minLength(3), maxLength(10)]),
     icon: string([minLength(1), maxLength(10)]),
-    description: optional(string([maxLength(50)])),
+    description: optional(string([maxLength(200)])),
 });
 export type Category = Output<typeof Category>;
 
