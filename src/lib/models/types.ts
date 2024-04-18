@@ -46,7 +46,7 @@ export const Transaction = object({
     date: DateSchema,
     categoryId: string([maxLength(30)]),
     walletId: string([maxLength(30)]),
-    description: optional(string([maxLength(50)]), ''),
+    description: optional(string([maxLength(200)]), ''),
 });
 export type Transaction = Output<typeof Transaction>;
 
@@ -82,7 +82,7 @@ export const Wallet = object({
     createdAt: DateSchema,
     updatedAt: DateSchema,
     name: string([minLength(1), maxLength(10), regex(/[a-zA-Z]/)]),
-    amount: number([safeInteger(), minValue(0)]),
+    amount: number([safeInteger()]),
     description: optional(string([maxLength(50)])),
 });
 export type Wallet = Output<typeof Wallet>;
