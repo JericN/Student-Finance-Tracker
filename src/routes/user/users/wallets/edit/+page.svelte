@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Amount, Description, Name } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { Wallet, WalletForm } from '$lib/models/types';
+    import { Wallet, WalletForm } from '$lib/models/sft';
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';

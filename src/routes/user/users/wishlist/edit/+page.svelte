@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Amount, Description, Name } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { Wishlist, WishlistForm } from '$lib/models/types';
+    import { Wishlist, WishlistForm } from '$lib/models/sft';
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
@@ -48,7 +48,7 @@
     }
 
     // TODO: remove related transactions or archive wallet
-    ////TODO: Above comment is relic from copy pasting wallet stuff
+    // TODO: Above comment is relic from copy pasting wallet stuff
     function removeHandler() {
         modalStore.trigger({
             type: 'confirm',

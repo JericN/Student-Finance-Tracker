@@ -1,4 +1,4 @@
-import { Category, Template, Wallet, Wishlist } from '$lib/models/types';
+import { Category, Template, Wallet, Wishlist } from '$lib/models/sft';
 import { type Store, initStore } from '$lib/store/templates/DatabaseTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
 

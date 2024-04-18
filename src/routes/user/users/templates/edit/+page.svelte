@@ -6,7 +6,7 @@
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeTemplate, updateTemplate } from '$lib/firebase/database';
-    import { Template } from '$lib/models/types';
+    import { Template } from '$lib/models/sft';
     import { getTemplateEditStore } from '$lib/store/forms';
 
     const modalStore = getModalStore();

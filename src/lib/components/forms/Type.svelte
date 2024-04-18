@@ -1,6 +1,6 @@
 <script lang="ts">
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
-    import { TransactionType } from '$lib/models/types';
+    import { TransactionType } from '$lib/models/sft';
 
     export let type: TransactionType = TransactionType.Expense;
 </script>

@@ -1,5 +1,9 @@
 <script lang="ts">
+    import 'chartjs-adapter-date-fns';
     import {
+        ArcElement,
+        BarController,
+        BarElement,
         CategoryScale,
         Chart,
         type ChartData,
@@ -9,12 +13,27 @@
         LineController,
         LineElement,
         LinearScale,
+        PieController,
         PointElement,
+        TimeScale,
         Tooltip,
     } from 'chart.js';
     import { afterUpdate, onDestroy, onMount } from 'svelte';
 
-    Chart.register(CategoryScale, LineController, LineElement, LinearScale, PointElement, Legend, Tooltip);
+    Chart.register(
+        ArcElement,
+        BarController,
+        BarElement,
+        CategoryScale,
+        LineController,
+        LineElement,
+        LinearScale,
+        PieController,
+        PointElement,
+        Legend,
+        TimeScale,
+        Tooltip,
+    );
 
     export let data: ChartData;
     export let options: ChartOptions = {};
@@ -43,4 +62,6 @@
     });
 </script>
 
-<canvas bind:this={chartCanvas}></canvas>
+<div class="card relative h-full w-full p-4">
+    <canvas bind:this={chartCanvas}></canvas>
+</div>

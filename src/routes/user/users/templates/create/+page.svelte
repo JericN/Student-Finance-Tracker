@@ -4,7 +4,7 @@
     import { error, success } from '$lib/functions/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { parse, pick, safeParse } from 'valibot';
-    import { TemplateForm } from '$lib/models/types';
+    import { TemplateForm } from '$lib/models/sft';
     import { addTemplate } from '$lib/firebase/database';
     import { getTemplateCreateStore } from '$lib/store/forms';
     import { getToastStore } from '@skeletonlabs/skeleton';
