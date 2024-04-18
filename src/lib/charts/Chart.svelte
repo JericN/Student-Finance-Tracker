@@ -62,6 +62,6 @@
     });
 </script>
 
-<div class="relative h-full w-full p-4">
+<div class="relative h-full w-full p-2">
     <canvas bind:this={chartCanvas}></canvas>
 </div>

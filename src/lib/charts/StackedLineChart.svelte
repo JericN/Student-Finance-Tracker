@@ -20,7 +20,7 @@
 
     $: options = {
         maintainAspectRatio: false,
-        plugins: { legend: { display: true } },
+        plugins: { legend: { display: true, position: 'bottom' } },
         scales: {
             x: {
                 grid: { display: false },

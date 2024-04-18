@@ -16,11 +16,11 @@ function getDays(range: number) {
 
 export function makeInterval(interval: string) {
     switch (interval) {
-        case 'week':
+        case 'Week':
             return getDays(7);
-        case 'month':
+        case 'Month':
             return getDays(30);
-        case 'year':
+        case 'Year':
             return getDays(365);
         default:
             throw new Error('Invalid interval');
@@ -30,13 +30,13 @@ export function makeInterval(interval: string) {
 function filterDate(data: Transaction[], range: string): Transaction[] {
     const limit = new Date();
     switch (range) {
-        case 'week':
+        case 'Week':
             limit.setDate(limit.getDate() - 7);
             return data.filter(({ date }) => date > limit);
-        case 'month':
+        case 'Month':
             limit.setDate(limit.getDate() - 30);
             return data.filter(({ date }) => date > limit);
-        case 'year':
+        case 'Year':
             limit.setDate(limit.getDate() - 365);
             return data.filter(({ date }) => date > limit);
         default:
@@ -227,8 +227,9 @@ export function makePieCategory(
     }
 
     // aggregate data to result object
+    const walletStore = getWalletStore();
     for (const entry of data) {
-        if (wallet !== 'All' && entry.walletId !== wallet) continue;
+        if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const entryGroup = String(entry.categoryId);
         if (entry.type === TransactionType.Income) incomeData[entryGroup] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup] += entry.amount;
