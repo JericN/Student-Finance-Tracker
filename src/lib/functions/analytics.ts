@@ -69,7 +69,7 @@ function renameKeys(data: StackedData, group: string): StackedData {
  * @param range - The date range for filtering the data (`week`, `month`, `year`).
  * @returns An object containing the grouped data and the interval of dates.
  */
-export function makeTimeseriesType(data: Transaction[], range: string): StackedData {
+export function makeTimeSeriesType(data: Transaction[], range: string): StackedData {
     // filter data by date cutoff
     data = filterDate(data, range);
 
@@ -98,8 +98,8 @@ export function makeTimeSeriesCategory(
     data: Transaction[],
     range: string,
 ): {
-    incomeCategory: StackedData;
-    expenseCategory: StackedData;
+    income: StackedData;
+    expense: StackedData;
 } {
     // filter data by date cutoff
     data = filterDate(data, range);
@@ -131,18 +131,18 @@ export function makeTimeSeriesCategory(
     }
 
     // rename ids to names if applicable
-    const incomeCategory = renameKeys(incomeData, 'category');
-    const expenseCategory = renameKeys(expenseData, 'category');
+    const income = renameKeys(incomeData, 'category');
+    const expense = renameKeys(expenseData, 'category');
 
-    return { incomeCategory, expenseCategory };
+    return { income, expense };
 }
 
 export function makeTimeSeriesWallet(
     data: Transaction[],
     range: string,
 ): {
-    incomeWallet: StackedData;
-    expenseWallet: StackedData;
+    income: StackedData;
+    expense: StackedData;
 } {
     // filter data by date cutoff
     data = filterDate(data, range);
@@ -173,8 +173,8 @@ export function makeTimeSeriesWallet(
     }
 
     // rename ids to names if applicable
-    const incomeWallet = renameKeys(incomeData, 'wallet');
-    const expenseWallet = renameKeys(expenseData, 'wallet');
+    const income = renameKeys(incomeData, 'wallet');
+    const expense = renameKeys(expenseData, 'wallet');
 
-    return { incomeWallet, expenseWallet };
+    return { income, expense };
 }

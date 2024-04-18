@@ -1,27 +1,27 @@
 <script lang="ts">
-    import StackedLineChart from '$lib/charts/StackedLineChart.svelte';
-    import { getTransactionStore } from '$lib/store/transaction';
     import {
         makeInterval,
         makeTimeSeriesCategory,
-        makeTimeseriesType,
+        makeTimeSeriesType,
         makeTimeSeriesWallet,
     } from '$lib/functions/analytics';
+    import StackedLineChart from '$lib/charts/StackedLineChart.svelte';
+    import { getTransactionStore } from '$lib/store/transaction';
 
     const transactionStore = getTransactionStore();
 
     $: interval = makeInterval('week');
-    $: typeData = makeTimeseriesType($transactionStore, 'week');
-    $: ({ incomeWallet, expenseWallet } = makeTimeSeriesWallet($transactionStore, 'week'));
-    $: ({ incomeCategory, expenseCategory } = makeTimeSeriesCategory($transactionStore, 'week'));
+    $: typeData = makeTimeSeriesType($transactionStore, 'week');
+    $: wallet = makeTimeSeriesWallet($transactionStore, 'week');
+    $: category = makeTimeSeriesCategory($transactionStore, 'week');
 </script>
 
 <div class="grid h-full w-full grid-cols-2 grid-rows-3 gap-2">
     <div class="col-span-2">
         <StackedLineChart dataset={typeData} {interval} />
     </div>
-    <StackedLineChart dataset={incomeWallet} {interval} />
-    <StackedLineChart dataset={expenseWallet} {interval} />
-    <StackedLineChart dataset={incomeCategory} {interval} />
-    <StackedLineChart dataset={expenseCategory} {interval} />
+    <StackedLineChart dataset={wallet.income} {interval} />
+    <StackedLineChart dataset={wallet.expense} {interval} />
+    <StackedLineChart dataset={category.income} {interval} />
+    <StackedLineChart dataset={category.expense} {interval} />
 </div>
