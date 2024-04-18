@@ -2,6 +2,8 @@
     import 'chartjs-adapter-date-fns';
     import {
         ArcElement,
+        BarController,
+        BarElement,
         CategoryScale,
         Chart,
         type ChartData,
@@ -20,6 +22,8 @@
 
     Chart.register(
         ArcElement,
+        BarController,
+        BarElement,
         CategoryScale,
         LineController,
         LineElement,
