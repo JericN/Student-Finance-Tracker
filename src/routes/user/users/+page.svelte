@@ -44,7 +44,7 @@
         <div>Transaction categories</div>
     </Entry>
 
-    <Entry title="Wishlist">
+    <Entry link="wishlist" title="Wishlist">
         <div>Add/remove Wishlist Item</div>
         <div>Edit Wishlist Item</div>
     </Entry>
