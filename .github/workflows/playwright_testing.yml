@@ -1,13 +1,15 @@
-name: Automated Unit Tests
-
+name: Playwright Unit Tests
 on:
-  workflow_dispatch:
-  pull_request:
   push:
-    branches: main
-
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+env:
+  USER_EMAIL: ${{ vars.USER_EMAIL }}
+  USER_PASSWORD: ${{ vars.USER_PASSWORD }}
 jobs:
-  build:
+  test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
       POSTGRES_URL: postgres://127.0.0.1/postgres
@@ -29,5 +31,13 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install Dependencies
         run: pnpm install --no-frozen-lockfile
-      - name: Running Tests
-        run: pnpm test
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+      - name: Run Playwright tests
+        run: pnpm exec playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
