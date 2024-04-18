@@ -18,6 +18,7 @@ import {
     omit,
     optional,
     partial,
+    regex,
     safeInteger,
     string,
 } from 'valibot';
@@ -80,7 +81,7 @@ export const Wallet = object({
     id: string([length(20)]),
     createdAt: DateSchema,
     updatedAt: DateSchema,
-    name: string([minLength(3), maxLength(10)]),
+    name: string([minLength(1), maxLength(10), regex(/[a-zA-Z]/)]),
     amount: number([safeInteger(), minValue(0)]),
     description: optional(string([maxLength(50)])),
 });
