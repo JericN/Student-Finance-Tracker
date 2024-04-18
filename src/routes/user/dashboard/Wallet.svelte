@@ -16,8 +16,7 @@
             <div class="text-xs font-bold">{name}</div>
         </div>
         <div class="my-auto text-2xl font-bold">
-            <!--{currency(amount)}-->
-            {amount}
+            {currency(amount)}
         </div>
     </div>
 </Card>
