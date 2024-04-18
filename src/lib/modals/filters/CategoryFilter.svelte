@@ -1,6 +1,6 @@
 <script lang="ts">
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
-    import type { Category } from '$lib/models/types';
+    import type { Category } from '$lib/models/sft';
 
     export let selected: string[] | null;
     export let categories: Category[];

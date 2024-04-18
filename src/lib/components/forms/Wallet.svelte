@@ -1,6 +1,6 @@
 <script lang="ts">
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
-    import type { Wallet } from '$lib/models/types';
+    import type { Wallet } from '$lib/models/sft';
 
     export let wallets: Wallet[];
     export let selected: string | undefined;

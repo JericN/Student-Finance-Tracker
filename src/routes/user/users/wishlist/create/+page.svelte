@@ -3,7 +3,7 @@
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/functions/toast';
     import { parse, pick, safeParse } from 'valibot';
-    import { WishlistForm } from '$lib/models/types';
+    import { WishlistForm } from '$lib/models/sft';
     import { addWishlist } from '$lib/firebase/database';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { getWishlistCreateStore } from '$lib/store/forms';

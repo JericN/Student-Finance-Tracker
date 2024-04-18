@@ -1,8 +1,9 @@
 <script lang="ts">
     import { type ChartData, type ChartOptions } from 'chart.js';
     import Chart from '$lib/charts/Chart.svelte';
+    import type { NameCount } from '$lib/models/types';
 
-    export let dataset: Record<string, number>;
+    export let dataset: NameCount;
 
     $: data = {
         labels: Object.keys(dataset),
