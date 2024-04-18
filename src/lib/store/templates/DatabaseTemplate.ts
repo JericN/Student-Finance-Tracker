@@ -6,6 +6,7 @@ import { session } from '$lib/store/session';
 
 interface ID {
     id: string;
+    name: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,12 +34,17 @@ export function initStore<T extends ID>(path: string, schema: any) {
         return get(store).find(item => item.id === id);
     }
 
+    function findByName(name: string) {
+        return get(store).find(item => item.name === name);
+    }
+
     function values() {
         return get(store);
     }
 
     return {
         find,
+        findByName,
         values,
         set,
         subscribe,
