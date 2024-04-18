@@ -1,6 +1,6 @@
+import { NameNumber, StackedData } from '$lib/models/types';
 import { Transaction, TransactionType } from '$lib/models/sft';
 import { getCategoryStore, getWalletStore } from '$lib/store/database';
-import { StackedData } from '$lib/models/types';
 
 // return array of days from 7 days before today
 function getDays(range: number) {
@@ -44,20 +44,26 @@ function filterDate(data: Transaction[], range: string): Transaction[] {
     }
 }
 
-function renameKeys(data: StackedData, group: string): StackedData {
+function renameKeys(data: StackedData | NameNumber, group: string): StackedData | NameNumber {
     if (group === 'category') {
         const categoryStore = getCategoryStore();
-        return Object.keys(data).reduce((acc, key) => {
-            acc[categoryStore.find(key)?.name || 'Unknown'] = data[key];
-            return acc;
-        }, {} as StackedData);
+        return Object.keys(data).reduce(
+            (acc, key) => {
+                acc[categoryStore.find(key)?.name || 'Unknown'] = data[key];
+                return acc;
+            },
+            {} as StackedData | NameNumber,
+        );
     }
     if (group === 'wallet') {
         const walletStore = getWalletStore();
-        return Object.keys(data).reduce((acc, key) => {
-            acc[walletStore.find(key)?.name || 'Unknown'] = data[key];
-            return acc;
-        }, {} as StackedData);
+        return Object.keys(data).reduce(
+            (acc, key) => {
+                acc[walletStore.find(key)?.name || 'Unknown'] = data[key];
+                return acc;
+            },
+            {} as StackedData | NameNumber,
+        );
     }
     return data;
 }
@@ -131,8 +137,8 @@ export function makeTimeSeriesCategory(
     }
 
     // rename ids to names if applicable
-    const income = renameKeys(incomeData, 'category');
-    const expense = renameKeys(expenseData, 'category');
+    const income = renameKeys(incomeData, 'category') as StackedData;
+    const expense = renameKeys(expenseData, 'category') as StackedData;
 
     return { income, expense };
 }
@@ -173,8 +179,45 @@ export function makeTimeSeriesWallet(
     }
 
     // rename ids to names if applicable
-    const income = renameKeys(incomeData, 'wallet');
-    const expense = renameKeys(expenseData, 'wallet');
+    const income = renameKeys(incomeData, 'wallet') as StackedData;
+    const expense = renameKeys(expenseData, 'wallet') as StackedData;
 
+    return { income, expense };
+}
+
+export function makePieCategory(data: Transaction[], range: string): { income: NameNumber; expense: NameNumber } {
+    console.log('this is the raw data', data);
+    // filter data by date cutoff
+    data = filterDate(data, range);
+
+    // get groups
+    const categories = getCategoryStore().values();
+
+    // initialize result object
+    const incomeData = {} as NameNumber;
+    const expenseData = {} as NameNumber;
+
+    // initialize result object
+    for (const category of categories) {
+        const { id } = category;
+        const { type } = category;
+
+        if (type === TransactionType.Income) incomeData[id] = 0;
+        if (type === TransactionType.Expense) expenseData[id] = 0;
+    }
+
+    // aggregate data to result object
+    for (const entry of data) {
+        const entryGroup = String(entry.categoryId);
+        if (entry.type === TransactionType.Income) incomeData[entryGroup] += entry.amount;
+        if (entry.type === TransactionType.Expense) expenseData[entryGroup] += entry.amount;
+    }
+
+    // rename ids to names if applicable
+    const income = renameKeys(incomeData, 'category') as NameNumber;
+    const expense = renameKeys(expenseData, 'category') as NameNumber;
+
+    console.log('this is the income data', income);
+    console.log('this is the expense data', expense);
     return { income, expense };
 }
