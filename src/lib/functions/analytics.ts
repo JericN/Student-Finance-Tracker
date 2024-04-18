@@ -202,7 +202,11 @@ export function makeTimeSeriesWallet(
  * @param {string} range - The range for filtering the data (`week`, `month`, `year`).
  * @returns The {@linkcode NameNumber} object representing income and expense categories.
  */
-export function makePieCategory(data: Transaction[], range: string): { income: NameNumber; expense: NameNumber } {
+export function makePieCategory(
+    data: Transaction[],
+    range: string,
+    wallet: string,
+): { income: NameNumber; expense: NameNumber } {
     // filter data by date cutoff
     data = filterDate(data, range);
 
@@ -224,6 +228,7 @@ export function makePieCategory(data: Transaction[], range: string): { income: N
 
     // aggregate data to result object
     for (const entry of data) {
+        if (wallet !== 'All' && entry.walletId !== wallet) continue;
         const entryGroup = String(entry.categoryId);
         if (entry.type === TransactionType.Income) incomeData[entryGroup] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup] += entry.amount;
@@ -246,7 +251,7 @@ export function makeCategoryList(data: { income: NameNumber; expense: NameNumber
             name,
             amount,
             icon: categoryStore.findByName(name)?.icon || 'x',
-            percent: (amount / totalIncome) * 100,
+            percent: Math.round((amount / totalIncome) * 100 || 0),
         };
     });
     const expense = Object.entries(data.expense).map(([name, amount]) => {
@@ -254,7 +259,7 @@ export function makeCategoryList(data: { income: NameNumber; expense: NameNumber
             name,
             amount,
             icon: categoryStore.findByName(name)?.icon || 'x',
-            percent: Math.round((amount / totalExpense) * 100),
+            percent: Math.round((amount / totalExpense) * 100 || 0),
         };
     });
     return { income, expense };
