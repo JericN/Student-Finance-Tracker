@@ -16,7 +16,7 @@
             borderWidth: 2,
             pointBorderWidth: 0,
         })),
-    } satisfies ChartData;
+    } satisfies ChartData<'line'>;
 
     $: options = {
         maintainAspectRatio: false,
