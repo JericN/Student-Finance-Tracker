@@ -1,19 +1,21 @@
 <script lang="ts">
-    import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
+    import { Amount, Calendar, Category, Description, Type, Wallet as WalletForm } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { Transaction, TransactionForm } from '$lib/models/types';
+    import { Transaction, TransactionForm, Wallet } from '$lib/models/types';
     import { error, success } from '$lib/functions/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import { removeTransaction, updateTransaction } from '$lib/firebase/database';
+    import { removeTransaction, updateTransaction, updateWallet } from '$lib/firebase/database';
     import { getTransactionEditStore } from '$lib/store/forms';
+    import { getTransactionStore } from '$lib/store/transaction';
     import { goto } from '$app/navigation';
 
     const modalStore = getModalStore();
     const toastStore = getToastStore();
     const categoryStore = getCategoryStore();
     const walletStore = getWalletStore();
+    const transactionStore = getTransactionStore();
     const forms = getTransactionEditStore();
 
     async function update() {
@@ -35,6 +37,21 @@
         }
 
         try {
+            // undo outdated transaction on wallet
+            const transaction = $transactionStore.find(t => t.id === $forms.id);
+            const prevWallet = structuredClone($walletStore.find(w => w.id === transaction.walletId));
+            if (transaction.type === 'Expense')
+                prevWallet.amount += transaction.amount;
+            else 
+                prevWallet.amount -= transaction.amount;
+            await updateWallet(parse(Wallet, prevWallet));
+            // update wallet based on current input to form
+            const wallet = (transaction.walletId === $forms.walletId) ? prevWallet : structuredClone($walletStore.find(w => w.id === $forms.walletId));
+            if ($forms.type === 'Expense')
+                wallet.amount -= $forms.amount;
+            else 
+                wallet.amount += $forms.amount;
+            await updateWallet(parse(Wallet, wallet));
             await updateTransaction(parse(Transaction, $forms));
             goto('/user/transactions');
             forms.reset();
@@ -47,6 +64,12 @@
     async function remove() {
         try {
             const { id } = parse(pick(Transaction, ['id']), { id: $forms.id });
+            const wallet = structuredClone($walletStore.find(w => w.id === $forms.walletId));
+            if ($forms.type === 'Expense')
+                wallet.amount += $forms.amount;
+            else 
+                wallet.amount -= $forms.amount;
+            await updateWallet(parse(Wallet, wallet));
             await removeTransaction(id);
             goto('/user/transactions');
             forms.reset();
@@ -75,7 +98,7 @@
             <Amount bind:amount={$forms.amount} />
             <Calendar bind:date={$forms.date} />
             <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
-            <Wallet wallets={$walletStore} bind:selected={$forms.walletId} />
+            <WalletForm wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

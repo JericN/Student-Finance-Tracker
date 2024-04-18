@@ -39,14 +39,12 @@
         }
 
         try {
-            if ($forms.type !== 'Transfer'){
-                const wallet = structuredClone($walletStore.find(w => w.id === $forms.walletId));
-                if ($forms.type === 'Expense')
-                    wallet.amount -= $forms.amount;
-                else 
-                    wallet.amount += $forms.amount;
-                await updateWallet(parse(Wallet, wallet));
-            }
+            const wallet = structuredClone($walletStore.find(w => w.id === $forms.walletId));
+            if ($forms.type === 'Expense')
+                wallet.amount -= $forms.amount;
+            else 
+                wallet.amount += $forms.amount;
+            await updateWallet(parse(Wallet, wallet));
             await addTransaction(parse(TransactionForm, $forms));
             goto('/user/transactions');
             forms.reset();
