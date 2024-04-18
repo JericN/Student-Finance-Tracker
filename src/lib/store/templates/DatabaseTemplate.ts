@@ -33,8 +33,13 @@ export function initStore<T extends ID>(path: string, schema: any) {
         return get(store).find(item => item.id === id);
     }
 
+    function values() {
+        return get(store);
+    }
+
     return {
         find,
+        values,
         set,
         subscribe,
         update,
