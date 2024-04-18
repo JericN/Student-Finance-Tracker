@@ -8,7 +8,7 @@ import {
     Wallet,
     WalletForm,
     Wishlist,
-    WishlistForm
+    WishlistForm,
 } from '$lib/models/types';
 import { type Store, initStore } from './templates/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';

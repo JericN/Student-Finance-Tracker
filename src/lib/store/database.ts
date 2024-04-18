@@ -11,7 +11,7 @@ export function init() {
     setContext(CATEGORY, initStore<Category>('categories', Category));
     setContext(TEMPLATE, initStore<Template>('transaction-templates', Template));
     setContext(WALLET, initStore<Wallet>('wallets', Wallet));
-    setContext(WISHLIST, initStore<Wishlist>('wishlist', Wishlist))
+    setContext(WISHLIST, initStore<Wishlist>('wishlist', Wishlist));
 }
 
 export function getCategoryStore() {

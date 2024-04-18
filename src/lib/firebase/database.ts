@@ -9,7 +9,7 @@ import {
     type Wallet,
     type WalletForm,
     type Wishlist,
-    type WishlistForm
+    type WishlistForm,
 } from '$lib/models/types';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
