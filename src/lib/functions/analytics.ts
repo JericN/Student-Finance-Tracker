@@ -69,11 +69,10 @@ function renameKeys(data: StackedData | NameNumber, group: string): StackedData 
 }
 
 /**
- * Transform data into a aggregated time series data compatible with chartjs.
+ * Transform data into an aggregated time series by `Type`, compatible with Chart.js.
  * @param data - The data to transform of type {@linkcode Transaction}.
- * @param group - The property used for grouping the data (`type`, `categoryId`, `walletId`).
- * @param range - The date range for filtering the data (`week`, `month`, `year`).
- * @returns An object containing the grouped data and the interval of dates.
+ * @param range - The range for filtering the data (`week`, `month`, `year`).
+ * @returns The {@linkcode StackedData} representing the time series.
  */
 export function makeTimeSeriesType(data: Transaction[], range: string): StackedData {
     // filter data by date cutoff
@@ -100,6 +99,12 @@ export function makeTimeSeriesType(data: Transaction[], range: string): StackedD
     return result;
 }
 
+/**
+ * Transform data into an aggregated time series by `Category`, compatible with Chart.js.
+ * @param data - The data to transform of type {@linkcode Transaction}.
+ * @param range - The range for filtering the data (`week`, `month`, `year`).
+ * @returns The {@linkcode StackedData} object representing the time series for income and expense.
+ */
 export function makeTimeSeriesCategory(
     data: Transaction[],
     range: string,
@@ -143,6 +148,12 @@ export function makeTimeSeriesCategory(
     return { income, expense };
 }
 
+/**
+ * Transform data into an aggregated time series by `Wallet`, compatible with Chart.js.
+ * @param data - The data to transform of type {@linkcode Transaction}.
+ * @param range - The date for filtering the data (`week`, `month`, `year`).
+ * @returns The {@linkcode StackedData} object representing the time series for income and expense.
+ */
 export function makeTimeSeriesWallet(
     data: Transaction[],
     range: string,
@@ -185,6 +196,12 @@ export function makeTimeSeriesWallet(
     return { income, expense };
 }
 
+/**
+ * Transform data by `Category`, compatible with Chart.js.
+ * @param {Transaction[]} data - The data to transform of type {@linkcode Transaction}.
+ * @param {string} range - The range for filtering the data (`week`, `month`, `year`).
+ * @returns The {@linkcode NameNumber} object representing income and expense categories.
+ */
 export function makePieCategory(data: Transaction[], range: string): { income: NameNumber; expense: NameNumber } {
     // filter data by date cutoff
     data = filterDate(data, range);
