@@ -8,6 +8,8 @@ import {
     TransactionType,
     type Wallet,
     type WalletForm,
+    type Wishlist,
+    type WishlistForm,
 } from '$lib/models/types';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
@@ -231,4 +233,58 @@ export async function createUserTransactionForm(user: User) {
     await addCategory({ name: 'Fare', type: TransactionType.Expense, icon: '🚌' });
     await addCategory({ name: 'Utils', type: TransactionType.Expense, icon: '🏠' });
     await addCategory({ name: 'Salary', type: TransactionType.Income, icon: '💰' });
+}
+
+// This function is used to create a new wishlist item
+export async function addWishlist(wishlist: WishlistForm) {
+    const path = `UserData/${session.uid()}/wishlist`;
+    const payload = { ...wishlist, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
+    try {
+        await addDoc(collection(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed adding wishlist');
+    }
+}
+
+// This function is used to remove a wishlist item
+export async function removeWishlist(id: string) {
+    const path = `UserData/${session.uid()}/wishlist/${id}`;
+
+    try {
+        await deleteDoc(doc(db, path));
+    } catch (e) {
+        throw new Error('Failed removing wishlist');
+    }
+}
+
+// This function is used to update the wishlist item
+export async function updateWishlist(wallet: Wallet) {
+    const path = `UserData/${session.uid()}/wishlist/${wallet.id}`;
+    const payload = { ...wallet, updatedAt: serverTimestamp() };
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating wishlist');
+    }
+}
+
+// This function is used to fetch all wishlist items
+export async function getWishlist() {
+    const path = `UserData/${session.uid()}/wishlist`;
+
+    try {
+        const snap = await getDocs(collection(db, path));
+        const wishlist = [] as Wishlist[];
+
+        snap.forEach(doc => {
+            const value = { ...doc.data(), id: doc.id };
+            // TODO: parse the value to the Wallet type
+            wishlist.push(value as Wishlist);
+        });
+
+        return wishlist;
+    } catch (e) {
+        throw new Error('Failed fetching wishlist');
+    }
 }
