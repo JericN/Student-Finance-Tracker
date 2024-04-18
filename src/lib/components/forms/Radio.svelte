@@ -2,7 +2,10 @@
     import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
 
     export let select: string;
-    export let list: string[];
+    export let list: {
+        key: string;
+        value: string;
+    }[];
 </script>
 
 <RadioGroup
@@ -11,7 +14,7 @@
     active="bg-primary-900 text-white"
     hover="hover:variant-soft-primary"
 >
-    {#each list as item}
-        <RadioItem bind:group={select} name={item} value={item}>{item}</RadioItem>
+    {#each list as { key, value }}
+        <RadioItem bind:group={select} name={key} {value}>{key}</RadioItem>
     {/each}
 </RadioGroup>

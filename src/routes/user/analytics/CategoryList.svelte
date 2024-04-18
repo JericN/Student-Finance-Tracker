@@ -5,13 +5,13 @@
     import { makeCategoryList } from '$lib/functions/analytics';
 
     export let data: { income: NameNumber; expense: NameNumber };
-    export let current: string;
+    export let currentType: string;
 
     $: categoryList = makeCategoryList(data);
 </script>
 
 <Card width="max-w-sm" layout="flex flex-col gap-2">
-    {#each current === 'Income' ? categoryList.income : categoryList.expense as { name, amount, icon, percent }}
+    {#each currentType === 'Income' ? categoryList.income : categoryList.expense as { name, amount, icon, percent }}
         <div class="flex justify-between text-sm">
             <p>{icon} {name}</p>
 
