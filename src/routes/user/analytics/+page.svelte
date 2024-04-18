@@ -10,9 +10,6 @@
     import PieChart from '$lib/charts/PieChart.svelte';
     import { Radio } from '$lib/components/forms';
     import { getTransactionStore } from '$lib/store/transaction';
-    import { getWalletStore } from '$lib/store/database';
-    import { onMount } from 'svelte';
-    import { getWallets } from '$lib/firebase/database';
 
     export let data;
     $: ({ wallets } = data);
@@ -32,6 +29,24 @@
     ];
     let currentType = 'Expense';
 
+    // TODO: dont use hardcoded values here
+    const range = [
+        {
+            key: 'Week',
+            value: 'week',
+        },
+        {
+            key: 'Month',
+            value: 'month',
+        },
+        {
+            key: 'Year',
+            value: 'year',
+        },
+    ];
+    let currentRange = 'week';
+
+    // TODO: improve list interface for radio component
     $: walletList = wallets
         .map(wallet => {
             return { key: wallet.name, value: wallet.id };
@@ -43,7 +58,7 @@
     $: typeData = makeTimeSeriesType($transactionStore, 'week');
     $: wallet = makeTimeSeriesWallet($transactionStore, 'week');
     $: category = makeTimeSeriesCategory($transactionStore, 'week');
-    $: pie = makePieCategory($transactionStore, 'week', selectedWallet);
+    $: pie = makePieCategory($transactionStore, currentRange, selectedWallet);
 
     console.log(interval, typeData, wallet, category, pie);
 </script>
@@ -51,6 +66,7 @@
 {#if wallets}
     <div class="flex flex-col items-center gap-4 p-10">
         <Radio bind:select={currentType} list={types} />
+        <Radio bind:select={currentRange} list={range} />
         <Radio bind:select={selectedWallet} list={walletList} />
         <div class="max-w-screen-sm">
             <PieChart dataset={currentType === 'Income' ? pie.income : pie.expense} />
