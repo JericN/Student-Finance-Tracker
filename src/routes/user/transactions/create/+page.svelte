@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { Amount, Calendar, Category, Description, Type, Wallet } from '$lib/components/forms';
+    import { Amount, Calendar, Category, Description, Type, Wallet as WalletForm } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
+    import { TransactionForm, Wallet } from '$lib/models/types';
+    import { addTransaction, updateWallet } from '$lib/firebase/database';
     import { error, success } from '$lib/functions/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import { TransactionForm } from '$lib/models/types';
-    import { addTransaction } from '$lib/firebase/database';
     import { getTransactionCreateStore } from '$lib/store/forms';
     import { goto } from '$app/navigation';
 
@@ -39,6 +39,14 @@
         }
 
         try {
+            if ($forms.type !== 'Transfer'){
+                const wallet = structuredClone($walletStore.find(w => w.id === $forms.walletId));
+                if ($forms.type === 'Expense')
+                    wallet.amount -= $forms.amount;
+                else 
+                    wallet.amount += $forms.amount;
+                await updateWallet(parse(Wallet, wallet));
+            }
             await addTransaction(parse(TransactionForm, $forms));
             goto('/user/transactions');
             forms.reset();
@@ -68,7 +76,7 @@
             <Amount bind:amount={$forms.amount} />
             <Calendar bind:date={$forms.date} />
             <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
-            <Wallet wallets={$walletStore} bind:selected={$forms.walletId} />
+            <WalletForm wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>
