@@ -13,7 +13,11 @@
                 backgroundColor: Object.keys(dataset).map(
                     (_, i) => `hsl(${(i * 200) / Object.keys(dataset).length}, 45%, 60%)`,
                 ),
+                borderColor: '#294665',
+                borderWidth: 3,
+                borderRadius: 4,
                 hoverOffset: 20,
+                spacing: 4,
             },
         ],
     } satisfies ChartData<'doughnut'>;
