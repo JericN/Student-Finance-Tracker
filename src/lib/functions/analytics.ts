@@ -235,3 +235,27 @@ export function makePieCategory(data: Transaction[], range: string): { income: N
 
     return { income, expense };
 }
+
+export function makeCategoryList(data: { income: NameNumber; expense: NameNumber }) {
+    const categoryStore = getCategoryStore();
+
+    const totalIncome = Object.values(data.income).reduce((acc, val) => acc + val, 0);
+    const totalExpense = Object.values(data.expense).reduce((acc, val) => acc + val, 0);
+    const income = Object.entries(data.income).map(([name, amount]) => {
+        return {
+            name,
+            amount,
+            icon: categoryStore.findByName(name)?.icon || 'x',
+            percent: (amount / totalIncome) * 100,
+        };
+    });
+    const expense = Object.entries(data.expense).map(([name, amount]) => {
+        return {
+            name,
+            amount,
+            icon: categoryStore.findByName(name)?.icon || 'x',
+            percent: Math.round((amount / totalExpense) * 100),
+        };
+    });
+    return { income, expense };
+}

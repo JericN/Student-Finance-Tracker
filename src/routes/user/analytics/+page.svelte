@@ -30,4 +30,5 @@
     <div class="max-w-screen-sm">
         <PieChart dataset={current === 'Income' ? pie.income : pie.expense} />
     </div>
+    <CategoryList data={pie} {current} />
 </div>
