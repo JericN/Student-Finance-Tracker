@@ -186,7 +186,6 @@ export function makeTimeSeriesWallet(
 }
 
 export function makePieCategory(data: Transaction[], range: string): { income: NameNumber; expense: NameNumber } {
-    console.log('this is the raw data', data);
     // filter data by date cutoff
     data = filterDate(data, range);
 
@@ -217,7 +216,5 @@ export function makePieCategory(data: Transaction[], range: string): { income: N
     const income = renameKeys(incomeData, 'category') as NameNumber;
     const expense = renameKeys(expenseData, 'category') as NameNumber;
 
-    console.log('this is the income data', income);
-    console.log('this is the expense data', expense);
     return { income, expense };
 }

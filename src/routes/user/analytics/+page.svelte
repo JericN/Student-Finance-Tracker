@@ -6,8 +6,8 @@
         makeTimeSeriesType,
         makeTimeSeriesWallet,
     } from '$lib/functions/analytics';
-    import StackedLineChart from '$lib/charts/StackedLineChart.svelte';
     import PieChart from '$lib/charts/PieChart.svelte';
+    import StackedLineChart from '$lib/charts/StackedLineChart.svelte';
     import { getTransactionStore } from '$lib/store/transaction';
 
     const transactionStore = getTransactionStore();

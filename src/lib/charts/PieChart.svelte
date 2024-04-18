@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { type ChartData, type ChartOptions } from 'chart.js';
     import Chart from '$lib/charts/Chart.svelte';
+    import { type ChartData } from 'chart.js';
     import type { NameNumber } from '$lib/models/types';
 
     export let dataset: NameNumber;
