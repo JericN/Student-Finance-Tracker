@@ -5,14 +5,16 @@ on:
   pull_request:
     branches: [main, master]
 env:
-  USER_EMAIL: ${{ vars.USER_EMAIL }}
-  USER_PASSWORD: ${{ vars.USER_PASSWORD }}
+  USER_EMAIL: ${{vars.USER_EMAIL}}
+  USER_PASSWORD: ${{vars.USER_PASSWORD}}
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
       POSTGRES_URL: postgres://127.0.0.1/postgres
+      USER_EMAIL: ${{vars.USER_EMAIL}}
+      USER_PASSWORD: ${{vars.USER_PASSWORD}}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
