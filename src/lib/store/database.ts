@@ -31,5 +31,5 @@ export function getWalletStore() {
 
 export function getWishlistStore() {
     if (!hasContext(WISHLIST)) throw new Error('No wishlist store initialized');
-    return getContext<Store<Wishlist>>(WISHLIST);
+    return getContext<Store<Template>>(WISHLIST);
 }

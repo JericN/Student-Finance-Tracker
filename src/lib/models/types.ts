@@ -2,7 +2,6 @@ import {
     type Output,
     array,
     boolean,
-    blob,
     coerce,
     date,
     email,
@@ -21,10 +20,6 @@ import {
     partial,
     safeInteger,
     string,
-    mimeType,
-    maxSize,
-    any
-    
 } from 'valibot';
 import { Timestamp } from 'firebase/firestore';
 
@@ -33,11 +28,6 @@ const DateSchema = coerce(date([minValue(new Date(2000, 0, 1)), maxValue(new Dat
     if (input instanceof Timestamp) return input.toDate();
     throw new Error('Failed parsing date');
 });
-
-const ImageSchema = blob('Please select an image file.', [
-    mimeType(['image/jpeg', 'image/png'], 'Please select a JPEG or PNG file.'),
-    maxSize(1024 * 1024 * 10, 'Please select a file smaller than 10 MB.'),
-]);
 
 export enum TransactionType {
     Income = 'Income',
@@ -108,9 +98,8 @@ export const Wishlist = object({
     name: string([minLength(3), maxLength(10)]),
     amount: number([safeInteger(), minValue(0)]),
     description: optional(string([maxLength(50)])),
-    image: any(),
 });
-export type Wishlist = Output<typeof Wishlist>;
+export type Wishlist = Output<typeof Wallet>;
 
 // Defines the schema for validating a wishlist object from input forms
 export const WishlistForm = omit(Wishlist, ['id', 'createdAt', 'updatedAt']);

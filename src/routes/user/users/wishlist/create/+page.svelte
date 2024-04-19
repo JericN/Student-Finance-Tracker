@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Amount, Description, Name, Image } from '$lib/components/forms';
+    import { Amount, Description, Name } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/functions/toast';
     import { parse, pick, safeParse } from 'valibot';
@@ -12,7 +12,7 @@
     const forms = getWishlistCreateStore();
 
     async function submit() {
-        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'description', 'image'];
+        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'description'];
 
         for (const property of properties) {
             const result = safeParse(pick(WishlistForm, [property]), { [property]: $forms[property] });
@@ -41,7 +41,6 @@
             <Amount bind:amount={$forms.amount} />
         </div>
         <Description bind:description={$forms.description} />
-        <Image bind:value={$forms.image} />
     </Card>
     <Button on:click={submit}>SAVE</Button>
 </div>

@@ -6,4 +6,3 @@ export { default as Name } from '$lib/components/forms/Name.svelte';
 export { default as Type } from '$lib/components/forms/Type.svelte';
 export { default as Wallet } from '$lib/components/forms/Wallet.svelte';
 export { default as Icon } from '$lib/components/forms/Icon.svelte';
-export { default as Image } from '$lib/components/forms/Image.svelte';

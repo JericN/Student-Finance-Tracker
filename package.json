@@ -49,8 +49,6 @@
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-svelte": "^2.37.0",
-        "flowbite": "^2.3.0",
-        "flowbite-svelte": "^0.45.0",
         "object.groupby": "^1.0.3",
         "postcss": "8.4.38",
         "postgres": "^3.4.4",
