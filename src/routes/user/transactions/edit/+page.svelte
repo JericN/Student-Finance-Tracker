@@ -75,8 +75,8 @@
                 if ($forms.type === 'Expense') wallet.amount = wallet.amount * 100 + $forms.amount! * 100;
                 else wallet.amount = wallet.amount * 100 - $forms.amount! * 100;
                 wallet.amount /= 100;
+                await updateWallet(parse(Wallet, wallet));
             }
-            await updateWallet(parse(Wallet, wallet));
             await removeTransaction(id);
             goto('/user/transactions');
             forms.reset();
