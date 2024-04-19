@@ -15,6 +15,7 @@
             backgroundColor: `hsl(${(i * 200) / Object.keys(dataset).length}, 45%, 60%)`,
             borderWidth: 2,
             pointBorderWidth: 0,
+            pointRadius: 2,
         })),
     } satisfies ChartData<'line'>;
 
