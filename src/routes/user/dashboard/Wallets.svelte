@@ -6,7 +6,7 @@
 
     const walletStore = getWalletStore();
 
-    const length = $walletStore.length - 1;
+    $: length = $walletStore.length - 1;
     let card: HTMLDivElement;
     let curr: number;
 
