@@ -1,7 +1,5 @@
 <script lang="ts">
     import { Button, CardButton } from '$lib/components/modules';
-    import { CreditCard } from '@steeze-ui/heroicons';
-    import { Icon } from '@steeze-ui/svelte-icon';
     import { currency } from '$lib/functions/helper';
     import { getWishlistEditStore } from '$lib/store/forms';
     import { getWishlistStore } from '$lib/store/database';
