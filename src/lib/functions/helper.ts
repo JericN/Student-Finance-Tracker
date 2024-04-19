@@ -1,4 +1,4 @@
-import { Transaction } from '$lib/models/types';
+import { Transaction } from '$lib/models/sft';
 import groupBy from 'object.groupby';
 
 const currencyOptions = { style: 'currency', currency: 'PHP', minimumFractionDigits: 0, maximumFractionDigits: 2 };

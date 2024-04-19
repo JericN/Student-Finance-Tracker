@@ -3,7 +3,7 @@
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/functions/toast';
     import { parse, pick, safeParse } from 'valibot';
-    import { WalletForm } from '$lib/models/types';
+    import { WalletForm } from '$lib/models/sft';
     import { addWallet } from '$lib/firebase/database';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { getWalletCreateStore } from '$lib/store/forms';

@@ -7,7 +7,9 @@ import {
     TransactionForm,
     Wallet,
     WalletForm,
-} from '$lib/models/types';
+    Wishlist,
+    WishlistForm,
+} from '$lib/models/sft';
 import { type Store, initStore } from './templates/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
 import { assert } from '$lib/functions/assert';
@@ -20,6 +22,8 @@ const CREATETEMPLATE = Symbol('createtemplate');
 const EDITTEMPLATE = Symbol('edittemplate');
 const CREATECATEGORY = Symbol('createcategory');
 const EDITCATEGORY = Symbol('editcategory');
+const CREATEWISHLIST = Symbol('createwishlist');
+const EDITWISHLIST = Symbol('editwishlist');
 
 export function init() {
     setContext(CREATETRANSACTION, initStore<TransactionForm>());
@@ -30,6 +34,8 @@ export function init() {
     setContext(EDITTEMPLATE, initStore<Template>());
     setContext(CREATECATEGORY, initStore<TransactionForm>());
     setContext(EDITCATEGORY, initStore<TransactionForm>());
+    setContext(CREATEWISHLIST, initStore<WishlistForm>());
+    setContext(EDITWISHLIST, initStore<Wishlist>());
 }
 
 export function getTransactionCreateStore() {
@@ -69,4 +75,14 @@ export function getCategoryCreateStore() {
 export function getCategoryEditStore() {
     assert(hasContext(EDITCATEGORY), 'Edit category store not initialized');
     return getContext<Store<Category>>(EDITCATEGORY);
+}
+
+export function getWishlistCreateStore() {
+    assert(hasContext(CREATEWISHLIST), 'Create wishlist store not initialized');
+    return getContext<Store<WishlistForm>>(CREATEWISHLIST);
+}
+
+export function getWishlistEditStore() {
+    assert(hasContext(EDITWISHLIST), 'Edit wishlist store not initialized');
+    return getContext<Store<Wishlist>>(EDITWISHLIST);
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Card } from '$lib/components/modules';
-    import LineChart from '$lib/charts/LineChart.svelte';
+    import LineChart from '$lib/charts/SimpleLineChart.svelte';
 
     // TODO: should fetch the most recent transactions
     export let dataset: Record<string, number>;

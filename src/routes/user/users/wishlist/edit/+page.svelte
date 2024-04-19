@@ -1,55 +1,59 @@
 <script lang="ts">
+    import { Amount, Description, Name } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { Category, CategoryForm } from '$lib/models/sft';
-    import { Description, Icon, Name, Type } from '$lib/components/forms';
+    import { Wishlist, WishlistForm } from '$lib/models/sft';
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import { removeCategory, updateCategory } from '$lib/firebase/database';
-    import { getCategoryEditStore } from '$lib/store/forms';
+    import { removeWishlist, updateWishlist } from '$lib/firebase/database';
+    import { getWishlistEditStore } from '$lib/store/forms';
 
-    const modalStore = getModalStore();
     const toastStore = getToastStore();
-    const forms = getCategoryEditStore();
+    const modalStore = getModalStore();
+    const forms = getWishlistEditStore();
 
     async function update() {
-        const properties: (keyof CategoryForm)[] = ['name', 'icon', 'description'];
+        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'description'];
 
         for (const property of properties) {
-            const result = safeParse(pick(CategoryForm, [property]), { [property]: $forms[property] });
+            const result = safeParse(pick(WishlistForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;
             }
         }
+
         try {
-            await updateCategory(parse(Category, $forms));
+            await updateWishlist(parse(Wishlist, $forms));
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
-            toastStore.trigger(success('Category updated'));
+            toastStore.trigger(success('Wishlist updated'));
         } catch (_) {
-            toastStore.trigger(error('Failed to update Category'));
+            toastStore.trigger(error('Failed to update wishlist'));
         }
     }
 
     async function remove() {
         try {
-            const { id } = parse(pick(Category, ['id']), { id: $forms.id });
-            await removeCategory(id);
+            const { id } = parse(pick(Wishlist, ['id']), { id: $forms.id });
+            await removeWishlist(id);
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
-            toastStore.trigger(success('Category removed'));
+            toastStore.trigger(success('Wishlist item removed'));
         } catch (_) {
-            toastStore.trigger(error('Failed to remove Category'));
+            toastStore.trigger(error('Failed to remove item from wishlist'));
         }
     }
 
-    // TODO: remove related transactions or archive category
+    // TODO: remove related transactions or archive wallet
+    // TODO: Above comment is relic from copy pasting wallet stuff
     function removeHandler() {
         modalStore.trigger({
             type: 'confirm',
             title: 'Please Confirm',
-            body: 'Are you sure you wish to remove this category?',
+            body: 'Are you sure you wish to remove this item from your wishlist?',
             response: (res: boolean) => {
                 if (res) remove();
             },
@@ -60,9 +64,8 @@
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
-            <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
-            <Icon bind:icon={$forms.icon} />
+            <Amount bind:amount={$forms.amount} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

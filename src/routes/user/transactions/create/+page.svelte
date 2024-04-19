@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Amount, Calendar, Category, Description, Type, Wallet as WalletForm } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { TransactionForm, Wallet } from '$lib/models/types';
+    import { TransactionForm, Wallet } from '$lib/models/sft';
     import { addTransaction, updateWallet } from '$lib/firebase/database';
     import { error, success } from '$lib/functions/toast';
     import { getCategoryStore, getWalletStore } from '$lib/store/database';
@@ -40,11 +40,9 @@
 
         try {
             const wallet = structuredClone($walletStore.find(w => w.id === $forms.walletId));
-            if (wallet){
-                if ($forms.type === 'Expense')
-                    wallet.amount = (wallet.amount * 100) - ($forms.amount! * 100);
-                else 
-                    wallet.amount = (wallet.amount * 100) + ($forms.amount! * 100);
+            if (wallet) {
+                if ($forms.type === 'Expense') wallet.amount = wallet.amount * 100 - $forms.amount! * 100;
+                else wallet.amount = wallet.amount * 100 + $forms.amount! * 100;
                 wallet.amount /= 100;
                 await updateWallet(parse(Wallet, wallet));
             }

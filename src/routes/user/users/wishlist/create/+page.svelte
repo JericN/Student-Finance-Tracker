@@ -1,21 +1,21 @@
 <script lang="ts">
+    import { Amount, Description, Name } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
-    import { Description, Icon, Name, Type } from '$lib/components/forms';
     import { error, success } from '$lib/functions/toast';
     import { parse, pick, safeParse } from 'valibot';
-    import { CategoryForm } from '$lib/models/sft';
-    import { addCategory } from '$lib/firebase/database';
-    import { getCategoryCreateStore } from '$lib/store/forms';
+    import { WishlistForm } from '$lib/models/sft';
+    import { addWishlist } from '$lib/firebase/database';
     import { getToastStore } from '@skeletonlabs/skeleton';
+    import { getWishlistCreateStore } from '$lib/store/forms';
 
     const toastStore = getToastStore();
-    const forms = getCategoryCreateStore();
+    const forms = getWishlistCreateStore();
 
     async function submit() {
-        const properties: (keyof CategoryForm)[] = ['name', 'icon', 'description'];
+        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'description'];
 
         for (const property of properties) {
-            const result = safeParse(pick(CategoryForm, [property]), { [property]: $forms[property] });
+            const result = safeParse(pick(WishlistForm, [property]), { [property]: $forms[property] });
             if (!result.success) {
                 toastStore.trigger(error(`Invalid ${property}`));
                 return;
@@ -23,13 +23,13 @@
         }
 
         try {
-            await addCategory(parse(CategoryForm, $forms));
+            await addWishlist(parse(WishlistForm, $forms));
             // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
-            toastStore.trigger(success('Category added'));
+            toastStore.trigger(success('Item added'));
         } catch (_) {
-            toastStore.trigger(error('Failed to add Category'));
+            toastStore.trigger(error('Failed to add item'));
         }
     }
 </script>
@@ -37,9 +37,8 @@
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
-            <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
-            <Icon bind:icon={$forms.icon} />
+            <Amount bind:amount={$forms.amount} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

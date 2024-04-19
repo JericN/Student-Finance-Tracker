@@ -1,4 +1,4 @@
-import { Filters, TransactionType } from '$lib/models/types';
+import { Filters, TransactionType } from '$lib/models/sft';
 import { get, writable } from 'svelte/store';
 import { getCategories, getWallets } from '$lib/firebase/database';
 
@@ -39,6 +39,6 @@ export async function loadDefault() {
     filterStore.set(structuredClone(initial));
 }
 
-export function getDefault() {
+export function getDefault(): Filters {
     return structuredClone(initial);
 }
