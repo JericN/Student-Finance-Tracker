@@ -19,6 +19,7 @@
     $: wallet = current.startsWith('/user/users/wallets/');
     $: template = current.startsWith('/user/users/templates/');
     $: category = current.startsWith('/user/users/categories/');
+    $: wishlist = current.startsWith('/user/users/wishlist/');
 
     DataStore.init();
     FormStore.init();
@@ -36,6 +37,8 @@
             <Header title="Templates" />
         {:else if category}
             <Header title="Categories" />
+        {:else if wishlist}
+            <Header title="Wishlist" />
         {/if}
     </div>
     <slot />

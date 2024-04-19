@@ -24,10 +24,7 @@
     <Button on:click={add}>Add Item ➕</Button>
     {#each $wishlistStore as { name, amount }, id}
         <CardButton layout="justify-between" font="font-bold" on:click={() => edit(id)}>
-            <div class="flex flex-col items-center">
-                <Icon src={CreditCard} class="w-8" />
-                <div class="text-xs">{name}</div>
-            </div>
+            <div class="text-lg">{name}</div>
             <div class="my-auto text-2xl">
                 {currency(amount)}
             </div>
