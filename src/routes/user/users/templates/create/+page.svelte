@@ -43,7 +43,7 @@
             <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
-            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Category categories={$categoryStore} type={$forms.type} bind:selected={$forms.categoryId} />
             <Wallet wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />

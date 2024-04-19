@@ -1,8 +1,9 @@
 <script lang="ts">
+    import type { Category, TransactionType } from '$lib/models/sft';
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
-    import type { Category } from '$lib/models/sft';
 
     export let categories: Category[];
+    export let type: TransactionType | undefined;
     export let selected: string | undefined;
 
     let deviceWidth = window.innerWidth;
@@ -23,7 +24,9 @@
         }
     }
 
-    $: preview = categories.slice(0, update(deviceWidth));
+    $: preview = categories.filter(category => category.type === type).slice(0, update(deviceWidth));
+    // eslint-disable-next-line no-undefined
+    $: if (!preview.map(prev => prev.id).includes(selected || '')) selected = undefined;
 </script>
 
 <div class="input-label">Category</div>

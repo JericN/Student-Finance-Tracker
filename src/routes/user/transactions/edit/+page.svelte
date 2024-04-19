@@ -104,7 +104,7 @@
             <Type bind:type={$forms.type} />
             <Amount bind:amount={$forms.amount} />
             <Calendar bind:date={$forms.date} />
-            <Category categories={$categoryStore} bind:selected={$forms.categoryId} />
+            <Category categories={$categoryStore} type={$forms.type} bind:selected={$forms.categoryId} />
             <WalletForm wallets={$walletStore} bind:selected={$forms.walletId} />
         </div>
         <Description bind:description={$forms.description} />
