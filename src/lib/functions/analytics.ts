@@ -16,11 +16,11 @@ function getDays(range: number) {
 
 export function makeInterval(interval: string) {
     switch (interval) {
-        case 'week':
+        case 'Week':
             return getDays(7);
-        case 'month':
+        case 'Month':
             return getDays(30);
-        case 'year':
+        case 'Year':
             return getDays(365);
         default:
             throw new Error('Invalid interval');
@@ -30,13 +30,13 @@ export function makeInterval(interval: string) {
 function filterDate(data: Transaction[], range: string): Transaction[] {
     const limit = new Date();
     switch (range) {
-        case 'week':
+        case 'Week':
             limit.setDate(limit.getDate() - 7);
             return data.filter(({ date }) => date > limit);
-        case 'month':
+        case 'Month':
             limit.setDate(limit.getDate() - 30);
             return data.filter(({ date }) => date > limit);
-        case 'year':
+        case 'Year':
             limit.setDate(limit.getDate() - 365);
             return data.filter(({ date }) => date > limit);
         default:
@@ -74,7 +74,7 @@ function renameKeys(data: StackedData | NameNumber, group: string): StackedData 
  * @param range - The range for filtering the data (`week`, `month`, `year`).
  * @returns The {@linkcode StackedData} representing the time series.
  */
-export function makeTimeSeriesType(data: Transaction[], range: string): StackedData {
+export function makeTimeSeriesType(data: Transaction[], range: string, wallet: string): StackedData {
     // filter data by date cutoff
     data = filterDate(data, range);
 
@@ -90,7 +90,9 @@ export function makeTimeSeriesType(data: Transaction[], range: string): StackedD
     }
 
     // aggregate data to result object
+    const walletStore = getWalletStore();
     for (const entry of data) {
+        if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const day = entry.date.toDateString();
         const entryGroup = entry.type;
         result[entryGroup][day] += entry.amount;
@@ -108,6 +110,7 @@ export function makeTimeSeriesType(data: Transaction[], range: string): StackedD
 export function makeTimeSeriesCategory(
     data: Transaction[],
     range: string,
+    wallet: string,
 ): {
     income: StackedData;
     expense: StackedData;
@@ -134,9 +137,13 @@ export function makeTimeSeriesCategory(
     }
 
     // aggregate data to result object
+    const walletStore = getWalletStore();
+    const list = categories.map(category => category.id);
     for (const entry of data) {
+        if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const day = entry.date.toDateString();
         const entryGroup = String(entry.categoryId);
+        if (!list.includes(entryGroup)) continue;
         if (entry.type === TransactionType.Income) incomeData[entryGroup][day] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup][day] += entry.amount;
     }
@@ -182,9 +189,11 @@ export function makeTimeSeriesWallet(
     }
 
     // aggregate data to result object
+    const list = wallets.map(wallet => wallet.id);
     for (const entry of data) {
         const day = entry.date.toDateString();
         const entryGroup = String(entry.walletId);
+        if (!list.includes(entryGroup)) continue;
         if (entry.type === TransactionType.Income) incomeData[entryGroup][day] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup][day] += entry.amount;
     }
@@ -202,7 +211,11 @@ export function makeTimeSeriesWallet(
  * @param {string} range - The range for filtering the data (`week`, `month`, `year`).
  * @returns The {@linkcode NameNumber} object representing income and expense categories.
  */
-export function makePieCategory(data: Transaction[], range: string): { income: NameNumber; expense: NameNumber } {
+export function makePieCategory(
+    data: Transaction[],
+    range: string,
+    wallet: string,
+): { income: NameNumber; expense: NameNumber } {
     // filter data by date cutoff
     data = filterDate(data, range);
 
@@ -223,8 +236,12 @@ export function makePieCategory(data: Transaction[], range: string): { income: N
     }
 
     // aggregate data to result object
+    const walletStore = getWalletStore();
+    const list = categories.map(category => category.id);
     for (const entry of data) {
+        if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const entryGroup = String(entry.categoryId);
+        if (!list.includes(entryGroup)) continue;
         if (entry.type === TransactionType.Income) incomeData[entryGroup] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup] += entry.amount;
     }
@@ -233,5 +250,29 @@ export function makePieCategory(data: Transaction[], range: string): { income: N
     const income = renameKeys(incomeData, 'category') as NameNumber;
     const expense = renameKeys(expenseData, 'category') as NameNumber;
 
+    return { income, expense };
+}
+
+export function makeCategoryList(data: { income: NameNumber; expense: NameNumber }) {
+    const categoryStore = getCategoryStore();
+
+    const totalIncome = Object.values(data.income).reduce((acc, val) => acc + val, 0);
+    const totalExpense = Object.values(data.expense).reduce((acc, val) => acc + val, 0);
+    const income = Object.entries(data.income).map(([name, amount]) => {
+        return {
+            name,
+            amount,
+            icon: categoryStore.findByName(name)?.icon || 'x',
+            percent: Math.round((amount / totalIncome) * 100 || 0),
+        };
+    });
+    const expense = Object.entries(data.expense).map(([name, amount]) => {
+        return {
+            name,
+            amount,
+            icon: categoryStore.findByName(name)?.icon || 'x',
+            percent: Math.round((amount / totalExpense) * 100 || 0),
+        };
+    });
     return { income, expense };
 }

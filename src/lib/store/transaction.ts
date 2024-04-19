@@ -14,6 +14,7 @@ function initStore() {
     const store = writable<Transaction[]>([]);
     const { subscribe } = store;
 
+    // FIXME: do not filter removed categories and wallets
     function setData(data: Transaction[]) {
         const filters = filterStore.values();
         const filtered = data.filter(({ type, amount, date, categoryId, walletId }) => {
