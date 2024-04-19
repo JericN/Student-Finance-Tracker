@@ -258,9 +258,9 @@ export async function removeWishlist(id: string) {
 }
 
 // This function is used to update the wishlist item
-export async function updateWishlist(wallet: Wallet) {
-    const path = `UserData/${session.uid()}/wishlist/${wallet.id}`;
-    const payload = { ...wallet, updatedAt: serverTimestamp() };
+export async function updateWishlist(wishlist: Wishlist) {
+    const path = `UserData/${session.uid()}/wishlist/${wishlist.id}`;
+    const payload = { ...wishlist, updatedAt: serverTimestamp() };
 
     try {
         await setDoc(doc(db, path), payload);
@@ -279,7 +279,7 @@ export async function getWishlist() {
 
         snap.forEach(doc => {
             const value = { ...doc.data(), id: doc.id };
-            // TODO: parse the value to the Wallet type
+            // TODO: parse the value to the Wishlist type
             wishlist.push(value as Wishlist);
         });
 
