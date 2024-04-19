@@ -8,9 +8,8 @@ export function currency(value: number) {
 }
 
 export function hasValidDecimalPlaces(value: number) {
-    const strInput = String(value).split('.')
-    if (strInput.length === 1)
-        return true;
+    const strInput = String(value).split('.');
+    if (strInput.length === 1) return true;
     return strInput[1].length < 3;
 }
 

@@ -19,5 +19,5 @@
 <div class="flex h-full flex-col items-center justify-between p-10">
     <Budget {balance} {maxBalance} />
     <Chart dataset={expenses} />
-    <Wallets/>
+    <Wallets />
 </div>
