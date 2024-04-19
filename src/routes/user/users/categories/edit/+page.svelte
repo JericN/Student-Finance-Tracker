@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Button, Card } from '$lib/components/modules';
     import { Category, CategoryForm } from '$lib/models/sft';
-    import { Description, Icon, Name, Type } from '$lib/components/forms';
+    import { Description, Icon, Name } from '$lib/components/forms';
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
@@ -60,7 +60,6 @@
 <div class="flex h-full flex-col items-center justify-center p-8">
     <Card width="w-full max-w-sm min-w-72">
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
-            <Type bind:type={$forms.type} />
             <Name bind:name={$forms.name} />
             <Icon bind:icon={$forms.icon} />
         </div>
