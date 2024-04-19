@@ -138,10 +138,12 @@ export function makeTimeSeriesCategory(
 
     // aggregate data to result object
     const walletStore = getWalletStore();
+    const list = categories.map(category => category.id);
     for (const entry of data) {
         if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const day = entry.date.toDateString();
         const entryGroup = String(entry.categoryId);
+        if (!list.includes(entryGroup)) continue;
         if (entry.type === TransactionType.Income) incomeData[entryGroup][day] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup][day] += entry.amount;
     }
@@ -187,9 +189,11 @@ export function makeTimeSeriesWallet(
     }
 
     // aggregate data to result object
+    const list = wallets.map(wallet => wallet.id);
     for (const entry of data) {
         const day = entry.date.toDateString();
         const entryGroup = String(entry.walletId);
+        if (!list.includes(entryGroup)) continue;
         if (entry.type === TransactionType.Income) incomeData[entryGroup][day] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup][day] += entry.amount;
     }
@@ -233,9 +237,11 @@ export function makePieCategory(
 
     // aggregate data to result object
     const walletStore = getWalletStore();
+    const list = categories.map(category => category.id);
     for (const entry of data) {
         if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const entryGroup = String(entry.categoryId);
+        if (!list.includes(entryGroup)) continue;
         if (entry.type === TransactionType.Income) incomeData[entryGroup] += entry.amount;
         if (entry.type === TransactionType.Expense) expenseData[entryGroup] += entry.amount;
     }
