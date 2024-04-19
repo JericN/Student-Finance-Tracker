@@ -10,7 +10,7 @@
     $: categoryList = makeCategoryList(data);
 </script>
 
-<Card width="max-w-sm" layout="flex flex-col gap-2">
+<Card layout="flex flex-col gap-2">
     {#each currentType === 'Income' ? categoryList.income : categoryList.expense as { name, amount, icon, percent }}
         <div class="flex justify-between text-sm">
             <p>{icon} {name}</p>

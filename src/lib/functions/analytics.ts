@@ -74,7 +74,7 @@ function renameKeys(data: StackedData | NameNumber, group: string): StackedData 
  * @param range - The range for filtering the data (`week`, `month`, `year`).
  * @returns The {@linkcode StackedData} representing the time series.
  */
-export function makeTimeSeriesType(data: Transaction[], range: string): StackedData {
+export function makeTimeSeriesType(data: Transaction[], range: string, wallet: string): StackedData {
     // filter data by date cutoff
     data = filterDate(data, range);
 
@@ -90,7 +90,9 @@ export function makeTimeSeriesType(data: Transaction[], range: string): StackedD
     }
 
     // aggregate data to result object
+    const walletStore = getWalletStore();
     for (const entry of data) {
+        if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const day = entry.date.toDateString();
         const entryGroup = entry.type;
         result[entryGroup][day] += entry.amount;
@@ -108,6 +110,7 @@ export function makeTimeSeriesType(data: Transaction[], range: string): StackedD
 export function makeTimeSeriesCategory(
     data: Transaction[],
     range: string,
+    wallet: string,
 ): {
     income: StackedData;
     expense: StackedData;
@@ -134,7 +137,9 @@ export function makeTimeSeriesCategory(
     }
 
     // aggregate data to result object
+    const walletStore = getWalletStore();
     for (const entry of data) {
+        if (wallet !== 'All' && entry.walletId !== walletStore.findByName(wallet)?.id) continue;
         const day = entry.date.toDateString();
         const entryGroup = String(entry.categoryId);
         if (entry.type === TransactionType.Income) incomeData[entryGroup][day] += entry.amount;
