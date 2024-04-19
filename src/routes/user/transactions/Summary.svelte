@@ -13,9 +13,9 @@
             <div class="text-xs">Income</div>
             <div class="text-xs">Expenses</div>
             <div class="text-xs">Balance</div>
-            <div class="text-income">{currency(income)}</div>
-            <div class="text-expense">{currency(expenses)}</div>
-            <div class="text-neutral">{currency(balance)}</div>
+            <div class="break-keep text-income">{currency(income)}</div>
+            <div class="break-keep text-expense">{currency(expenses)}</div>
+            <div class="break-keep text-neutral">{currency(balance)}</div>
         </div>
     </div>
 </Card>
