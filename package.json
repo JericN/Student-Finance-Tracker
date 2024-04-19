@@ -1,6 +1,6 @@
 {
     "name": "student-finance-tracker",
-    "version": "0.0.2",
+    "version": "0.3.1",
     "private": true,
     "scripts": {
         "dev": "vite",
