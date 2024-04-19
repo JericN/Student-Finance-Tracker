@@ -22,6 +22,7 @@
     function findCategoryIcon(id: string) {
         return categories.find(id)?.icon || '❓';
     }
+
 </script>
 
 <div class="border-bottom -my-2 flex flex-col gap-2 bg-light p-2">
