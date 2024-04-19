@@ -90,7 +90,7 @@ export type Wallet = Output<typeof Wallet>;
 export const WalletForm = omit(Wallet, ['id', 'createdAt', 'updatedAt']);
 export type WalletForm = Output<typeof WalletForm>;
 
-//Defines the schema for validating a wishlist item in the database.
+// Defines the schema for validating a wishlist item in the database.
 export const Wishlist = object({
     id: string([length(20)]),
     createdAt: DateSchema,

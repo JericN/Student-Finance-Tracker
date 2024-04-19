@@ -48,7 +48,7 @@
     }
 
     // TODO: remove related transactions or archive wallet
-    ////TODO: Above comment is relic from copy pasting wallet stuff
+    // TODO: Above comment is relic from copy pasting wallet stuff
     function removeHandler() {
         modalStore.trigger({
             type: 'confirm',
