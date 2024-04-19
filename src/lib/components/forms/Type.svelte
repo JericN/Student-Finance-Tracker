@@ -1,12 +1,19 @@
 <script lang="ts">
     import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
-    import { TransactionType } from '$lib/models/types';
+    import { TransactionType } from '$lib/models/sft';
 
     export let type: TransactionType = TransactionType.Expense;
+    export let hideLabel = false;
 </script>
 
-<div class="input-label">Type</div>
-<ListBox class="border-default grid w-full grid-cols-2 text-center text-sm text-dark" spacing="space-y-0" padding="p-1">
+{#if !hideLabel}
+    <div class="input-label">Type</div>
+{/if}
+<ListBox
+    class="border-default grid w-full grid-cols-2 bg-surface-200 text-center text-sm text-dark"
+    spacing="space-y-0"
+    padding="p-1"
+>
     <ListBoxItem
         bind:group={type}
         name="income"

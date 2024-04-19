@@ -1,5 +1,5 @@
 import { get, writable } from 'svelte/store';
-import { Session } from '$lib/models/types';
+import { Session } from '$lib/models/sft';
 import type { User } from 'firebase/auth';
 
 const initial: Session = {

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type Transaction } from '$lib/models/types';
+    import { type Transaction } from '$lib/models/sft';
     import { currency } from '$lib/functions/helper';
     import { getCategoryStore } from '$lib/store/database';
     import { getTransactionEditStore } from '$lib/store/forms';

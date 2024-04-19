@@ -9,7 +9,7 @@ import {
     WalletForm,
     Wishlist,
     WishlistForm,
-} from '$lib/models/types';
+} from '$lib/models/sft';
 import { type Store, initStore } from './templates/FormTemplate';
 import { getContext, hasContext, setContext } from 'svelte';
 import { assert } from '$lib/functions/assert';

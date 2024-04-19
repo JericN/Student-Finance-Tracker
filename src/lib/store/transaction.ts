@@ -1,6 +1,6 @@
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { getContext, hasContext, setContext } from 'svelte';
-import { Transaction } from '$lib/models/types';
+import { Transaction } from '$lib/models/sft';
 import { db } from '$lib/firebase/firebase.client';
 import { filterStore } from '$lib/store/filter';
 import { getTransactions } from '$lib/firebase/database';
@@ -14,6 +14,7 @@ function initStore() {
     const store = writable<Transaction[]>([]);
     const { subscribe } = store;
 
+    // FIXME: do not filter removed categories and wallets
     function setData(data: Transaction[]) {
         const filters = filterStore.values();
         const filtered = data.filter(({ type, amount, date, categoryId, walletId }) => {

@@ -5,7 +5,7 @@
     import { currency } from '$lib/functions/helper';
 
     export let name: string;
-    export let value: number;
+    export let amount: number;
     // TODO: custom icons
 </script>
 
@@ -16,7 +16,7 @@
             <div class="text-xs font-bold">{name}</div>
         </div>
         <div class="my-auto text-2xl font-bold">
-            {currency(value)}
+            {currency(amount)}
         </div>
     </div>
 </Card>

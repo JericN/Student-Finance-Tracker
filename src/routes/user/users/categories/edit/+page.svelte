@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Button, Card } from '$lib/components/modules';
-    import { Category, CategoryForm } from '$lib/models/types';
+    import { Category, CategoryForm } from '$lib/models/sft';
     import { Description, Icon, Name, Type } from '$lib/components/forms';
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';

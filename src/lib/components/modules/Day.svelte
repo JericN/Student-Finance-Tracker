@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type Days, days } from '$lib/models/types';
+    import { type Days, days } from '$lib/models/sft';
 
     export let day: number;
 
