@@ -1,14 +1,18 @@
 <script lang="ts">
+    import { makeInterval, makeTimeSeriesType } from '$lib/functions/analytics';
     import { Card } from '$lib/components/modules';
-    import LineChart from '$lib/charts/SimpleLineChart.svelte';
+    import SimpleLineChart from '$lib/charts/SimpleLineChart.svelte';
+    import { getTransactionStore } from '$lib/store/transaction';
 
-    // TODO: should fetch the most recent transactions
-    export let dataset: Record<string, number>;
+    const transactionStore = getTransactionStore();
+
+    $: interval = makeInterval('Week');
+    $: typeData = makeTimeSeriesType($transactionStore, 'Week', 'All');
 </script>
 
 <div class="w-full max-w-sm">
     <div class="text-center font-bold">EXPENSES</div>
-    <Card>
-        <LineChart {dataset} />
+    <Card padding="p-0">
+        <SimpleLineChart dataset={typeData.Expense} {interval} />
     </Card>
 </div>

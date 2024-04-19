@@ -4,12 +4,12 @@
     import type { NameCount } from '$lib/models/types';
 
     export let dataset: NameCount;
+    export let interval: Date[];
 
     $: data = {
-        labels: Object.keys(dataset),
+        labels: interval,
         datasets: [
             {
-                label: 'Count',
                 data: Object.values(dataset),
                 backgroundColor: '#ffffff',
                 borderColor: '#448e32',
@@ -28,6 +28,10 @@
                 ticks: {
                     color: '#242c46',
                     font: { size: 10, family: 'ShantellSans', weight: 'bold' },
+                },
+                type: 'time',
+                time: {
+                    unit: 'day',
                 },
             },
             y: {
