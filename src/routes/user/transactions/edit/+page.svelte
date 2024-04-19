@@ -38,22 +38,26 @@
 
         try {
             // undo outdated transaction on wallet
-            const transaction = $transactionStore.find(t => t.id === $forms.id);
+            const transaction = $transactionStore.find(t => t.id === $forms.id)!;
             const prevWallet = structuredClone($walletStore.find(w => w.id === transaction.walletId));
-            if (transaction.type === 'Expense')
-                prevWallet.amount = (prevWallet.amount * 100) + (transaction.amount * 100);
-            else 
-                prevWallet.amount = (prevWallet.amount * 100) - (transaction.amount * 100);
-            prevWallet.amount /= 100;
-            await updateWallet(parse(Wallet, prevWallet));
+            if (prevWallet){
+                if (transaction.type === 'Expense')
+                    prevWallet.amount = (prevWallet.amount * 100) + (transaction.amount * 100);
+                else 
+                    prevWallet.amount = (prevWallet.amount * 100) - (transaction.amount * 100);
+                prevWallet.amount /= 100;
+                await updateWallet(parse(Wallet, prevWallet));
+            }
             // update wallet based on current input to form
             const wallet = (transaction.walletId === $forms.walletId) ? prevWallet : structuredClone($walletStore.find(w => w.id === $forms.walletId));
-            if ($forms.type === 'Expense')
-                wallet.amount =  (wallet.amount * 100) - ($forms.amount * 100);
-            else 
-                wallet.amount = (wallet.amount * 100) + ($forms.amount * 100);
-            wallet.amount /= 100;
-            await updateWallet(parse(Wallet, wallet));
+            if (wallet){
+                if ($forms.type === 'Expense')
+                    wallet.amount =  (wallet.amount * 100) - ($forms.amount! * 100);
+                else 
+                    wallet.amount = (wallet.amount * 100) + ($forms.amount! * 100);
+                wallet.amount /= 100;
+                await updateWallet(parse(Wallet, wallet));
+            }
             await updateTransaction(parse(Transaction, $forms));
             goto('/user/transactions');
             forms.reset();
@@ -67,11 +71,13 @@
         try {
             const { id } = parse(pick(Transaction, ['id']), { id: $forms.id });
             const wallet = structuredClone($walletStore.find(w => w.id === $forms.walletId));
-            if ($forms.type === 'Expense')
-                wallet.amount =  (wallet.amount * 100) + ($forms.amount * 100);
-            else 
-                wallet.amount =  (wallet.amount * 100) - ($forms.amount * 100);
-            wallet.amount /= 100;
+            if (wallet){
+                if ($forms.type === 'Expense')
+                    wallet.amount =  (wallet.amount * 100) + ($forms.amount! * 100);
+                else 
+                    wallet.amount =  (wallet.amount * 100) - ($forms.amount! * 100);
+                wallet.amount /= 100;
+            }
             await updateWallet(parse(Wallet, wallet));
             await removeTransaction(id);
             goto('/user/transactions');
