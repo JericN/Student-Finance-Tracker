@@ -5,8 +5,8 @@
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import { addBudgetPref, removeBudgetPref, updateBudgetPref } from '$lib/firebase/database';
-    import { getBudgetPrefCreateStore, getBudgetPrefEditStore} from '$lib/store/forms';
+    import { removeBudgetPref, updateBudgetPref } from '$lib/firebase/database';
+    import { getBudgetPrefEditStore} from '$lib/store/forms';
 
     const toastStore = getToastStore();
     const modalStore = getModalStore();
@@ -37,8 +37,7 @@
 
     async function remove() {
         try {
-            const { id } = parse(pick(BudgetPref, ['id']), { id: $forms.id });
-            await removeBudgetPref(id);
+            await removeBudgetPref(parse(BudgetPref, $forms));
             // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
@@ -55,7 +54,7 @@
         modalStore.trigger({
             type: 'confirm',
             title: 'Please Confirm',
-            body: 'Are you sure you wish to remove this budget preference?',
+            body: 'Are you sure you wish to clear this budget preference?',
             response: (res: boolean) => {
                 if (res) remove();
             },

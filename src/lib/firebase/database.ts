@@ -305,13 +305,17 @@ export async function addBudgetPref(budgetpref: BudgetPrefForm) {
 }
 
 // This function is used to clear a budget preference
-export async function removeBudgetPref(id: string) {
-    const path = `UserData/${session.uid()}/budgetpref/${id}`;
+export async function removeBudgetPref(budgetpref: BudgetPref) {
+    const path = `UserData/${session.uid()}/budgetpref/${budgetpref.id}`;
+    const payload = { ...budgetpref, updatedAt: serverTimestamp() };
+
+    payload.amount = 0;
+    payload.goal = 0;
 
     try {
-        await deleteDoc(doc(db, path));
+        await setDoc(doc(db, path), payload);
     } catch (e) {
-        throw new Error('Failed removing budget preference');
+        throw new Error('Failed updating budget preference');
     }
 }
 
