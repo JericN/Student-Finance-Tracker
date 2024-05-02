@@ -110,7 +110,7 @@ export type WishlistForm = Output<typeof WishlistForm>;
 
 // Defines the schema for validating a budget preference in the database
 export const BudgetPref = object({
-    id: string([length(20)]),
+    id: string(),
     name: string([minLength(3), maxLength(10)]),
     createdAt: DateSchema,
     updatedAt: DateSchema,
