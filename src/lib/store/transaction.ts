@@ -1,14 +1,23 @@
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { getContext, hasContext, setContext } from 'svelte';
+import { getTransactions, updateBudgetAmount } from '$lib/firebase/database';
 import { Transaction } from '$lib/models/sft';
 import { db } from '$lib/firebase/firebase.client';
 import { filterStore } from '$lib/store/filter';
-import { getTransactions } from '$lib/firebase/database';
 import { safeParse } from 'valibot';
 import { session } from '$lib/store/session';
 import { writable } from 'svelte/store';
 
 const TRANSACTIONS = Symbol('transactions');
+
+function updateBudget(transactions: Transaction[]) {
+    const expenses = transactions.filter(({ type }) => type === 'Expense');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todayExpenses = expenses.filter(({ date }) => date.getTime() === today.getTime());
+    const totalTodayExpenses = todayExpenses.reduce((acc, { amount }) => acc + amount, 0);
+    updateBudgetAmount(totalTodayExpenses);
+}
 
 function initStore() {
     const store = writable<Transaction[]>([]);
@@ -46,6 +55,7 @@ function initStore() {
             if (json.success) transactions.push(json.output);
             else throw new Error('Failed parsing transaction');
         });
+        updateBudget(transactions);
         setData(transactions);
     });
 

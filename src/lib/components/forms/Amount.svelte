@@ -12,7 +12,7 @@
         type="number"
         placeholder="0.00"
         on:change={() => {
-            flag = (amount || 0) <= 0;
+            flag = (amount || 0) < 0;
         }}
     />
 </div>
