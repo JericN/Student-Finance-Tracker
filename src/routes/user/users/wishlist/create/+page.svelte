@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Amount, Description, Name } from '$lib/components/forms';
+    import { Amount, Calendar, Description, Name, Quantity } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/functions/toast';
     import { parse, pick, safeParse } from 'valibot';
@@ -12,7 +12,7 @@
     const forms = getWishlistCreateStore();
 
     async function submit() {
-        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'description'];
+        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'date', 'quantity', 'description'];
 
         for (const property of properties) {
             const result = safeParse(pick(WishlistForm, [property]), { [property]: $forms[property] });
@@ -29,9 +29,11 @@
             forms.reset();
             toastStore.trigger(success('Item added'));
         } catch (_) {
+            console.log(_)
             toastStore.trigger(error('Failed to add item'));
         }
     }
+
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -39,6 +41,8 @@
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
+            <Quantity bind:quantity={$forms.quantity} />
+            <Calendar bind:date={$forms.date} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>

@@ -98,7 +98,6 @@ export const Wishlist = object({
     id: string([length(20)]),
     createdAt: DateSchema,
     updatedAt: DateSchema,
-    bought: boolean(),
     name: string([minLength(3), maxLength(10)]),
     date: DateSchema,
     amount: number([minValue(0.01), custom(hasValidDecimalPlaces)]),
