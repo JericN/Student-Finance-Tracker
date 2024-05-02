@@ -3,12 +3,14 @@
     import Chart from './Chart.svelte';
     import Wallets from './Wallets.svelte';
 
-    const balance = 1200;
-    const maxBalance = 2500;
+    import { getBudgetPrefStore } from '$lib/store/database';
+
+    const budgetPrefStore = getBudgetPrefStore();
+    $: current = $budgetPrefStore.length !== 0 ? $budgetPrefStore[0] : { amount: 0, goal: 0 };
 </script>
 
 <div class="flex h-full flex-col items-center justify-between p-10">
-    <Budget {balance} {maxBalance} />
+    <Budget balance={current.goal - current.amount} maxBalance={current.goal} />
     <Chart />
     <Wallets />
 </div>

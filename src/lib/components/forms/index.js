@@ -1,4 +1,5 @@
 export { default as Amount } from '$lib/components/forms/Amount.svelte';
+export { default as Goal } from '$lib/components/forms/Goal.svelte';
 export { default as Calendar } from '$lib/components/forms/Calendar.svelte';
 export { default as Category } from '$lib/components/forms/Category.svelte';
 export { default as Description } from '$lib/components/forms/Description.svelte';
