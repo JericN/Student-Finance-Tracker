@@ -27,8 +27,8 @@
         </div>
     </div>
 
-    <Entry title="Daily Budget">
-        <div>{currency(1000)}</div>
+    <Entry link="budget-pref" title="Daily Budget">
+        <div>{currency(1000)} Daily</div>
     </Entry>
 
     <Entry link="wallets" title="Wallets">

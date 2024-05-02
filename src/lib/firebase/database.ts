@@ -10,6 +10,8 @@ import {
     type WalletForm,
     type Wishlist,
     type WishlistForm,
+    type BudgetPref,
+    type BudgetPrefForm,
 } from '$lib/models/sft';
 import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
@@ -286,5 +288,28 @@ export async function getWishlist() {
         return wishlist;
     } catch (e) {
         throw new Error('Failed fetching wishlist');
+    }
+}
+
+// This function is used to clear a budget preference
+export async function removeBudgetPref(id: string) {
+    const path = `UserData/${session.uid()}/budgetpref/${id}`;
+
+    try {
+        await deleteDoc(doc(db, path));
+    } catch (e) {
+        throw new Error('Failed removing budget preference');
+    }
+}
+
+// This function is used to update a budget preference
+export async function updateBudgetPref(budgetpref: BudgetPref) {
+    const path = `UserData/${session.uid()}/budgetpref/${budgetpref.id}`;
+    const payload = { ...budgetpref, updatedAt: serverTimestamp() };
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating budget preference');
     }
 }
