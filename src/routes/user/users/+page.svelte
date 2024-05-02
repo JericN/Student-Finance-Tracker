@@ -2,7 +2,6 @@
     import { LightSwitch, getToastStore } from '@skeletonlabs/skeleton';
     import { Button } from '$lib/components/modules';
     import Entry from './Entry.svelte';
-    import { currency } from '$lib/functions/helper';
     import { error } from '$lib/functions/toast';
     import { goto } from '$app/navigation';
     import { session } from '$lib/store/session';
@@ -27,8 +26,8 @@
         </div>
     </div>
 
-    <Entry title="Daily Budget">
-        <div>{currency(1000)}</div>
+    <Entry link="budget-pref" title="Daily Budget">
+        <div>Edit Budget Preference</div>
     </Entry>
 
     <Entry link="wallets" title="Wallets">

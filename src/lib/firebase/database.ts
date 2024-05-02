@@ -1,4 +1,6 @@
 import {
+    type BudgetPref,
+    type BudgetPrefForm,
     type Category,
     type CategoryForm,
     type Template,
@@ -216,25 +218,6 @@ export async function getCategories() {
     }
 }
 
-// This function is used to create a user record when a new user registers
-export async function createUserTransactionForm(user: User) {
-    const { uid, email, displayName } = user;
-
-    await setDoc(doc(db, `UserData/${uid}`), {
-        uid: uid,
-        email: email,
-        username: displayName,
-    });
-
-    await addWallet({ amount: 0, name: 'Cash' });
-    await addWallet({ amount: 0, name: 'Bank' });
-
-    await addCategory({ name: 'Food', type: TransactionType.Expense, icon: '🍔' });
-    await addCategory({ name: 'Fare', type: TransactionType.Expense, icon: '🚌' });
-    await addCategory({ name: 'Utils', type: TransactionType.Expense, icon: '🏠' });
-    await addCategory({ name: 'Salary', type: TransactionType.Income, icon: '💰' });
-}
-
 // This function is used to create a new wishlist item
 export async function addWishlist(wishlist: WishlistForm) {
     const path = `UserData/${session.uid()}/wishlist`;
@@ -287,4 +270,62 @@ export async function getWishlist() {
     } catch (e) {
         throw new Error('Failed fetching wishlist');
     }
+}
+
+// This function is used to create a budget preference
+export async function addBudgetPref(budgetpref: BudgetPrefForm) {
+    const path = `UserData/${session.uid()}/budgetpref`;
+    const payload = { ...budgetpref, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
+    try {
+        await addDoc(collection(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed adding budget preference');
+    }
+}
+
+// This function is used to clear a budget preference
+export async function removeBudgetPref(budgetpref: BudgetPref) {
+    const path = `UserData/${session.uid()}/budgetpref/${budgetpref.id}`;
+    const payload = { ...budgetpref, updatedAt: serverTimestamp() };
+
+    payload.amount = 0;
+    payload.goal = 0;
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating budget preference');
+    }
+}
+
+// This function is used to update a budget preference
+export async function updateBudgetPref(budgetpref: BudgetPref) {
+    const path = `UserData/${session.uid()}/budgetpref/${budgetpref.id}`;
+    const payload = { ...budgetpref, updatedAt: serverTimestamp() };
+
+    try {
+        await setDoc(doc(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed updating budget preference');
+    }
+}
+
+// This function is used to create a user record when a new user registers
+export async function createUserTransactionForm(user: User) {
+    const { uid, email, displayName } = user;
+
+    await setDoc(doc(db, `UserData/${uid}`), {
+        uid: uid,
+        email: email,
+        username: displayName,
+    });
+
+    await addWallet({ amount: 0, name: 'Cash' });
+    await addWallet({ amount: 0, name: 'Bank' });
+
+    await addCategory({ name: 'Food', type: TransactionType.Expense, icon: '🍔' });
+    await addCategory({ name: 'Fare', type: TransactionType.Expense, icon: '🚌' });
+    await addCategory({ name: 'Utils', type: TransactionType.Expense, icon: '🏠' });
+    await addCategory({ name: 'Salary', type: TransactionType.Income, icon: '💰' });
+    await addBudgetPref({ name: 'save', amount: 1000, goal: 5000 });
 }

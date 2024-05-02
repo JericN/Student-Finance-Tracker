@@ -102,11 +102,25 @@ export const Wishlist = object({
     amount: number([safeInteger(), minValue(0)]),
     description: optional(string([maxLength(200)])),
 });
-export type Wishlist = Output<typeof Wallet>;
+export type Wishlist = Output<typeof Wishlist>;
 
 // Defines the schema for validating a wishlist object from input forms
 export const WishlistForm = omit(Wishlist, ['id', 'createdAt', 'updatedAt']);
 export type WishlistForm = Output<typeof WishlistForm>;
+
+// Defines the schema for validating a budget preference in the database
+export const BudgetPref = object({
+    id: string([length(20)]),
+    name: string([minLength(3), maxLength(10)]),
+    createdAt: DateSchema,
+    updatedAt: DateSchema,
+    amount: number([safeInteger(), minValue(0)]),
+    goal: number([safeInteger(), minValue(0)]),
+});
+export type BudgetPref = Output<typeof BudgetPref>;
+
+export const BudgetPrefForm = omit(BudgetPref, ['id', 'createdAt', 'updatedAt']);
+export type BudgetPrefForm = Output<typeof BudgetPrefForm>;
 
 // Defines the schema for validating a category object in the database.
 export const Category = object({
