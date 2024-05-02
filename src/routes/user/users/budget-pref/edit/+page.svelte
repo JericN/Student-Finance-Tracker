@@ -3,13 +3,12 @@
     import { BudgetPref, BudgetPrefForm } from '$lib/models/sft';
     import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/functions/toast';
-    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
+    import { getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import { removeBudgetPref, updateBudgetPref } from '$lib/firebase/database';
+    import { updateBudgetPref } from '$lib/firebase/database';
     import { getBudgetPrefEditStore } from '$lib/store/forms';
 
     const toastStore = getToastStore();
-    const modalStore = getModalStore();
     const forms = getBudgetPrefEditStore();
 
     async function update() {
@@ -33,31 +32,6 @@
             toastStore.trigger(error('Failed to update budget preference'));
         }
     }
-
-    async function remove() {
-        try {
-            await removeBudgetPref(parse(BudgetPref, $forms));
-            // FIXME: Temporary fix until we have a proper way to navigate
-            window.history.back();
-            forms.reset();
-            toastStore.trigger(success('Budget preference removed'));
-        } catch (_) {
-            toastStore.trigger(error('Failed to remove budget preference'));
-        }
-    }
-
-    // TODO: remove related transactions or archive wallet
-    // TODO: Above comment is relic from copy pasting
-    function removeHandler() {
-        modalStore.trigger({
-            type: 'confirm',
-            title: 'Please Confirm',
-            body: 'Are you sure you wish to clear this budget preference?',
-            response: (res: boolean) => {
-                if (res) remove();
-            },
-        });
-    }
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
@@ -69,6 +43,5 @@
     </Card>
     <div class="flex w-full min-w-72 max-w-sm">
         <Button width="w-full" accent="bg-income" on:click={update}>UPDATE</Button>
-        <Button width="w-full" accent="bg-expense" on:click={removeHandler}>REMOVE</Button>
     </div>
 </div>
