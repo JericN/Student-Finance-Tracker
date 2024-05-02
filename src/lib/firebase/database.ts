@@ -235,6 +235,8 @@ export async function createUserTransactionForm(user: User) {
     await addCategory({ name: 'Fare', type: TransactionType.Expense, icon: '🚌' });
     await addCategory({ name: 'Utils', type: TransactionType.Expense, icon: '🏠' });
     await addCategory({ name: 'Salary', type: TransactionType.Income, icon: '💰' });
+
+    await addBudgetPref({ amount: 1000, goal: 5000 });
 }
 
 // This function is used to create a new wishlist item
@@ -288,6 +290,17 @@ export async function getWishlist() {
         return wishlist;
     } catch (e) {
         throw new Error('Failed fetching wishlist');
+    }
+}
+
+//This function is used to create a budget preference
+export async function addBudgetPref(budgetpref: BudgetPrefForm) {
+    const path = `UserData/${session.uid()}/budgetpref`;
+    const payload = { ...budgetpref, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
+    try {
+        await addDoc(collection(db, path), payload);
+    } catch (e) {
+        throw new Error('Failed adding budget preference');
     }
 }
 

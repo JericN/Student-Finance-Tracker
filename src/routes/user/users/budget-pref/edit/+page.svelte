@@ -5,8 +5,8 @@
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
-    import { removeBudgetPref, updateBudgetPref } from '$lib/firebase/database';
-    import { getBudgetPrefEditStore} from '$lib/store/forms';
+    import { addBudgetPref, removeBudgetPref, updateBudgetPref } from '$lib/firebase/database';
+    import { getBudgetPrefCreateStore, getBudgetPrefEditStore} from '$lib/store/forms';
 
     const toastStore = getToastStore();
     const modalStore = getModalStore();
@@ -25,24 +25,26 @@
 
         try {
             await updateBudgetPref(parse(BudgetPref, $forms));
-            // FIXME: Temporary fix until we have a proper way to navigate
+                // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Budget preference updated'));
-        } catch (_) {
+        } catch (_: Error) {
+            console.log(_.stack);
             toastStore.trigger(error('Failed to update budget preference'));
         }
     }
 
     async function remove() {
         try {
-            const { id } = parse(pick(BudgetPreference, ['id']), { id: $forms.id });
-            await removeBudgetPreference(id);
+            const { id } = parse(pick(BudgetPref, ['id']), { id: $forms.id });
+            await removeBudgetPref(id);
             // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Budget preference removed'));
-        } catch (_) {
+        } catch (_: Error) {
+            console.log(_.stack);
             toastStore.trigger(error('Failed to remove budget preference'));
         }
     }
