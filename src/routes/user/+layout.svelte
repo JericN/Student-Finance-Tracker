@@ -20,6 +20,7 @@
     $: template = current.startsWith('/user/users/templates/');
     $: category = current.startsWith('/user/users/categories/');
     $: wishlist = current.startsWith('/user/users/wishlist/');
+    $: budget = current.startsWith('/user/users/budget-pref/');
 
     DataStore.init();
     FormStore.init();
@@ -39,11 +40,13 @@
             <Header title="Categories" />
         {:else if wishlist}
             <Header title="Wishlist" />
+        {:else if budget}
+            <Header title="Budget" />
         {/if}
     </div>
     <slot />
     <div slot="footer">
-        {#if !transaction && !wallet && !template && !category}
+        {#if !transaction && !wallet && !template && !category && !wishlist && !budget}
             <NavBar />
         {/if}
     </div>
