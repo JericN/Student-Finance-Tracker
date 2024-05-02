@@ -99,7 +99,9 @@ export const Wishlist = object({
     createdAt: DateSchema,
     updatedAt: DateSchema,
     name: string([minLength(3), maxLength(10)]),
-    amount: number([safeInteger(), minValue(0)]),
+    image: optional(string([maxLength(100)])),
+    amount: number([minValue(0.01), custom(hasValidDecimalPlaces)]),
+    quantity: number([safeInteger(), minValue(1)]),
     description: optional(string([maxLength(200)])),
 });
 export type Wishlist = Output<typeof Wallet>;
