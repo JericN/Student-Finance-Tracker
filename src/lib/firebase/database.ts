@@ -13,7 +13,7 @@ import {
     type Wishlist,
     type WishlistForm,
 } from '$lib/models/sft';
-import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
 import { db } from '$lib/firebase/firebase.client';
 import { safeParse } from 'valibot';
@@ -277,19 +277,16 @@ export async function addBudgetPref(budgetpref: BudgetPrefForm) {
     const path = `UserData/${session.uid()}/budgetpref`;
     const payload = { ...budgetpref, createdAt: serverTimestamp(), updatedAt: serverTimestamp() };
     try {
-        await addDoc(collection(db, path), payload);
+        await setDoc(doc(db, path, 'budget'), payload);
     } catch (e) {
         throw new Error('Failed adding budget preference');
     }
 }
 
-// This function is used to clear a budget preference
-export async function removeBudgetPref(budgetpref: BudgetPref) {
-    const path = `UserData/${session.uid()}/budgetpref/${budgetpref.id}`;
+// This function is used to update a budget preference
+export async function updateBudgetPref(budgetpref: BudgetPref) {
+    const path = `UserData/${session.uid()}/budgetpref/budget`;
     const payload = { ...budgetpref, updatedAt: serverTimestamp() };
-
-    payload.amount = 0;
-    payload.goal = 0;
 
     try {
         await setDoc(doc(db, path), payload);
@@ -298,13 +295,12 @@ export async function removeBudgetPref(budgetpref: BudgetPref) {
     }
 }
 
-// This function is used to update a budget preference
-export async function updateBudgetPref(budgetpref: BudgetPref) {
-    const path = `UserData/${session.uid()}/budgetpref/${budgetpref.id}`;
-    const payload = { ...budgetpref, updatedAt: serverTimestamp() };
+export async function updateBudgetAmount(amount: number) {
+    const path = `UserData/${session.uid()}/budgetpref/budget`;
+    const payload = { amount: amount, updatedAt: serverTimestamp() };
 
     try {
-        await setDoc(doc(db, path), payload);
+        await updateDoc(doc(db, path), payload);
     } catch (e) {
         throw new Error('Failed updating budget preference');
     }
