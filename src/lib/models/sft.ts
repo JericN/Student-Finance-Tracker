@@ -98,13 +98,14 @@ export const Wishlist = object({
     id: string([length(20)]),
     createdAt: DateSchema,
     updatedAt: DateSchema,
+    bought: boolean(),
     name: string([minLength(3), maxLength(10)]),
-    image: optional(string([maxLength(100)])),
+    date: DateSchema,
     amount: number([minValue(0.01), custom(hasValidDecimalPlaces)]),
     quantity: number([safeInteger(), minValue(1)]),
     description: optional(string([maxLength(200)])),
 });
-export type Wishlist = Output<typeof Wallet>;
+export type Wishlist = Output<typeof Wishlist>;
 
 // Defines the schema for validating a wishlist object from input forms
 export const WishlistForm = omit(Wishlist, ['id', 'createdAt', 'updatedAt']);

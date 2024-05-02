@@ -8,3 +8,4 @@ export { default as Wallet } from '$lib/components/forms/Wallet.svelte';
 export { default as Icon } from '$lib/components/forms/Icon.svelte';
 export { default as Radio } from '$lib/components/forms/Radio.svelte';
 export { default as Select } from '$lib/components/forms/Select.svelte';
+export { default as Quantity } from '$lib/components/forms/Quantity.svelte';
