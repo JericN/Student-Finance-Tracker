@@ -2,7 +2,6 @@
     import { LightSwitch, getToastStore } from '@skeletonlabs/skeleton';
     import { Button } from '$lib/components/modules';
     import Entry from './Entry.svelte';
-    import { currency } from '$lib/functions/helper';
     import { error } from '$lib/functions/toast';
     import { goto } from '$app/navigation';
     import { session } from '$lib/store/session';

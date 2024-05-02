@@ -5,14 +5,14 @@
     import { parse, pick, safeParse } from 'valibot';
     import { BudgetPrefForm } from '$lib/models/sft';
     import { addBudgetPref } from '$lib/firebase/database';
-    import { getToastStore } from '@skeletonlabs/skeleton';
     import { getBudgetPrefCreateStore } from '$lib/store/forms';
+    import { getToastStore } from '@skeletonlabs/skeleton';
 
     const toastStore = getToastStore();
     const forms = getBudgetPrefCreateStore();
 
     async function submit() {
-        const properties: (keyof BudgetPrefForm)[] = [ 'amount', 'goal' ];
+        const properties: (keyof BudgetPrefForm)[] = ['amount', 'goal'];
 
         for (const property of properties) {
             const result = safeParse(pick(BudgetPrefForm, [property]), { [property]: $forms[property] });

@@ -1,9 +1,9 @@
 <script lang="ts">
     import Budget from './budget.svelte';
     import { Button } from '$lib/components/modules';
-    import { goto } from '$app/navigation';
     import { getBudgetPrefEditStore } from '$lib/store/forms';
     import { getBudgetPrefStore } from '$lib/store/database';
+    import { goto } from '$app/navigation';
 
     const budgetPrefStore = getBudgetPrefStore();
     const forms = getBudgetPrefEditStore();
@@ -15,7 +15,6 @@
     function add() {
         goto('/user/users/budget-pref/create/');
     }
-
 </script>
 
 <div class="flex h-full flex-col items-center p-10">

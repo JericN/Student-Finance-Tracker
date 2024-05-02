@@ -24,7 +24,7 @@ export function initStore<T extends ID>(path: string, schema: any) {
             const value = { ...doc.data(), id: doc.id };
             const json = safeParse(schema, value);
             if (json.success) data.push(json.output);
-            else throw new Error('Failed parsing data from database. path = '+path);
+            else throw new Error(`Failed parsing data from database. ${path}`);
         });
 
         set(data);

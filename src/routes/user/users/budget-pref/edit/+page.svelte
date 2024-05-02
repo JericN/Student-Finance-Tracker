@@ -1,12 +1,12 @@
 <script lang="ts">
     import { Amount, Goal } from '$lib/components/forms';
-    import { Button, Card } from '$lib/components/modules';
     import { BudgetPref, BudgetPrefForm } from '$lib/models/sft';
+    import { Button, Card } from '$lib/components/modules';
     import { error, success } from '$lib/functions/toast';
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { parse, pick, safeParse } from 'valibot';
     import { removeBudgetPref, updateBudgetPref } from '$lib/firebase/database';
-    import { getBudgetPrefEditStore} from '$lib/store/forms';
+    import { getBudgetPrefEditStore } from '$lib/store/forms';
 
     const toastStore = getToastStore();
     const modalStore = getModalStore();
@@ -25,12 +25,11 @@
 
         try {
             await updateBudgetPref(parse(BudgetPref, $forms));
-                // FIXME: Temporary fix until we have a proper way to navigate
+            // FIXME: Temporary fix until we have a proper way to navigate
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Budget preference updated'));
-        } catch (_: Error) {
-            console.log(_.stack);
+        } catch (_) {
             toastStore.trigger(error('Failed to update budget preference'));
         }
     }
@@ -42,8 +41,7 @@
             window.history.back();
             forms.reset();
             toastStore.trigger(success('Budget preference removed'));
-        } catch (_: Error) {
-            console.log(_.stack);
+        } catch (_) {
             toastStore.trigger(error('Failed to remove budget preference'));
         }
     }
