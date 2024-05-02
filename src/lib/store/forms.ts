@@ -1,6 +1,5 @@
 import {
     BudgetPref,
-    BudgetPrefForm,
     Category,
     CategoryForm,
     Template,
@@ -27,7 +26,6 @@ const EDITCATEGORY = Symbol('editcategory');
 const CREATEWISHLIST = Symbol('createwishlist');
 const EDITWISHLIST = Symbol('editwishlist');
 const EDITBUDGETPREF = Symbol('editbudgetpref');
-const CREATEBUDGETPREF = Symbol('createbudgetpref');
 
 export function init() {
     setContext(CREATETRANSACTION, initStore<TransactionForm>());
@@ -41,7 +39,6 @@ export function init() {
     setContext(CREATEWISHLIST, initStore<WishlistForm>());
     setContext(EDITWISHLIST, initStore<Wishlist>());
     setContext(EDITBUDGETPREF, initStore<BudgetPref>());
-    setContext(CREATEBUDGETPREF, initStore<BudgetPrefForm>());
 }
 
 export function getTransactionCreateStore() {
@@ -96,9 +93,4 @@ export function getWishlistEditStore() {
 export function getBudgetPrefEditStore() {
     assert(hasContext(EDITBUDGETPREF), 'Edit budget preference store not initialized');
     return getContext<Store<BudgetPref>>(EDITBUDGETPREF);
-}
-
-export function getBudgetPrefCreateStore() {
-    assert(hasContext(CREATEBUDGETPREF), 'Create budget preference store not initialized');
-    return getContext<Store<BudgetPrefForm>>(CREATEBUDGETPREF);
 }
