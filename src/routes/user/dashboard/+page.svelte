@@ -10,7 +10,7 @@
 </script>
 
 <div class="flex h-full flex-col items-center justify-between p-10">
-    <Budget balance={current.amount} maxBalance={current.goal} />
+    <Budget balance={current.goal - current.amount} maxBalance={current.goal} />
     <Chart />
     <Wallets />
 </div>

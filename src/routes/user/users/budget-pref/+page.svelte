@@ -18,7 +18,7 @@
 </script>
 
 <div class="flex h-full flex-col items-center p-10">
-    <Budget balance={current.amount} maxBalance={current.goal} />
+    <Budget balance={current.goal - current.amount} maxBalance={current.goal} />
     <CardButton on:click={edit} layout="justify-between" width="mt-4">
         <div class="text-sm font-bold text-dark">Current</div>
         <div class="text-xl font-bold text-dark">{currency(current.amount)}</div>
