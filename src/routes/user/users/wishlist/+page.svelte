@@ -22,7 +22,7 @@
     <Button on:click={add}>Add Item ➕</Button>
     {#each $wishlistStore as { name, amount, bought, quantity, date}, id}
         <CardButton layout="justify-between" font="font-bold" on:click={() => edit(id)}>
-            <div class="grid grid-cols-2">
+            <div class="flex justify-items-stretch">
                 <div>
                     <div class="text-lg">{name}</div>
                     <div class="my-auto text-2xl">
