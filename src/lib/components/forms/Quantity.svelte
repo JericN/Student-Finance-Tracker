@@ -5,7 +5,9 @@
 
 <div class="input-label">Quantity</div>
 <div class="flex">
-    <button class="h-8 w-8 rounded-lg border-2 bg-surface-300" on:click={() => (quantity > 1) ? quantity-- : quantity}> − </button>
+    <button class="h-8 w-8 rounded-lg border-2 bg-surface-300" on:click={() => (quantity > 1 ? quantity-- : quantity)}>
+        −
+    </button>
     <div class={`${flag && 'border-red-500 dark:border-red-500'} input-group input-group-divider grid-rows-[auto_1fr]`}>
         <input
             bind:value={quantity}

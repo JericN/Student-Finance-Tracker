@@ -29,11 +29,9 @@
             forms.reset();
             toastStore.trigger(success('Item added'));
         } catch (_) {
-            console.log(_)
             toastStore.trigger(error('Failed to add item'));
         }
     }
-
 </script>
 
 <div class="flex h-full flex-col items-center justify-center p-8">
