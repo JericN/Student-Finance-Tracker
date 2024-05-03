@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Amount, Description, Name } from '$lib/components/forms';
+    import { Amount, Calendar, Description, Name, Quantity } from '$lib/components/forms';
     import { Button, Card } from '$lib/components/modules';
     import { Wishlist, WishlistForm } from '$lib/models/sft';
     import { error, success } from '$lib/functions/toast';
@@ -13,7 +13,7 @@
     const forms = getWishlistEditStore();
 
     async function update() {
-        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'description'];
+        const properties: (keyof WishlistForm)[] = ['name', 'amount', 'date', 'quantity', 'description'];
 
         for (const property of properties) {
             const result = safeParse(pick(WishlistForm, [property]), { [property]: $forms[property] });
@@ -66,6 +66,8 @@
         <div class="grid grid-cols-[auto_1fr] place-items-center gap-2">
             <Name bind:name={$forms.name} />
             <Amount bind:amount={$forms.amount} />
+            <Quantity bind:quantity={$forms.quantity} />
+            <Calendar bind:date={$forms.date} />
         </div>
         <Description bind:description={$forms.description} />
     </Card>
