@@ -20,21 +20,20 @@
 
 <div class="flex h-full flex-col items-center gap-2 p-10">
     <Button on:click={add}>Add Item ➕</Button>
-    {#each $wishlistStore as { name, amount, bought, quantity, date}, id}
+    {#each $wishlistStore as { name, amount, quantity, date }, id}
         <CardButton layout="justify-between" font="font-bold" on:click={() => edit(id)}>
-            <div class="flex justify-items-stretch">
-                <div>
-                    <div class="text-lg">{name}</div>
+            <div class="text-2xl">{name}</div>
+
+            <div class="flex flex-col items-end">
+                <div class="flex justify-between gap-2">
                     <div class="my-auto text-2xl">
                         {currency(amount)}
                     </div>
-                </div>
-                <div>
-                    <div class="text-xl">{date.toDateString().slice(4)}</div>
-                    <div class="my-auto text-xl">
-                        {`${quantity}x`}
+                    <div class="my-auto rounded-lg border-2 bg-dark px-2 py-1 text-sm text-white">
+                        {`${quantity}`}
                     </div>
                 </div>
+                <div class="text-sm text-red-900">{date.toDateString().slice(4)}</div>
             </div>
         </CardButton>
     {/each}
