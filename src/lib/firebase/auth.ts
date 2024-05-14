@@ -48,3 +48,14 @@ export async function resetPassword() {
     }
 }
 
+export async function updateProfileName(username: string) {
+    try {
+        const { uid } = session.values();
+        if (!uid) throw new Error('No user found');
+        if (!auth.currentUser) throw new Error('No user found');
+        await updateProfile(auth.currentUser, { displayName: username });
+        session.create(auth.currentUser);
+    } catch (error) {
+        throw new Error('Failed updating profile name');
+    }
+}
