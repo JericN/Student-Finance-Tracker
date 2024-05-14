@@ -48,7 +48,7 @@
         <div>Edit Wishlist Item</div>
     </Entry>
 
-    <Entry title="User Management">
+    <Entry link="management" title="User Management">
         <div>Edit Username</div>
         <div>Edit Password</div>
     </Entry>
