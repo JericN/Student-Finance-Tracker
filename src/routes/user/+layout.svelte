@@ -2,16 +2,11 @@
     import * as DataStore from '$lib/store/database';
     import * as FormStore from '$lib/store/forms';
     import * as TransactionStore from '$lib/store/transaction';
-    import { AppShell, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
-    import { FilterModal, TemplateModal } from '$lib/modals';
+    import { AppShell, type ModalComponent } from '@skeletonlabs/skeleton';
+
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
     import { page } from '$app/stores';
-
-    const modalRegistry: Record<string, ModalComponent> = {
-        filter: { ref: FilterModal },
-        template: { ref: TemplateModal },
-    };
 
     // TODO: fix header routing
     $: current = $page.url.pathname;
@@ -29,7 +24,6 @@
     TransactionStore.init();
 </script>
 
-<Modal components={modalRegistry} />
 <AppShell>
     <div slot="header">
         {#if transaction}
