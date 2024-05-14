@@ -21,6 +21,8 @@
     $: category = current.startsWith('/user/users/categories/');
     $: wishlist = current.startsWith('/user/users/wishlist/');
     $: budget = current.startsWith('/user/users/budget-pref/');
+    $: management = current.startsWith('/user/users/management/');
+    $: settings = current.startsWith('/user/users/settings/');
 
     DataStore.init();
     FormStore.init();
@@ -42,6 +44,10 @@
             <Header title="Wishlist" />
         {:else if budget}
             <Header title="Budget" />
+        {:else if management}
+            <Header title="User Management" />
+        {:else if settings}
+            <Header title="App Settings" />
         {/if}
     </div>
     <slot />
