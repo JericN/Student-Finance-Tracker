@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { Button, CardButton } from '$lib/components/modules';
     import { LockClosed, User } from '@steeze-ui/heroicons';
+    import { resetPassword, updateProfileName } from '$lib/firebase/auth';
+    import { CardButton } from '$lib/components/modules';
     import { Icon } from '@steeze-ui/svelte-icon';
     import { getModalStore } from '@skeletonlabs/skeleton';
-    import { resetPassword, updateProfileName } from '$lib/firebase/auth';
 
     const modalStore = getModalStore();
 

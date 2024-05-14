@@ -2,8 +2,7 @@
     import * as DataStore from '$lib/store/database';
     import * as FormStore from '$lib/store/forms';
     import * as TransactionStore from '$lib/store/transaction';
-    import { AppShell, type ModalComponent } from '@skeletonlabs/skeleton';
-
+    import { AppShell } from '@skeletonlabs/skeleton';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
     import { page } from '$app/stores';

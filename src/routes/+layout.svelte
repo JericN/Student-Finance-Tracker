@@ -1,5 +1,6 @@
 <script lang="ts">
     import '../app.postcss';
+    import { FilterModal, TemplateModal } from '$lib/modals';
     import {
         Modal,
         type ModalComponent,
@@ -8,7 +9,6 @@
         modeCurrent,
         setModeCurrent,
     } from '@skeletonlabs/skeleton';
-    import { FilterModal, TemplateModal } from '$lib/modals';
     import { onMount } from 'svelte';
     initializeStores();
     const modalRegistry: Record<string, ModalComponent> = {
