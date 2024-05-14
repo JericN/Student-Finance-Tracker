@@ -1,4 +1,9 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    updateProfile,
+} from 'firebase/auth';
 import { auth } from '$lib/firebase/firebase.client';
 import { createUserTransactionForm } from '$lib/firebase/database';
 import { session } from '$lib/store/session';
@@ -32,3 +37,14 @@ export async function signOutUser() {
         throw new Error('Failed signing out user');
     }
 }
+
+export async function resetPassword() {
+    try {
+        const { email } = session.values();
+        if (!email) throw new Error('No email found');
+        await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+        throw new Error('Failed sending reset password email');
+    }
+}
+
