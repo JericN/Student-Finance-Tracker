@@ -38,11 +38,14 @@ export async function signOutUser() {
     }
 }
 
-export async function resetPassword() {
+export async function resetPassword(email: string = '') {
     try {
-        const { email } = session.values();
-        if (!email) throw new Error('No email found');
-        await sendPasswordResetEmail(auth, email);
+        if (email.length > 0) await sendPasswordResetEmail(auth, email);
+        else {
+            const { email } = session.values();
+            if (!email) throw new Error('No email found');
+            await sendPasswordResetEmail(auth, email);
+        }
     } catch (error) {
         throw new Error('Failed sending reset password email');
     }

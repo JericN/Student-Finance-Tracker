@@ -3,7 +3,10 @@
     import { error, success } from '$lib/functions/toast';
     import { getToastStore } from '@skeletonlabs/skeleton';
     import { goto } from '$app/navigation';
-    import { loginWithMail } from '$lib/firebase/auth';
+    import { loginWithMail, resetPassword } from '$lib/firebase/auth';
+    import { getModalStore } from '@skeletonlabs/skeleton';
+
+    const modalStore = getModalStore();
 
     let email: string;
     let password: string;
@@ -18,6 +21,18 @@
         } catch (e) {
             toast.trigger(error('Login Failed'));
         }
+    }
+
+    function updatePassword() {
+        modalStore.trigger({
+            type: 'prompt',
+            title: 'Password Update',
+            body: 'Please type your email. We will send you an email to update your password.',
+            valueAttr: { type: 'text', minlength: 3, maxlength: 30, required: true },
+            response: (res: string) => {
+                if (res) resetPassword(res);
+            },
+        });
     }
 
     function toregister() {
@@ -38,4 +53,5 @@
             <Button width="w-full" accent="bg-expense" on:click={toregister}>Signup</Button>
         </div>
     </Card>
+    <button class="underline" on:click={updatePassword}> Forgot password </button>
 </div>
