@@ -4,7 +4,7 @@
     import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { loginWithMail, resetPassword } from '$lib/firebase/auth';
     import { goto } from '$app/navigation';
-
+    import { Modal } from '@skeletonlabs/skeleton';
     const modalStore = getModalStore();
 
     let email: string;
@@ -39,6 +39,7 @@
     }
 </script>
 
+<Modal />
 <div class="mx-10 -mt-10 flex h-full flex-col items-center justify-center gap-10">
     <div class="text-primary-900-100-token text-5xl font-bold">Student<br />Finance<br />Tracker</div>
     <Card width="max-w-sm" layout="space-y-4">
