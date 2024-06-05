@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Select, Type } from '$lib/components/forms';
     import { Tab, TabGroup } from '@skeletonlabs/skeleton';
+    import { TransactionType, Wallet } from '$lib/models/sft';
     import {
         makeInterval,
         makePieCategory,
@@ -10,8 +11,8 @@
     } from '$lib/functions/analytics';
     import PageOne from './PageOne.svelte';
     import PageTwo from './PageTwo.svelte';
-    import { TransactionType } from '$lib/models/sft';
     import { getTransactionStore } from '$lib/store/transaction';
+
     export let data;
     $: ({ wallets } = data);
 
@@ -23,7 +24,7 @@
     const rangeList = ['Week', 'Month', 'Year'];
     let currentRange = 'Week';
 
-    $: walletList = ['All'].concat(wallets.map(wallet => wallet.name));
+    $: walletList = ['All'].concat(wallets.map((wallet: Wallet) => wallet.name));
     let selectedWallet = 'All';
 
     $: interval = makeInterval(currentRange);

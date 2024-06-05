@@ -3,10 +3,10 @@
     import * as FormStore from '$lib/store/forms';
     import * as TransactionStore from '$lib/store/transaction';
     import { AppShell, Modal, type ModalComponent } from '@skeletonlabs/skeleton';
+    import { FilterModal, TemplateModal } from '$lib/modals';
     import Header from '$lib/components/Header.svelte';
     import NavBar from '$lib/components/NavBar.svelte';
     import { page } from '$app/stores';
-    import { FilterModal, TemplateModal } from '$lib/modals';
 
     // TODO: fix header routing
     $: current = $page.url.pathname;

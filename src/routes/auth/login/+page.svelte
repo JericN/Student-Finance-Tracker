@@ -1,10 +1,10 @@
 <script lang="ts">
     import { Button, Card } from '$lib/components/modules';
+    import { Modal, getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { error, success } from '$lib/functions/toast';
-    import { getModalStore, getToastStore } from '@skeletonlabs/skeleton';
     import { loginWithMail, resetPassword } from '$lib/firebase/auth';
     import { goto } from '$app/navigation';
-    import { Modal } from '@skeletonlabs/skeleton';
+
     const modalStore = getModalStore();
 
     let email: string;
